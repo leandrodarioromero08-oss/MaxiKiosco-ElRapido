@@ -1,0 +1,63 @@
+/* ===== BARRA DE ADMINISTRACIÓN (solo se carga si hay un admin logueado) ===== */
+.admin-bar {
+  background: var(--negro);
+  color: #fff;
+  font-size: 13px;
+  border-bottom: 2px solid var(--amarillo);
+}
+.admin-bar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.admin-bar-quien {
+  font-weight: 700;
+  color: var(--amarillo);
+  white-space: nowrap;
+}
+.admin-bar-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.admin-bar a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.admin-bar a:hover { background: rgba(255, 255, 255, .12); color: var(--amarillo); }
+.admin-bar a:focus-visible { outline: 2px solid var(--amarillo); outline-offset: 0; }
+.admin-bar-badge {
+  background: var(--rojo);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  padding: 3px 7px;
+  border-radius: 999px;
+}
+.admin-bar-salir { margin-left: auto; color: #d3d3d9; }
+
+/* Celular: solo íconos (los nombres quedan para lectores de pantalla) */
+@media (max-width: 720px) {
+  .admin-bar-inner { padding: 0 12px; gap: 8px; }
+  .admin-bar-quien { display: none; }
+  .admin-bar-texto {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap;
+  }
+  .admin-bar a { padding: 9px 12px; }
+}
+@media print { .admin-bar { display: none; } }

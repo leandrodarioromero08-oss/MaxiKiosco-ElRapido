@@ -1,0 +1,539 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+/* ============================================================
+   NUESTRO OBJETIVO · El Rápido
+   Hoja de animación del SVG. Una escena de 6 s con tres momentos
+   encadenados: pedidos en orden, menos espera y atención cercana.
+   Los pedidos son el hilo que conecta las tres escenas.
+   ============================================================ */
+
+:root {
+  --ciclo: 6s;
+  --ease-suave: cubic-bezier(.2, .7, .3, 1);
+  --ease-entra: cubic-bezier(.23, 1, .32, 1);
+  --ease-resorte: cubic-bezier(.34, 1.56, .64, 1);
+  --rojo: #D91F26;
+  --amarillo: #FFD600;
+}
+
+svg {
+  font-family: 'Montserrat', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Reproducción única (integración futura en la tarjeta): el JS agrega
+   .una-vez al <svg> para que la secuencia termine en su último fotograma.
+   En la vista previa el ciclo sigue siendo infinito. */
+.una-vez,
+.una-vez * {
+  animation-iteration-count: 1 !important;
+}
+
+/* En reproducción única la escena no se desvanece al final. */
+.una-vez .escena { animation-name: escenaUnaVez; }
+@keyframes escenaUnaVez {
+  0%       { opacity: 0; }
+  1%, 100% { opacity: 1; }
+}
+
+/* El rótulo del tercer momento se queda en el fotograma final. */
+.una-vez .texto-momento--3 { animation-name: momento3UnaVez; }
+@keyframes momento3UnaVez {
+  0%, 64.5%   { opacity: 0; transform: translateY(8px); }
+  68%, 100%   { opacity: 1; transform: translateY(0); }
+}
+
+/* El globo de agradecimiento también se queda visible al terminar. */
+.una-vez .globo-gracias { animation-name: globoUnaVez; }
+@keyframes globoUnaVez {
+  0%, 81%     { opacity: 0; transform: translateY(6px) scale(.72); }
+  84%         { opacity: 1; transform: translateY(0) scale(1.06); }
+  86%, 100%   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---------- Escena general ---------- */
+
+.escena {
+  animation: escenaEntra var(--ciclo) linear infinite both;
+}
+@keyframes escenaEntra {
+  0%    { opacity: 0; }
+  1%    { opacity: 1; }
+  96.5% { opacity: 1; }
+  99.4% { opacity: 0; }
+  100%  { opacity: 0; }
+}
+
+.mancha-amarilla {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: respirar var(--ciclo) ease-in-out infinite both;
+}
+@keyframes respirar {
+  0%, 100% { transform: scale(1); }
+  45%      { transform: scale(1.03); }
+  75%      { transform: scale(.995); }
+}
+
+.destellos {
+  animation: destellosFondo var(--ciclo) ease-in-out infinite both;
+}
+@keyframes destellosFondo {
+  0%, 100% { opacity: .65; }
+  42%      { opacity: 1; }
+  72%      { opacity: .78; }
+}
+
+/* ---------- Rótulos de momento ---------- */
+
+.texto-momento {
+  transform-box: fill-box;
+  transform-origin: left center;
+}
+
+.texto-momento--1 { animation: momento1 var(--ciclo) linear infinite both; }
+.texto-momento--2 { animation: momento2 var(--ciclo) linear infinite both; }
+.texto-momento--3 { animation: momento3 var(--ciclo) linear infinite both; }
+
+@keyframes momento1 {
+  0%      { opacity: 0; transform: translateY(8px); }
+  1.5%    { opacity: 0; transform: translateY(8px); animation-timing-function: var(--ease-entra); }
+  4%      { opacity: 1; transform: translateY(0); }
+  28%     { opacity: 1; transform: translateY(0); }
+  30.5%   { opacity: 0; transform: translateY(-6px); }
+  100%    { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes momento2 {
+  0%, 30.5% { opacity: 0; transform: translateY(8px); }
+  33.5%     { opacity: 1; transform: translateY(0); }
+  62.5%     { opacity: 1; transform: translateY(0); }
+  64.5%     { opacity: 0; transform: translateY(-6px); }
+  100%      { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes momento3 {
+  0%, 64.5% { opacity: 0; transform: translateY(8px); }
+  67.5%     { opacity: 1; transform: translateY(0); }
+  94%       { opacity: 1; transform: translateY(0); }
+  96.5%     { opacity: 0; transform: translateY(-6px); }
+  100%      { opacity: 0; transform: translateY(-6px); }
+}
+
+/* ---------- Panel de pedidos ---------- */
+
+.panel-pedidos {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: panelEntra var(--ciclo) linear infinite both;
+}
+@keyframes panelEntra {
+  0%    { opacity: 0; transform: translateY(18px) scale(.96); }
+  3%    { opacity: 1; transform: translateY(0) scale(1.012); }
+  4.5%, 100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Tarjetas: aparecen desordenadas y se acomodan en las filas. */
+
+.pedido {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  opacity: 0;
+  animation-duration: var(--ciclo);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.pedido--1 { animation-name: pedidoUno; }
+.pedido--2 { animation-name: pedidoDos; }
+.pedido--3 { animation-name: pedidoTres; }
+.pedido--4 { animation-name: pedidoCuatro; }
+
+@keyframes pedidoUno {
+  0%, 2.5%  { opacity: 0; transform: translate(-28px, -20px) rotate(-11deg) scale(.9); }
+  4.5%      { opacity: 1; transform: translate(-28px, -20px) rotate(-11deg) scale(.9); }
+  9.5%      { opacity: 1; transform: translate(5px, 3px) rotate(2deg) scale(1.02); }
+  11.5%     { opacity: 1; transform: translate(-1px, 0) rotate(-.7deg) scale(1); }
+  13.5%, 100% { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+@keyframes pedidoDos {
+  0%, 5%    { opacity: 0; transform: translate(30px, 4px) rotate(9deg) scale(.9); }
+  7%        { opacity: 1; transform: translate(30px, 4px) rotate(9deg) scale(.9); }
+  12.5%     { opacity: 1; transform: translate(-4px, -2px) rotate(-2deg) scale(1.02); }
+  14.5%     { opacity: 1; transform: translate(1px, 0) rotate(.6deg) scale(1); }
+  16.5%, 100% { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+@keyframes pedidoTres {
+  0%, 7.5%  { opacity: 0; transform: translate(-32px, 14px) rotate(-8deg) scale(.9); }
+  9.5%      { opacity: 1; transform: translate(-32px, 14px) rotate(-8deg) scale(.9); }
+  15%       { opacity: 1; transform: translate(4px, -3px) rotate(2deg) scale(1.02); }
+  17%       { opacity: 1; transform: translate(-1px, 1px) rotate(-.5deg) scale(1); }
+  19%, 100% { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+@keyframes pedidoCuatro {
+  0%, 10%   { opacity: 0; transform: translate(26px, -12px) rotate(7deg) scale(.9); }
+  12%       { opacity: 1; transform: translate(26px, -12px) rotate(7deg) scale(.9); }
+  17.5%     { opacity: 1; transform: translate(-5px, 3px) rotate(-2deg) scale(1.02); }
+  19.5%     { opacity: 1; transform: translate(1px, 0) rotate(.4deg) scale(1); }
+  21.5%, 100% { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+
+/* Checks: confirman cada pedido a medida que se ordena. */
+
+.check-pedido {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation-duration: var(--ciclo);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.check-pedido--1 { animation-name: checkUno; }
+.check-pedido--2 { animation-name: checkDos; }
+.check-pedido--3 { animation-name: checkTres; }
+.check-pedido--4 { animation-name: checkCuatro; }
+
+@keyframes checkUno {
+  0%, 11.5%   { opacity: 0; transform: scale(.3); }
+  13.5%       { opacity: 1; transform: scale(1.22); }
+  15.5%, 100% { opacity: 1; transform: scale(1); }
+}
+@keyframes checkDos {
+  0%, 14.5%   { opacity: 0; transform: scale(.3); }
+  16.5%       { opacity: 1; transform: scale(1.22); }
+  18.5%, 100% { opacity: 1; transform: scale(1); }
+}
+@keyframes checkTres {
+  0%, 17.5%   { opacity: 0; transform: scale(.3); }
+  19.5%       { opacity: 1; transform: scale(1.22); }
+  21.5%, 100% { opacity: 1; transform: scale(1); }
+}
+@keyframes checkCuatro {
+  0%, 21%     { opacity: 0; transform: scale(.3); }
+  23%         { opacity: 1; transform: scale(1.22); }
+  25%, 100%   { opacity: 1; transform: scale(1); }
+}
+
+/* Contador de pedidos. */
+
+.contador-pedidos {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: contadorPop var(--ciclo) linear infinite both;
+}
+@keyframes contadorPop {
+  0%, 24%     { transform: scale(1); }
+  26%         { transform: scale(1.18); }
+  28%, 100%   { transform: scale(1); }
+}
+
+/* ---------- Reloj ---------- */
+
+.reloj-grupo {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: relojEntra var(--ciclo) linear infinite both;
+}
+@keyframes relojEntra {
+  0%, 31%   { opacity: 0; transform: translate(20px, -16px) scale(.8); }
+  34.5%     { opacity: 1; transform: translate(0, 0) scale(1.035); }
+  36%       { opacity: 1; transform: translate(0, 0) scale(1); }
+  62.5%     { opacity: 1; transform: translate(0, 0) scale(1); }
+  65.5%     { opacity: 0; transform: translate(34px, -10px) scale(.88); }
+  100%      { opacity: 0; transform: translate(34px, -10px) scale(.88); }
+}
+
+.aguja-hora,
+.aguja-minuto {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.aguja-hora {
+  animation: agujaHoraObj var(--ciclo) linear infinite both;
+}
+.aguja-minuto {
+  animation: agujaMinutoObj var(--ciclo) linear infinite both;
+}
+
+@keyframes agujaHoraObj {
+  0%, 33%   { transform: rotate(0deg); }
+  57%       { transform: rotate(88deg); }
+  59.5%     { transform: rotate(92deg); }
+  61.5%     { transform: rotate(89deg); }
+  63.5%, 100% { transform: rotate(90deg); }
+}
+@keyframes agujaMinutoObj {
+  0%, 33%   { transform: rotate(0deg); animation-timing-function: cubic-bezier(.3, .1, .3, 1); }
+  55%       { transform: rotate(1005deg); animation-timing-function: ease-out; }
+  58.5%     { transform: rotate(1083deg); }
+  60.5%     { transform: rotate(1075deg); }
+  62.5%, 100% { transform: rotate(1080deg); }
+}
+
+.arcos-reloj {
+  animation: arcosEntra var(--ciclo) linear infinite both;
+}
+@keyframes arcosEntra {
+  0%, 33%   { opacity: 0; }
+  36%       { opacity: .95; }
+  54%       { opacity: .9; }
+  58%, 100% { opacity: 0; }
+}
+
+.arcos-reloj path {
+  animation: arcosFlujo var(--ciclo) linear infinite both;
+}
+@keyframes arcosFlujo {
+  0%, 33%   { stroke-dashoffset: 0; }
+  58%       { stroke-dashoffset: -120; }
+  100%      { stroke-dashoffset: -120; }
+}
+
+.pulso-reloj {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulsoReloj var(--ciclo) linear infinite both;
+}
+@keyframes pulsoReloj {
+  0%, 57%   { opacity: 0; transform: scale(.84); }
+  59%       { opacity: .55; transform: scale(.9); }
+  64%       { opacity: 0; transform: scale(1.14); }
+  100%      { opacity: 0; transform: scale(1.14); }
+}
+
+.chip-espera {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: chipEspera var(--ciclo) linear infinite both;
+}
+@keyframes chipEspera {
+  0%, 53.5%   { opacity: 0; transform: translateY(6px) scale(.7); }
+  56%         { opacity: 1; transform: translateY(0) scale(1.06); }
+  58.5%       { opacity: 1; transform: translateY(0) scale(1); }
+  63.5%       { opacity: 1; transform: translateY(0) scale(1); }
+  66%, 100%   { opacity: 0; transform: translateY(-6px) scale(.94); }
+}
+
+/* ---------- Personajes ---------- */
+
+.cliente-obj {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: clienteEntraObj var(--ciclo) linear infinite both;
+}
+@keyframes clienteEntraObj {
+  0%, 64%   { opacity: 0; transform: translateX(-96px); }
+  66.5%     { opacity: 1; transform: translateX(-96px); }
+  73%       { opacity: 1; transform: translateX(0); }
+  78%       { opacity: 1; transform: translate(0, 0); }
+  81%       { opacity: 1; transform: translate(0, -1.6px); }
+  84%       { opacity: 1; transform: translate(0, 0); }
+  87%       { opacity: 1; transform: translate(0, -1.6px); }
+  90%, 100% { opacity: 1; transform: translate(0, 0); }
+}
+
+.vendedor-obj {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: vendedorEntraObj var(--ciclo) linear infinite both;
+}
+@keyframes vendedorEntraObj {
+  0%, 65%   { opacity: 0; transform: translateX(96px); }
+  67.5%     { opacity: 1; transform: translateX(96px); }
+  74.5%     { opacity: 1; transform: translateX(0); }
+  79%       { opacity: 1; transform: translate(0, 0); }
+  82%       { opacity: 1; transform: translate(0, -1.6px); }
+  85%       { opacity: 1; transform: translate(0, 0); }
+  88%       { opacity: 1; transform: translate(0, -1.6px); }
+  91%, 100% { opacity: 1; transform: translate(0, 0); }
+}
+
+/* Brazo del cliente: recibe la bolsa. */
+.brazo-cliente-obj {
+  transform-box: fill-box;
+  transform-origin: 0 0;
+  animation: brazoClienteObj var(--ciclo) linear infinite both;
+}
+@keyframes brazoClienteObj {
+  0%, 66%   { transform: rotate(26deg); }
+  72%       { transform: rotate(16deg); }
+  78%, 83%  { transform: rotate(0deg); }
+  87%       { transform: rotate(-4deg); }
+  90%, 100% { transform: rotate(0deg); }
+}
+
+/* Brazo del vendedor: entrega la bolsa. */
+.brazo-vendedor-obj {
+  transform-box: fill-box;
+  transform-origin: 100% 0;
+  animation: brazoVendedorObj var(--ciclo) linear infinite both;
+}
+@keyframes brazoVendedorObj {
+  0%, 66%   { transform: rotate(-14deg); }
+  72%       { transform: rotate(4deg); }
+  78%, 84%  { transform: rotate(0deg); }
+  88%       { transform: rotate(-9deg); }
+  91%, 100% { transform: rotate(-1deg); }
+}
+
+.antebrazo-vendedor-obj {
+  transform-box: fill-box;
+  transform-origin: 100% 0;
+  animation: antebrazoVendedorObj var(--ciclo) linear infinite both;
+}
+@keyframes antebrazoVendedorObj {
+  0%, 67%   { transform: rotate(-18deg); }
+  73%       { transform: rotate(6deg); }
+  79%, 86%  { transform: rotate(0deg); }
+  90%, 100% { transform: rotate(-16deg); }
+}
+
+/* Bolsa: viaja del vendedor al cliente. */
+.bolsa-obj {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: bolsaObj var(--ciclo) linear infinite both;
+}
+@keyframes bolsaObj {
+  0%, 65.5% { opacity: 0; transform: translate(22px, 2px) scale(.9); }
+  67.5%     { opacity: 1; transform: translate(22px, 2px) scale(.92); }
+  74%       { opacity: 1; transform: translate(10px, -7px) rotate(-3deg) scale(1); }
+  79.5%, 86% { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1); }
+  88.5%     { opacity: 1; transform: translate(-2px, 2px) rotate(0deg) scale(1); }
+  91%, 100% { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+
+/* ---------- Cierre: globo, destellos y etiqueta ---------- */
+
+.globo-gracias {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: globoGracias var(--ciclo) linear infinite both;
+}
+@keyframes globoGracias {
+  0%, 81%   { opacity: 0; transform: translateY(6px) scale(.72); }
+  83.5%     { opacity: 1; transform: translateY(0) scale(1.07); }
+  86%, 93%  { opacity: 1; transform: translateY(0) scale(1); }
+  95.5%, 100% { opacity: 0; transform: translateY(-5px) scale(.97); }
+}
+
+.destellos-exito {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: destellosExito var(--ciclo) linear infinite both;
+}
+@keyframes destellosExito {
+  0%, 83%   { opacity: 0; transform: scale(.6); }
+  85%       { opacity: 1; transform: scale(1); }
+  90%       { opacity: .85; transform: scale(1.06); }
+  94%, 100% { opacity: 0; transform: scale(1.12); }
+}
+
+.etiqueta-entregado {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: etiquetaEntregado var(--ciclo) linear infinite both;
+}
+@keyframes etiquetaEntregado {
+  0%, 85%   { opacity: 0; transform: scale(.5); }
+  87.5%     { opacity: 1; transform: scale(1.1); }
+  90%, 100% { opacity: 1; transform: scale(1); }
+}
+
+/* ---------- Progreso ---------- */
+
+.progreso-relleno {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: progreso var(--ciclo) linear infinite both;
+}
+@keyframes progreso {
+  0%   { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+.progreso-punto {
+  animation: progresoPunto var(--ciclo) linear infinite both;
+}
+@keyframes progresoPunto {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(624px); }
+}
+
+/* ---------- Movimiento reducido ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .escena,
+  .mancha-amarilla,
+  .destellos,
+  .texto-momento,
+  .panel-pedidos,
+  .pedido,
+  .check-pedido,
+  .contador-pedidos,
+  .reloj-grupo,
+  .aguja-hora,
+  .aguja-minuto,
+  .arcos-reloj,
+  .arcos-reloj path,
+  .pulso-reloj,
+  .chip-espera,
+  .cliente-obj,
+  .vendedor-obj,
+  .brazo-cliente-obj,
+  .brazo-vendedor-obj,
+  .antebrazo-vendedor-obj,
+  .bolsa-obj,
+  .globo-gracias,
+  .destellos-exito,
+  .etiqueta-entregado,
+  .progreso-relleno,
+  .progreso-punto {
+    animation: none !important;
+  }
+
+  /* Composición final quieta: pedidos listos y entrega con trato cercano. */
+  .texto-momento--1,
+  .texto-momento--2,
+  .reloj-grupo,
+  .chip-espera,
+  .destellos-exito {
+    display: none;
+  }
+
+  .texto-momento--3 { opacity: 1; transform: none; }
+
+  .pedido {
+    opacity: 1;
+    transform: none;
+  }
+  .check-pedido {
+    opacity: 1;
+    transform: none;
+  }
+  .etiqueta-entregado {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .cliente-obj,
+  .vendedor-obj {
+    opacity: 1;
+    transform: none;
+  }
+  .brazo-cliente-obj { transform: rotate(0deg); }
+  .brazo-vendedor-obj { transform: rotate(0deg); }
+  .antebrazo-vendedor-obj { transform: rotate(0deg); }
+  .bolsa-obj { opacity: 1; transform: none; }
+  .globo-gracias { opacity: 1; transform: none; }
+
+  .progreso-relleno {
+    transform-box: fill-box;
+    transform-origin: left center;
+    transform: scaleX(.88);
+  }
+  .progreso-punto { transform: translateX(548px); }
+}

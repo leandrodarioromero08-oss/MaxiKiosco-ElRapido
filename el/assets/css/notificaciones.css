@@ -1,0 +1,38 @@
+/* assets/css/notificaciones.css — avisos al cliente, abajo a la derecha.
+   Se carga solo con sesión iniciada (header.php). Usa las variables de mejoras.css. */
+.notif-region {
+  position: fixed; right: var(--sp-4, 16px); bottom: 88px;   /* 88 px: queda por encima del botón flotante de ayuda */
+  z-index: 1250; width: min(380px, calc(100vw - 24px));
+  display: flex; flex-direction: column; align-items: stretch; gap: 10px; pointer-events: none;
+}
+@media (max-width: 720px) {
+  .notif-region { right: 12px; bottom: 76px; }
+  body.has-cartbar .notif-region { bottom: 152px; }       /* y por encima de la barra "Ver carrito" */
+}
+.notif {
+  --notif-color: var(--amarillo, #FFD600);
+  pointer-events: auto; position: relative; display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 8px 12px 14px; border-radius: 14px; border-left: 5px solid var(--notif-color);
+  background: var(--negro, #1a1a1a); color: #fff; font: 600 14px/1.35 'Montserrat', system-ui, sans-serif;
+  box-shadow: 0 14px 34px -10px rgba(0, 0, 0, .55);
+  animation: notifEntra .38s cubic-bezier(.22, 1, .36, 1) both;
+}
+html[data-theme="dark"] .notif { background: #2b2b30; }
+.notif--en_camino  { --notif-color: #4DA3FF; }
+.notif--listo      { --notif-color: #3ECF8E; }
+.notif--entregado  { --notif-color: #3ECF8E; }
+.notif--preparando { --notif-color: #FFD600; }
+.notif--cancelado  { --notif-color: #FF6B70; }
+.notif-ico { flex: none; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; color: var(--notif-color); background: rgba(255, 255, 255, .09); }
+.notif-cuerpo { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; padding-top: 1px; }
+.notif-titulo { font-weight: 800; font-size: 14.5px; }
+.notif-txt { font-weight: 500; color: rgba(255, 255, 255, .82); }
+.notif-link { align-self: flex-start; margin-top: 6px; padding: 4px 0; font-weight: 800; color: var(--notif-color); text-decoration: underline; text-underline-offset: 3px; }
+.notif-link:hover { text-decoration-thickness: 2px; }
+.notif-x { flex: none; width: 44px; height: 44px; margin: -6px 0 0; border: 0; border-radius: 10px; background: transparent; color: rgba(255, 255, 255, .7); display: grid; place-items: center; cursor: pointer; }
+.notif-x:hover { background: rgba(255, 255, 255, .1); color: #fff; }
+.notif-x:focus-visible, .notif-link:focus-visible { outline: 3px solid var(--notif-color); outline-offset: 2px; }
+.notif--sale { animation: notifSale .26s ease-in both; }
+@keyframes notifEntra { from { opacity: 0; transform: translateX(40px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes notifSale  { to   { opacity: 0; transform: translateX(40px); } }
+@media (prefers-reduced-motion: reduce) { .notif, .notif--sale { animation: none !important; } }

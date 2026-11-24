@@ -1,0 +1,64 @@
+/* ===== INTRO CINEMATOGRÁFICA — pantalla de inicio, controles y botón del footer =====
+ * La intro en sí vive en assets/intro/intro.html (se carga en un iframe, ver assets/js/intro.js).
+ * Todo lo de acá es liviano: solo transform/opacity, sin filtros pesados. */
+html.intro-on{overflow:hidden}
+html.intro-on body>*:not(#intro-gate){visibility:hidden}
+/* el sitio queda quieto detrás: sin animaciones CSS corriendo mientras la intro necesita todo el procesador */
+html.intro-on body>*:not(#intro-gate) *,html.intro-on body>*:not(#intro-gate) *::before,html.intro-on body>*:not(#intro-gate) *::after{animation-play-state:paused!important}
+.ig{display:none;position:fixed;inset:0;z-index:2147483000;background:#050608;color:#fff;font-family:'Montserrat',system-ui,sans-serif;overscroll-behavior:contain;touch-action:manipulation}
+html.intro-on .ig{display:block}
+.ig[hidden]{display:none!important}
+.ig-stage{position:absolute;inset:0;background:#000}
+.ig-stage iframe{display:block;width:100%;height:100%;border:0;background:#000}
+.ig-front{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:26px;overflow:hidden;
+  background:radial-gradient(ellipse 80% 55% at 50% 118%,rgba(150,48,12,.34),transparent 70%),radial-gradient(ellipse 70% 60% at 50% 46%,#13151c 0,#07080b 62%,#030304 100%);
+  transition:opacity .9s ease,visibility 0s linear .9s}
+.ig-front::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background:radial-gradient(ellipse at 50% 50%,transparent 45%,rgba(0,0,0,.7) 100%)}
+.ig-front::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.07;mix-blend-mode:screen;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+.ig-rain{position:absolute;inset:-20% 0 0;pointer-events:none;opacity:.55;will-change:transform;
+  background:repeating-linear-gradient(104deg,transparent 0 34px,rgba(150,170,215,.055) 34px 35px,transparent 35px 71px,rgba(150,170,215,.035) 71px 72px,transparent 72px 113px);
+  background-size:113px 113px;animation:igRain 1.1s linear infinite}
+@keyframes igRain{to{transform:translate3d(-22px,113px,0)}}
+.ig.ig-go .ig-front{opacity:0;visibility:hidden;transition:opacity .9s ease .5s,visibility 0s linear 1.4s}
+.ig-logo{position:relative;z-index:2;display:block;border:0;background:none;padding:18px;cursor:pointer;-webkit-tap-highlight-color:transparent;perspective:900px;border-radius:24px;outline-offset:6px}
+.ig-logo-in{display:block;will-change:transform;transform:translate3d(calc(var(--mx,0)*16px),calc(var(--my,0)*12px),0) rotateY(calc(var(--mx,0)*9deg)) rotateX(calc(var(--my,0)*-7deg));transition:transform .35s cubic-bezier(.2,.8,.2,1);animation:igFloat 5.5s ease-in-out infinite}
+.ig-logo img{display:block;width:min(64vw,440px);height:auto;filter:drop-shadow(0 6px 18px rgba(0,0,0,.6)) drop-shadow(0 0 16px rgba(217,31,38,.2));transition:filter .35s,transform .35s}
+.ig-logo:hover img,.ig-logo:focus-visible img{filter:drop-shadow(0 6px 18px rgba(0,0,0,.6)) drop-shadow(0 0 26px rgba(255,70,50,.42));transform:scale(1.05)}
+.ig-logo:active img{transform:scale(.97)}
+@keyframes igFloat{0%,100%{translate:0 0}50%{translate:0 -9px}}
+.ig-ring{position:absolute;inset:-4px;border-radius:30px;border:2px solid transparent;border-top-color:rgba(255,214,0,.7);border-right-color:rgba(217,31,38,.55);opacity:0;pointer-events:none;transition:opacity .4s}
+.ig.ig-load .ig-ring{opacity:1;animation:igSpin 1.1s linear infinite}
+@keyframes igSpin{to{transform:rotate(360deg)}}
+.ig-hint{position:relative;z-index:2;font-size:13px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.55);text-align:center;padding:0 20px}
+.ig:not(.ig-load) .ig-hint{animation:igHint 2.6s ease-in-out infinite}
+@keyframes igHint{0%,100%{opacity:.45}50%{opacity:1}}
+/* Al tocar el logo: arranca como una moto (sale disparado) y la pantalla se funde hacia la intro */
+.ig.ig-go .ig-logo-in{animation:igLaunch .9s cubic-bezier(.55,0,.9,.4) forwards}
+@keyframes igLaunch{0%{transform:none;opacity:1}28%{transform:translate3d(-26px,0,0) scale(.96)}100%{transform:translate3d(70vw,0,0) scale(1.35);opacity:0}}
+.ig.ig-go .ig-hint{opacity:0;transition:opacity .25s;animation:none}
+.ig.ig-go .ig-rain{animation-play-state:paused;will-change:auto}
+/* Controles: silencio y saltar (arriba a la derecha, siempre disponibles) */
+.ig-ctl{position:absolute;z-index:5;top:max(14px,env(safe-area-inset-top));right:max(14px,env(safe-area-inset-right));display:flex;gap:10px}
+.ig-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;min-width:42px;padding:0 13px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(10,11,16,.78);color:#fff;font:700 13px/1 'Montserrat',system-ui,sans-serif;letter-spacing:.04em;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+.ig-btn:hover{background:rgba(217,31,38,.85);border-color:rgba(255,214,0,.7)}
+.ig-btn:active{transform:scale(.95)}
+.ig-btn:focus-visible,.ig-logo:focus-visible{outline:3px solid #FFD600}
+.ig-btn .i-off{display:none}.ig-btn[aria-pressed="true"] .i-on{display:none}.ig-btn[aria-pressed="true"] .i-off{display:block}
+/* Salida conectada: el destello cálido de la entrada se vuelve un velo crema que se disuelve sobre el sitio,
+   mientras el sitio "llega" (se asienta desde un leve acercamiento), como si la cámara terminara de entrar. */
+.ig-veil{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 46%,#fff,#fff0cf 55%,#ffd88a);transition:opacity .35s ease-in}
+.ig.ig-veil-on .ig-veil{opacity:1}
+.ig.ig-out{opacity:0;pointer-events:none;transition:opacity 1.15s cubic-bezier(.4,0,.2,1)}
+.ig.ig-out-fast{transition-duration:.6s}
+@keyframes igEntra{from{opacity:0;transform:scale(1.06) translateZ(0)}to{opacity:1;transform:none}}
+@keyframes igEntraH{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+html.intro-entra main{animation:igEntra 1.5s cubic-bezier(.16,.8,.24,1) both;transform-origin:50% 18%}
+html.intro-entra header,html.intro-entra .site-header{animation:igEntraH 1.1s .25s cubic-bezier(.2,.8,.2,1) both}
+/* Botón "Ver intro" del footer */
+.footer-intro{display:inline-flex;align-items:center;gap:7px;padding:6px 14px;border-radius:999px;border:1px solid currentColor;color:inherit;font-weight:700;font-size:.92em;text-decoration:none;opacity:.9;transition:background .2s,color .2s,opacity .2s}
+.footer-intro:hover,.footer-intro:focus-visible{opacity:1;background:#D91F26;border-color:#D91F26;color:#fff}
+.footer-intro svg{flex:none}
+@media (max-width:560px){.ig-btn--txt{padding:0 12px}.ig-hint{font-size:11px;letter-spacing:.16em}}
+@media (prefers-reduced-motion:reduce){html.intro-entra main,html.intro-entra header,html.intro-entra .site-header{animation:none}.ig-veil{transition:none}.ig-rain,.ig-logo-in,.ig:not(.ig-load) .ig-hint{animation:none}.ig.ig-load .ig-ring{animation-duration:2.4s}}

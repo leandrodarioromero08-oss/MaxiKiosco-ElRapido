@@ -1,0 +1,70 @@
+# ── Páginas de error propias (Paso 6) ─────────────────────────
+# ErrorDocument necesita la RUTA WEB de las páginas (empieza con "/").
+# Cambiá "/el-rapido" por la carpeta donde está el sitio:
+#   - en localhost (http://localhost/el-rapido/)  → /el-rapido/404.php
+#   - en un dominio propio, en la raíz            → /404.php
+# Si la ruta no coincide, Apache muestra su página de error estándar (no se rompe nada).
+ErrorDocument 404 /el-rapido/404.php
+ErrorDocument 500 /el-rapido/500.php
+ErrorDocument 503 /el-rapido/500.php
+
+# ── Rendimiento (Paso 10) ─────────────────────────────────────
+# Todo va envuelto en <IfModule>: si el servidor no tiene el módulo, Apache lo ignora
+# y el sitio funciona igual (solo que sin esa optimización).
+
+# Compresión de texto (HTML, CSS, JS, JSON, SVG): reduce 60-80 % lo que viaja por la red.
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript application/json application/manifest+json application/xml image/svg+xml image/x-icon
+</IfModule>
+
+# Caché del navegador para imágenes (fotos de producto, logos, hero): no se vuelven a descargar
+# en cada visita. Los nombres de las fotos de producto son únicos (prod_<hash>), así que subir
+# una foto nueva nunca queda "pisada" por una versión vieja en caché.
+# CSS y JS quedan SIN caché fija a propósito: no llevan versión en el nombre, y así los cambios
+# se ven apenas se publican (el navegador solo revalida con el servidor y recibe 304).
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/webp "access plus 7 days"
+  ExpiresByType image/jpeg "access plus 7 days"
+  ExpiresByType image/png  "access plus 7 days"
+  ExpiresByType image/gif  "access plus 7 days"
+  ExpiresByType image/svg+xml "access plus 7 days"
+  ExpiresByType image/x-icon "access plus 7 days"
+</IfModule>
+
+# Caché larga para CSS/JS CON versión en la URL (includes/assets.php agrega ?v=<fecha del archivo> y junta las hojas
+# en paquetes _b-xxxx-xxxx.css cuyo nombre cambia al editar). Como la URL cambia sola cuando editás el archivo,
+# el navegador puede guardarlo 1 año sin volver a preguntar: cero pedidos en las visitas siguientes.
+# Los archivos pedidos SIN versión siguen revalidándose como antes. (Se usa mod_rewrite para marcar el pedido, así
+# funciona igual en Apache 2.2 y 2.4; si falta algún módulo, se ignora y todo sigue funcionando.)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{QUERY_STRING} (^|&)v=[0-9]+(&|$)
+  RewriteRule \.(css|js)$ - [E=ELR_VERSIONADO:1]
+  RewriteRule ^assets/css/_b-[0-9a-f]+-[0-9a-f]+\.css$ - [E=ELR_VERSIONADO:1]
+</IfModule>
+<IfModule mod_headers.c>
+  Header set Cache-Control "public, max-age=31536000, immutable" env=ELR_VERSIONADO
+</IfModule>
+
+# ── SEO (Paso 11) ─────────────────────────────────────────────
+# /robots.txt y /sitemap.xml se generan con PHP para usar siempre la dirección real del sitio
+# (SITE_URL en includes/config.php o config.local.php). Si el servidor no tiene mod_rewrite, la regla
+# se ignora y los mismos contenidos se pueden abrir como /robots.php y /sitemap.php.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^robots\.txt$ robots.php [L]
+  RewriteRule ^sitemap\.xml$ sitemap.php [L]
+</IfModule>
+
+# ── Modo app / PWA ────────────────────────────────────────────
+# El manifiesto necesita su tipo MIME. sw.js NO debe quedar en caché del navegador: así, cuando lo cambies,
+# todos los dispositivos reciben la versión nueva. El manifiesto se revalida a diario.
+<IfModule mod_mime.c>
+  AddType application/manifest+json .webmanifest
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "^sw\.js$">
+    Header set Cache-Control "no-cache, max-age=0"
+  </FilesMatch>
+</IfModule>

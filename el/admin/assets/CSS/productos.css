@@ -1,0 +1,666 @@
+/* ============================================
+   PRODUCTOS.CSS — Estilos SOLO para productos.html
+   Este archivo se usa JUNTO con global.css
+   ============================================ */
+
+/* ============================================
+   ENCABEZADO DE PÁGINA (título + botón agregar)
+   ============================================ */
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+/* ============================================
+   ESTADÍSTICAS (mismas 4 tarjetas de arriba)
+   — Igual que inicio.css, copiadas acá para
+     que cada página sea independiente —
+   ============================================ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background-color: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.stat-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-info {
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--gris-texto);
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--negro-texto);
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+.stat-trend { font-size: 12px; font-weight: 600; }
+.trend-positivo { color: var(--verde); }
+
+.stat-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--rojo);
+  text-decoration: none;
+}
+.stat-link:hover { text-decoration: underline; }
+
+.stat-sub {
+  font-size: 12px;
+  color: var(--gris-texto);
+}
+
+/* ============================================
+   BARRA DE FILTROS (búsqueda + selects)
+   ============================================ */
+.filtros-bar {
+  background-color: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;   /* Si la pantalla es chica, bajan a otra línea */
+}
+
+/* Input de búsqueda dentro de los filtros */
+.filtro-buscar {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.filtro-buscar input {
+  width: 100%;
+  padding: 9px 14px 9px 36px;
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  background-color: var(--gris-fondo);
+  transition: border-color 0.2s ease;
+}
+
+.filtro-buscar input:focus {
+  border-color: var(--rojo);
+}
+
+.filtro-buscar .search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gris-texto);
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Selects de categoría y estado */
+.filtro-select {
+  padding: 9px 32px 9px 12px;
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--blanco);
+  color: var(--negro-texto);
+  cursor: pointer;
+  outline: none;
+  /* La flechita del select la maneja el navegador */
+  appearance: auto;
+}
+
+.filtro-select:focus {
+  border-color: var(--rojo);
+}
+
+/* Botón de filtros */
+.btn-filtros {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  background-color: var(--blanco);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  color: var(--negro-texto);
+}
+
+.btn-filtros:hover {
+  background-color: var(--gris-fondo);
+}
+
+/* Botón exportar (va a la derecha) */
+.btn-exportar {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  background-color: var(--blanco);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  color: var(--negro-texto);
+  margin-left: auto;   /* Lo empuja a la derecha */
+}
+
+.btn-exportar:hover {
+  background-color: var(--gris-fondo);
+}
+
+/* ============================================
+   TABLA DE PRODUCTOS
+   ============================================ */
+.tabla-wrapper {
+  background-color: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  overflow-x: auto;       /* Responsive: la tabla se desplaza dentro de su caja */
+}
+
+.tabla-productos {
+  width: 100%;
+  min-width: 680px;       /* Responsive: en pantallas chicas se desplaza en vez de apretarse */
+  border-collapse: collapse;
+}
+
+/* Encabezados de columna */
+.tabla-productos thead th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gris-texto);
+  border-bottom: 1px solid var(--gris-borde);
+  background-color: var(--gris-fondo);
+}
+
+/* Celdas del cuerpo */
+.tabla-productos tbody td {
+  padding: 14px 16px;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--gris-borde);
+  font-size: 14px;
+}
+
+/* La última fila no tiene borde abajo */
+.tabla-productos tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Al pasar el mouse, se resalta la fila */
+.tabla-productos tbody tr:hover {
+  background-color: var(--gris-fondo);
+}
+
+/* Celda con imagen + nombre del producto */
+.producto-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Cuadro de la imagen del producto */
+.producto-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background-color: var(--gris-fondo);
+  border: 1px solid var(--gris-borde);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.producto-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.producto-nombre {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--negro-texto);
+}
+
+.producto-categoria-sub {
+  font-size: 12px;
+  color: var(--gris-texto);
+}
+
+/* Precio */
+.producto-precio {
+  font-weight: 700;
+  color: var(--negro-texto);
+}
+
+/* Stock con estado debajo */
+.stock-numero {
+  font-weight: 700;
+  font-size: 14px;
+  display: block;
+}
+
+.stock-estado {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.stock-ok     { color: var(--verde); }
+.stock-bajo   { color: var(--naranja); }
+.stock-sin    { color: var(--rojo); }
+
+/* Badge de estado Activo / Inactivo */
+.badge-activo {
+  display: inline-block;
+  padding: 4px 12px;
+  background-color: #E8F5E9;
+  color: var(--verde);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.badge-inactivo {
+  display: inline-block;
+  padding: 4px 12px;
+  background-color: #FFEBEE;
+  color: var(--rojo);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Botones de acción (lápiz y basura) */
+.acciones-td {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-accion {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--gris-borde);
+  background-color: var(--blanco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  color: var(--negro-texto);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-accion:active {
+  transform: scale(0.94);
+}
+
+.btn-editar:hover {
+  background-color: #FFF3E0;
+  border-color: var(--naranja);
+}
+
+.btn-eliminar:hover {
+  background-color: var(--rojo-claro);
+  border-color: var(--rojo);
+}
+
+/* ============================================
+   PAGINACIÓN (los números abajo de la tabla)
+   ============================================ */
+.paginacion-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-top: 1px solid var(--gris-borde);
+  background-color: var(--blanco);
+  font-size: 13px;
+  color: var(--gris-texto);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Grupo de botones de página */
+.paginacion-botones {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Cada botón de número */
+.pag-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--gris-borde);
+  background-color: var(--blanco);
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  color: var(--negro-texto);
+}
+
+.pag-btn:active {
+  transform: scale(0.92);
+}
+
+.pag-btn:hover {
+  background-color: var(--gris-fondo);
+}
+
+/* La página activa va en rojo */
+.pag-btn.activa {
+  background-color: var(--rojo);
+  color: var(--blanco);
+  border-color: var(--rojo);
+  font-weight: 700;
+}
+
+/* Selector de "5 por página" */
+.pag-por-pagina {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pag-por-pagina select {
+  padding: 6px 10px;
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--blanco);
+  cursor: pointer;
+  outline: none;
+}
+
+/* ============================================================
+   MODAL — Agregar / Editar producto
+   ============================================================ */
+.modal-overlay {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,.45);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.modal-overlay.abierto {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal-box {
+  background-color: var(--blanco);
+  border-radius: var(--radio);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.22);
+  width: 100%;
+  max-width: 520px;
+  transform: scale(0.96);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-overlay.abierto .modal-box {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--gris-borde);
+}
+
+.modal-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--negro-texto);
+}
+
+.modal-cerrar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--gris-texto);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.modal-cerrar:hover { color: var(--rojo); background-color: var(--rojo-claro); }
+.modal-cerrar:active { transform: scale(0.9); }
+
+.modal-body {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.campo-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo-grupo label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--negro-texto);
+}
+
+.campo-grupo input[type="text"],
+.campo-grupo input[type="number"],
+.campo-grupo select {
+  padding: 9px 12px;
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  background-color: var(--gris-fondo);
+  width: 100%;
+  transition: border-color 0.2s ease;
+}
+
+.campo-grupo input:focus,
+.campo-grupo select:focus {
+  border-color: var(--rojo);
+}
+
+.campo-fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+/* Responsive: los campos pueden achicarse y el selector de archivo no se sale del modal */
+.campo-fila > * { min-width: 0; }
+.modal-box input[type="file"] { max-width: 100%; min-width: 0; }
+
+.campo-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-direction: row;
+}
+
+.campo-check input { width: auto; }
+
+.modal-footer {
+  padding: 16px 22px 22px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-cancelar {
+  background: none;
+  border: 1px solid var(--gris-borde);
+  color: var(--negro-texto);
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-cancelar:active {
+  transform: scale(0.97);
+}
+
+.btn-cancelar:hover { background-color: var(--gris-fondo); }
+
+/* ============================================================
+   MENSAJES DE CONFIRMACIÓN / ERROR
+   ============================================================ */
+.alerta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.alerta .icono-svg {
+  flex-shrink: 0;
+}
+
+.alerta-exito {
+  background-color: #E8F5E9;
+  color: var(--verde);
+}
+
+.alerta-error {
+  background-color: #FFEBEE;
+  color: var(--rojo);
+}
+
+.sin-resultados {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--gris-texto);
+}
+
+
+
+/* ============================================================
+   SUBIDA DE FOTO DEL PRODUCTO (modal agregar/editar)
+   ============================================================ */
+.imagen-upload-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.imagen-preview {
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  background-color: var(--gris-fondo);
+  border: 1px solid var(--gris-borde);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.imagen-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.imagen-upload-controles {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.imagen-upload-ayuda {
+  font-size: 12px;
+  color: var(--gris-texto);
+  margin: 0;
+}

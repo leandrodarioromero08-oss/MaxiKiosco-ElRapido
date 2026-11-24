@@ -1,0 +1,446 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+/* ============================================================
+   NUESTRA FORMA DE TRABAJAR · El Rápido
+   Hoja de animación del SVG. Una escena continua de 6 s con
+   tres momentos encadenados: mostrador, entrega y delivery.
+   Los nombres de clase son estables para una integración futura.
+   ============================================================ */
+
+:root {
+  --ciclo: 6s;
+  --ease-suave: cubic-bezier(.2, .7, .3, 1);
+  --ease-entra: cubic-bezier(.23, 1, .32, 1);
+  --ease-resorte: cubic-bezier(.34, 1.56, .64, 1);
+  --rojo: #D91F26;
+  --amarillo: #FFD600;
+}
+
+svg {
+  font-family: 'Montserrat', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Reproducción única (integración en la tarjeta): el JS agrega
+   .una-vez al <svg> para que la secuencia termine en su último
+   fotograma. En la vista previa el ciclo sigue siendo infinito. */
+.una-vez,
+.una-vez * {
+  animation-iteration-count: 1 !important;
+}
+
+/* En reproducción única la escena no se desvanece al final: queda el
+   último fotograma (cliente con la bolsa, moto ya fuera de cuadro). */
+.una-vez .escena-tienda { animation-name: escenaUnaVez; }
+@keyframes escenaUnaVez {
+  0%   { opacity: 0; }
+  1%, 100% { opacity: 1; }
+}
+
+/* El rótulo del tercer momento se queda en el fotograma final. */
+.una-vez .texto-momento--3 { animation-name: momento3UnaVez; }
+@keyframes momento3UnaVez {
+  0%, 56%     { opacity: 0; transform: translateY(8px); }
+  59.5%, 100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Escena general ---------- */
+
+.escena-tienda {
+  animation: escenaEntra var(--ciclo) linear infinite both;
+}
+@keyframes escenaEntra {
+  0%    { opacity: 0; }
+  1%    { opacity: 1; }
+  96.5% { opacity: 1; }
+  99.4% { opacity: 0; }
+  100%  { opacity: 0; }
+}
+
+.mancha-amarilla {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: respirar var(--ciclo) ease-in-out infinite both;
+}
+@keyframes respirar {
+  0%, 100% { transform: scale(1); }
+  45%      { transform: scale(1.03); }
+  75%      { transform: scale(.995); }
+}
+
+.destellos {
+  animation: destellos var(--ciclo) ease-in-out infinite both;
+}
+@keyframes destellos {
+  0%, 100% { opacity: .65; }
+  42%      { opacity: 1; }
+  72%      { opacity: .78; }
+}
+
+/* ---------- Rótulos de momento ---------- */
+
+.texto-momento {
+  transform-box: fill-box;
+  transform-origin: left center;
+}
+
+.texto-momento--1 { animation: momento1 var(--ciclo) linear infinite both; }
+.texto-momento--2 { animation: momento2 var(--ciclo) linear infinite both; }
+.texto-momento--3 { animation: momento3 var(--ciclo) linear infinite both; }
+
+@keyframes momento1 {
+  0%     { opacity: 0; transform: translateY(8px); }
+  1.5%   { opacity: 0; transform: translateY(8px); animation-timing-function: var(--ease-entra); }
+  4%     { opacity: 1; transform: translateY(0); }
+  23%    { opacity: 1; transform: translateY(0); }
+  25.5%  { opacity: 0; transform: translateY(-6px); }
+  100%   { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes momento2 {
+  0%, 23.5% { opacity: 0; transform: translateY(8px); }
+  27%       { opacity: 1; transform: translateY(0); }
+  53.5%     { opacity: 1; transform: translateY(0); }
+  56.5%     { opacity: 0; transform: translateY(-6px); }
+  100%      { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes momento3 {
+  0%, 56%   { opacity: 0; transform: translateY(8px); }
+  59.5%     { opacity: 1; transform: translateY(0); }
+  94%       { opacity: 1; transform: translateY(0); }
+  96.5%     { opacity: 0; transform: translateY(-6px); }
+  100%      { opacity: 0; transform: translateY(-6px); }
+}
+
+/* ---------- Cliente: caminata ---------- */
+
+.cliente-camino {
+  animation: clienteCamina var(--ciclo) linear infinite both;
+}
+@keyframes clienteCamina {
+  0%, 2% {
+    transform: translateX(-330px);
+    animation-timing-function: cubic-bezier(.25, .8, .35, 1);
+  }
+  17%, 100% { transform: translateX(0); }
+}
+
+.cliente-bob {
+  animation: clienteBob var(--ciclo) linear infinite both;
+}
+@keyframes clienteBob {
+  0%, 2%   { transform: translateY(0); }
+  3.6%     { transform: translateY(-2.2px); }
+  5.2%     { transform: translateY(0); }
+  6.8%     { transform: translateY(-2.2px); }
+  8.4%     { transform: translateY(0); }
+  10%      { transform: translateY(-2.2px); }
+  11.6%    { transform: translateY(0); }
+  13.2%    { transform: translateY(-2px); }
+  14.8%    { transform: translateY(0); }
+  16%      { transform: translateY(-1.2px); }
+  17.5%, 100% { transform: translateY(0); }
+}
+
+.pierna-cliente {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+}
+.pierna--izq { animation: piernaIzq var(--ciclo) linear infinite both; }
+.pierna--der { animation: piernaDer var(--ciclo) linear infinite both; }
+
+@keyframes piernaIzq {
+  0%, 2%     { transform: rotate(0deg); }
+  3.8%       { transform: rotate(14deg); }
+  5.6%       { transform: rotate(-14deg); }
+  7.4%       { transform: rotate(14deg); }
+  9.2%       { transform: rotate(-14deg); }
+  11%        { transform: rotate(13deg); }
+  12.8%      { transform: rotate(-13deg); }
+  14.6%      { transform: rotate(9deg); }
+  16.2%      { transform: rotate(-4deg); }
+  17.5%, 100% { transform: rotate(0deg); }
+}
+@keyframes piernaDer {
+  0%, 2%     { transform: rotate(0deg); }
+  3.8%       { transform: rotate(-14deg); }
+  5.6%       { transform: rotate(14deg); }
+  7.4%       { transform: rotate(-14deg); }
+  9.2%       { transform: rotate(14deg); }
+  11%        { transform: rotate(-13deg); }
+  12.8%      { transform: rotate(13deg); }
+  14.6%      { transform: rotate(-9deg); }
+  16.2%      { transform: rotate(4deg); }
+  17.5%, 100% { transform: rotate(0deg); }
+}
+
+.sombra-cliente {
+  animation: sombraCliente var(--ciclo) linear infinite both;
+}
+@keyframes sombraCliente {
+  0%, 2.5% { opacity: 0; }
+  5%       { opacity: .1; }
+  96%, 100% { opacity: .1; }
+}
+
+/* ---------- Cliente: brazo y bolsa ---------- */
+
+.brazo-cliente {
+  transform-box: fill-box;
+  transform-origin: 0 0;
+  animation: brazoCliente var(--ciclo) linear infinite both;
+}
+@keyframes brazoCliente {
+  0%, 2%     { transform: rotate(0deg); }
+  4%         { transform: rotate(5deg); }
+  6%         { transform: rotate(-5deg); }
+  8%         { transform: rotate(5deg); }
+  10%        { transform: rotate(-5deg); }
+  12%        { transform: rotate(4deg); }
+  14%        { transform: rotate(-4deg); }
+  16%        { transform: rotate(2deg); }
+  17.5%      { transform: rotate(0deg); }
+  20%        { transform: rotate(-30deg); }
+  23%, 25%   { transform: rotate(-47deg); }
+  28%, 38%   { transform: rotate(0deg); }
+  41%        { transform: rotate(-47deg); }
+  44%        { transform: rotate(-47deg); }
+  52%, 100%  { transform: rotate(0deg); }
+}
+
+.bolsa {
+  animation: bolsaRuta var(--ciclo) linear infinite both;
+}
+@keyframes bolsaRuta {
+  0%, 2%   { opacity: 0; transform: translate(0, 0); }
+  2.6%     { opacity: 1; transform: translate(0, 0); }
+  17%      { opacity: 1; transform: translate(0, 0); }
+  20%      { transform: translate(18px, -7px); }
+  23%      { transform: translate(32px, -18px); }
+  24.5%    { transform: translate(32px, -16px); }
+  26%, 31% { transform: translate(32px, -18px); }
+  34%      { transform: translate(30px, -26px); }
+  41%, 43% { transform: translate(20px, -28px); }
+  50%      { transform: translate(0, 0); }
+  51.5%    { transform: translate(-2px, 3px); }
+  53%, 100% { transform: translate(0, 0); }
+}
+
+.bolsa-columpio {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: bolsaColumpio var(--ciclo) linear infinite both;
+}
+@keyframes bolsaColumpio {
+  0%, 2%  { transform: rotate(0deg); }
+  4%      { transform: rotate(5deg); }
+  6%      { transform: rotate(-5deg); }
+  8%      { transform: rotate(5deg); }
+  10%     { transform: rotate(-5deg); }
+  12%     { transform: rotate(4deg); }
+  14%     { transform: rotate(-4deg); }
+  16%     { transform: rotate(3deg); }
+  18%, 100% { transform: rotate(0deg); }
+}
+
+/* ---------- Vendedor ---------- */
+
+.antebrazo-vendedor {
+  transform-box: fill-box;
+  transform-origin: 100% 0;
+  animation: antebrazoVendedor var(--ciclo) linear infinite both;
+}
+@keyframes antebrazoVendedor {
+  0%, 29% { transform: rotate(-17deg); }
+  33%     { transform: rotate(100deg); }
+  35%     { transform: rotate(88deg); }
+  42%     { transform: rotate(88deg); }
+  45%     { transform: rotate(70deg); }
+  49%, 100% { transform: rotate(-17deg); }
+}
+
+/* ---------- Reloj ---------- */
+
+.aguja-hora,
+.aguja-minuto {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.aguja-hora {
+  animation: agujaHora var(--ciclo) linear infinite both;
+}
+.aguja-minuto {
+  animation: agujaMinuto var(--ciclo) linear infinite both;
+}
+
+@keyframes agujaHora {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(30deg); }
+}
+@keyframes agujaMinuto {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ---------- Globo de confirmación ---------- */
+
+.globo-listo {
+  animation: globoListo var(--ciclo) linear infinite both;
+}
+@keyframes globoListo {
+  0%, 46%   { opacity: 0; transform: scale(.7); }
+  48%       { opacity: 1; transform: scale(.86); }
+  50.5%     { opacity: 1; transform: scale(1.06); }
+  53%, 57%  { opacity: 1; transform: scale(1); }
+  60%, 100% { opacity: 0; transform: scale(.96); }
+}
+
+/* ---------- Ruta de delivery ---------- */
+
+.ruta {
+  animation: rutaEntra var(--ciclo) linear infinite both;
+}
+@keyframes rutaEntra {
+  0%, 55%  { opacity: 0; }
+  58%, 93% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+
+.ruta-linea {
+  animation: rutaMarcha var(--ciclo) linear infinite both;
+}
+@keyframes rutaMarcha {
+  0%, 55% { stroke-dashoffset: 0; }
+  96%     { stroke-dashoffset: -120; }
+  100%    { stroke-dashoffset: -120; }
+}
+
+/* ---------- Moto ---------- */
+
+.moto {
+  animation: motoRuta var(--ciclo) linear infinite both;
+}
+@keyframes motoRuta {
+  0%, 57% {
+    opacity: 0;
+    transform: translate(-200px, 0);
+  }
+  58% {
+    opacity: 1;
+    transform: translate(-170px, 0);
+    animation-timing-function: cubic-bezier(.32, .04, .28, 1);
+  }
+  62%  { transform: translate(-30px, -1.4px); }
+  66%  { transform: translate(120px, 0); }
+  70%  { transform: translate(270px, -1.4px); }
+  74%  { transform: translate(410px, 0); }
+  78%  { transform: translate(520px, -1.4px); }
+  82%  { transform: translate(600px, 0); }
+  86%  { transform: translate(660px, -1px); }
+  90%  { transform: translate(705px, 0); }
+  94%  { transform: translate(735px, 0); }
+  96%  { opacity: 1; transform: translate(752px, 0); }
+  97%, 100% { opacity: 0; transform: translate(770px, 0); }
+}
+
+.rueda {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ruedaGira var(--ciclo) linear infinite both;
+}
+@keyframes ruedaGira {
+  0%, 58% { transform: rotate(0deg); }
+  96%     { transform: rotate(1080deg); }
+  100%    { transform: rotate(1080deg); }
+}
+
+.lineas-moto {
+  animation: lineasMoto var(--ciclo) linear infinite both;
+}
+@keyframes lineasMoto {
+  0%, 58% { opacity: 0; }
+  60%     { opacity: .9; }
+  86%     { opacity: .9; }
+  91%, 100% { opacity: 0; }
+}
+
+.polvo {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: polvoMoto var(--ciclo) linear infinite both;
+}
+@keyframes polvoMoto {
+  0%, 58% { opacity: 0; transform: scale(.6); }
+  61%     { opacity: .75; transform: scale(1); }
+  90%     { opacity: .25; transform: scale(1.4); }
+  96%, 100% { opacity: 0; transform: scale(1.5); }
+}
+
+/* ---------- Progreso ---------- */
+
+.progreso-relleno {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: progreso var(--ciclo) linear infinite both;
+}
+@keyframes progreso {
+  0%   { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+.progreso-punto {
+  animation: progresoPunto var(--ciclo) linear infinite both;
+}
+@keyframes progresoPunto {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(624px); }
+}
+
+/* ---------- Movimiento reducido ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .escena-tienda,
+  .mancha-amarilla,
+  .destellos,
+  .texto-momento,
+  .cliente-camino,
+  .cliente-bob,
+  .pierna-cliente,
+  .sombra-cliente,
+  .brazo-cliente,
+  .bolsa,
+  .bolsa-columpio,
+  .antebrazo-vendedor,
+  .aguja-hora,
+  .aguja-minuto,
+  .globo-listo,
+  .ruta,
+  .ruta-linea,
+  .moto,
+  .rueda,
+  .lineas-moto,
+  .polvo,
+  .progreso-relleno,
+  .progreso-punto {
+    animation: none !important;
+  }
+
+  .moto,
+  .ruta,
+  .progreso-punto,
+  .texto-momento--1,
+  .texto-momento--3 {
+    display: none;
+  }
+
+  .texto-momento--2 { opacity: 1; }
+  .globo-listo { opacity: 1 !important; }
+  .sombra-cliente { opacity: .1; }
+
+  /* Barra de progreso detenida en el momento de la entrega. */
+  .progreso-relleno {
+    transform-box: fill-box;
+    transform-origin: left center;
+    transform: scaleX(.52);
+  }
+}

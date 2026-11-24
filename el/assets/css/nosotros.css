@@ -1,0 +1,213 @@
+
+    body { background: var(--crema); }
+
+    @keyframes heroEntra {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-left { animation: heroEntra 0.6s cubic-bezier(.2,.7,.3,1) both; }
+
+    /* ── HERO NOSOTROS ── */
+    .section-hero-nosotros {
+      background: var(--crema);
+      overflow: hidden;
+      position: relative;
+      z-index: 0;
+      isolation: isolate;
+    }
+    /* Rayas diagonales de fondo con desvanecido hacia abajo: es el MISMO recurso del hero de Inicio
+       (.inicio-cabecera::before en index.css), así ambas portadas se ven iguales y las rayas no se
+       cortan en seco en el borde del hero. Van en un pseudo-elemento detrás del contenido. */
+    .section-hero-nosotros::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(115deg, var(--crema-linea) 0px, var(--crema-linea) 1px, transparent 1px, transparent 64px);
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+    }
+    .hero-nosotros {
+      max-width: 1200px;
+      padding: 40px var(--pad-pagina) 72px; /* aire abajo: la sombra de la foto ya no se corta contra el borde del hero */
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch; 
+      gap: 40px; 
+      min-height: 320px;
+    }
+    .hero-imagen { height: 100%; animation: heroEntra 0.7s cubic-bezier(.2,.7,.3,1) 0.12s both; }
+    .hero-left h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 72px; 
+      font-weight: 400; 
+      color: var(--texto);
+      line-height: 1; 
+      margin-bottom: 12px; 
+      letter-spacing: 0.5px;
+    }
+    .hero-left p { 
+        font-size: 18px; 
+        color: var(--gris-texto); 
+        margin-bottom: 40px; }
+
+    /* Bloque quienes somos dentro del hero */
+    .quienes-bloque { 
+        display: flex; 
+        gap: 18px; 
+        align-items: start;
+        text-align: left; /* el justificado en 420px abre huecos irregulares entre palabras */
+        max-width: 420px;
+    }
+    .quienes-icon {
+      width: 64px; 
+      height: 64px; 
+      background: var(--superficie); 
+      color: var(--rojo-texto);
+      border: 1px solid var(--crema-linea);
+      border-radius: 16px;
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      flex-shrink: 0;
+    }
+    .quienes-content h2 { 
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 28px; 
+        font-weight: 400; 
+        letter-spacing: 0.5px;
+        color: var(--texto); 
+        margin-bottom: 10px; 
+    }
+    .quienes-content p { 
+        font-size: 14px; 
+        color: #444; 
+        line-height: 1.7; 
+        margin-bottom: 10px; 
+    }
+
+    /* Tira de datos (años, delivery, ubicación) */
+    .stats-tira {
+      display: flex;
+      gap: 28px;
+      margin-top: 28px;
+      max-width: 420px;
+    }
+    .stat-item { flex: 1; }
+    .stat-numero {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 34px;
+      color: var(--rojo-texto);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--gris-texto);
+      line-height: 1.3;
+    }
+
+    /* ── CARDS GRID ── */
+    .cards-section-inner {
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 48px var(--pad-pagina) 64px;
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 24px;
+    }
+    .info-card {
+      border: 1.5px solid var(--gris-borde); 
+      border-radius: 16px; 
+      padding: 28px 28px 28px 28px;
+      background: var(--superficie);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    .info-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--sombra);
+      border-color: transparent;
+    }
+    .info-card:active { transform: translateY(-1px) scale(0.99); }
+    .card-header { 
+        display: flex; 
+        gap: 16px; 
+        align-items: flex-start; 
+        margin-bottom: 16px; 
+    }
+    .card-icon {
+      width: 52px; 
+      height: 52px; 
+      background: var(--crema); 
+      color: var(--rojo-texto);
+      border: 1px solid var(--crema-linea);
+      border-radius: 14px;
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+    .info-card:hover .card-icon { transform: rotate(-6deg) scale(1.06); }
+    .card-header h2 { 
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 26px; 
+        font-weight: 400; 
+        letter-spacing: 0.5px;
+        line-height: 1.05;
+        color: var(--texto); 
+        padding-top: 12px; 
+    }
+    .info-card p { 
+        font-size: 14px; 
+        color: #444; 
+        line-height: 1.75; 
+        margin-bottom: 10px; 
+    }
+    .info-card p:last-child { margin-bottom: 0; }
+    .check-list { 
+        list-style: none; 
+        display: flex; 
+        flex-direction: column; 
+        gap: 10px; 
+        margin-top: 14px; 
+    }
+    .check-list li {
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
+      font-size: 14px; 
+      color: #333;
+    }
+    .check-ico {
+      color: #2e9e4f;
+      flex-shrink: 0;
+    }
+    .highlight { font-weight: 700; }
+    .note-icono { 
+        color: var(--rojo-texto);
+        margin-right: 2px; 
+    }
+
+    /* ===== REVELADO EN SCROLL (mismo patrón que index.php) =====
+       Por defecto todo es visible; nosotros.js agrega .reveal-oculto
+       recién si JS corre, así el contenido nunca depende de JS para
+       mostrarse. */
+    [data-reveal] { transition: opacity 0.5s ease, transform 0.5s ease; }
+    [data-reveal].reveal-oculto { opacity: 0; transform: translateY(20px); }
+    .cards-section-inner [data-reveal]:nth-child(2) { transition-delay: 0.06s; }
+    .cards-section-inner [data-reveal]:nth-child(3) { transition-delay: 0.1s; }
+    .cards-section-inner [data-reveal]:nth-child(4) { transition-delay: 0.16s; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .hero-nosotros { grid-template-columns: 1fr; padding: 24px 24px 56px; min-height: auto; text-align: center; }
+      .hero-left h1 { font-size: 44px; }
+      .stats-tira { max-width: none; justify-content: center; }
+      .cards-section-inner { padding: 32px 20px 48px; }
+    }
+    @media (max-width: 720px) {
+      .cards-section-inner { grid-template-columns: 1fr; }
+    }

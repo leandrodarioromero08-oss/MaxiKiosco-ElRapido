@@ -1,0 +1,497 @@
+/* ============================================================
+   MEJORAS.CSS — El Rápido Maxi Kiosco
+   Capa de mejoras UI/UX sobre el diseño existente.
+   · Se carga SIEMPRE al final (después de modo-oscuro.css) desde includes/header.php.
+   · No reemplaza ninguna hoja: solo afina lo que la auditoría detectó.
+   · Mantiene la identidad: rojo #D91F26, amarillo #FFD600, Bebas Neue + Montserrat,
+     rayas diagonales, sello de precio, modo oscuro.
+   · Cada bloque indica el ID de la recomendación (R##, M##, N##) del informe.
+   ============================================================ */
+
+/* ============================================================
+   0. TOKENS NUEVOS  (R10, R11)
+   Escala de espaciado 4/8, ritmo de secciones, tiempos de movimiento,
+   borde de controles accesible y escala z-index.
+   ============================================================ */
+:root {
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px; --sp-5: 24px;
+  --sp-6: 32px; --sp-7: 48px; --sp-8: 64px; --sp-9: 96px;
+  --sec-y: clamp(48px, 6vw, 88px);   /* separación vertical entre secciones */
+  --header-h: 68px;
+
+  /* R03: borde de controles interactivos ≥ 3:1 (antes #e0e0e0 = 1,3:1) */
+  --borde-control: #8a8a8a;
+
+  /* Movimiento: una sola familia de tiempos y curvas (antes: .15/.2/.25/.3/.5/.6/.7/1.1) */
+  --dur-1: 120ms; --dur-2: 200ms; --dur-3: 360ms;
+  --ease-out: cubic-bezier(.2, .7, .3, 1);   /* la misma curva que ya usaba heroEntra */
+
+  /* z-index con nombre (antes: 100/200/998/999/1000/1100/2000 sueltos) */
+  --z-header: 100; --z-chips: 90; --z-fab: 900; --z-drawer: 1000; --z-modal: 1100; --z-toast: 1200;
+
+  /* Escala tipográfica: ahora SÍ se usa (antes estaba definida y sin uso) */
+  --fs-xs: 12px; --fs-sm: 14px; --fs-md: 16px; --fs-lg: 20px; --fs-xl: 28px; --fs-2xl: 40px;
+  --fs-3xl: 72px;
+}
+html[data-theme="dark"] { --borde-control: #85858f; }
+
+html { scroll-padding-top: calc(var(--header-h) + 16px); }
+body { font-size: var(--fs-md); }          /* R11: base de 16 px (antes 15) */
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
+/* R11: cifras alineadas (precios, totales, contadores) → no "bailan" al cambiar */
+.product-price, .product-price-original, .carrito-total, .promo-precio, .cat-badge,
+.qty-num, .drawer-total strong, .toast, .modal-promo-precio-final { font-variant-numeric: tabular-nums; }
+a, button { touch-action: manipulation; }  /* sin el retardo de 300 ms al tocar */
+
+/* ============================================================
+   1. HEADER  (R07, R04, M06, M07)
+   ============================================================ */
+/* El diseño, tamaños y comportamiento (translúcido con blur al scrollear) del header vienen de global.css
+   (versión OpenCode): logo 60 px en barra de 68 px, botones de 40 px, pastillas en el menú. Acá solo se suma
+   lo que no lo pisa: aro del badge y animación de la hamburguesa. */
+.carrito-badge { top: -9px; right: -11px; box-shadow: 0 0 0 2px var(--superficie); }
+.carrito-icono { margin-right: 8px; }   /* separa el badge del importe (el botón ahora es de color --superficie) */
+.carrito-total { font-variant-numeric: tabular-nums; }
+
+.btn-hamburger span { transition: transform var(--dur-2) var(--ease-out), opacity var(--dur-1); }
+.btn-hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.btn-hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.btn-hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-menu.open { animation: menuIn var(--dur-3) var(--ease-out); }
+@keyframes menuIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+.mobile-menu .nav-link { min-height: 48px; font-size: var(--fs-md); }
+
+@media (max-width: 360px) {   /* 320 px: el total queda en la barra de carrito y en el mini-carrito */
+  .header-inner { padding-left: 12px; padding-right: 12px; }
+  .carrito-total { display: none; }
+}
+
+/* ============================================================
+   2. HERO DE INICIO  (R10, R05, N03)
+   ============================================================ */
+.inicio-cabecera .hero-inner { padding: clamp(40px, 6vw, 72px) var(--pad-pagina); gap: clamp(32px, 5vw, 56px); min-height: 560px; }
+.hero-kicker { margin-bottom: var(--sp-4); }
+.hero-titulo { margin: 0 0 var(--sp-5); }                  /* antes: margen superior 10 + inferior 32 */
+.hero-titulo-grande { margin-top: var(--sp-3); }            /* antes 22 px */
+.hero-subtitulo { margin: 0 0 var(--sp-6); font-size: clamp(16px, 1.4vw, 18px); }
+.hero-botones { margin-bottom: var(--sp-5); }
+.btn-ubicacion { border-color: var(--borde-control); }       /* R03 */
+.hero-estado { align-self: flex-start; max-width: 100%; }    /* antes se estiraba a todo el ancho de la columna */
+.hero-datos {
+  list-style: none; display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-5);
+  margin-top: var(--sp-4); font-size: var(--fs-sm); font-weight: 600; color: var(--gris-texto);
+}
+.hero-datos li { display: inline-flex; align-items: center; gap: 6px; }
+.hero-datos .icono-svg { color: var(--rojo-texto); }
+.chip-flotante { max-width: 250px; }
+
+/* R05: control de pausa de la foto que cambia sola (WCAG 2.2.2) */
+.foto-pausa {
+  position: absolute; top: 8px; right: 8px; z-index: 3; width: 44px; height: 44px; border-radius: 50%;
+  border: 0; background: rgba(26, 26, 26, .66); color: #fff; display: grid; place-items: center; cursor: pointer;
+  backdrop-filter: blur(3px); transition: background var(--dur-2), transform var(--dur-1);
+}
+.foto-pausa:hover { background: rgba(26, 26, 26, .85); }
+.foto-pausa:active { transform: scale(.92); }
+.foto-pausa:focus-visible { outline: 3px solid var(--amarillo); outline-offset: 2px; }
+.foto-pausa-ico { display: inline-flex; }
+.foto-pausa-ico--play { display: none; }
+.foto-pausa[aria-pressed="true"] .foto-pausa-ico--pausa { display: none; }
+.foto-pausa[aria-pressed="true"] .foto-pausa-ico--play { display: inline-flex; }
+
+@media (max-width: 900px) {
+  .inicio-cabecera .hero-inner { padding: 40px var(--pad-pagina) 72px; }      /* antes 90px arriba: vacío bajo el header */
+  .hero-datos { justify-content: center; }
+  .hero-estado { align-self: center; }
+}
+@media (max-width: 480px) {
+  .inicio-cabecera .hero-inner { padding: 32px 20px 72px; gap: 32px; }
+  .hero-subtitulo { margin-bottom: var(--sp-5); }
+}
+
+/* ============================================================
+   3. CATEGORÍAS  (R10, R11)
+   ============================================================ */
+.categorias-inner { padding: var(--sp-5) var(--sp-6); gap: var(--sp-5); margin-top: -36px; }
+.categoria-item { padding: var(--sp-1) var(--sp-2) var(--sp-2); border-radius: 14px; }
+.categoria-nombre { font-size: var(--fs-sm); }
+.categoria-item:focus-visible { outline-offset: 4px; }
+/* La tarjeta de categorías conserva el margen lateral (antes tocaba los bordes entre 860 y 1250 px) */
+.categorias-section { padding-left: var(--pad-pagina); padding-right: var(--pad-pagina); }
+@media (max-width: 859px) { .categorias-section { padding-left: 12px; padding-right: 12px; } }
+/* 860–1180 px: las 8 categorías caben en UNA fila (antes “Otros” quedaba solo en una segunda fila) */
+@media (min-width: 860px) and (max-width: 1180px) {
+  .categorias-inner { gap: var(--sp-4); padding-left: var(--sp-5); padding-right: var(--sp-5); }
+  .categoria-circulo { width: 84px; height: 84px; }
+  .categoria-circulo .icono-svg { width: 44px; height: 44px; }
+}
+@media (max-width: 859px) {
+  .categorias-inner { margin-top: -28px; padding: var(--sp-4) var(--sp-5);
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent);
+            mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); } /* insinúa que hay más → scroll */
+}
+
+/* ============================================================
+   4. SECCIONES Y ESPACIADO  (R10)
+   ============================================================ */
+.seccion { padding: var(--sec-y) var(--pad-pagina) 0; }
+.seccion-header { margin-bottom: var(--sp-6); gap: var(--sp-4); }
+.seccion-titulo { font-size: clamp(28px, 3.4vw, 40px); }
+.ver-todas { min-height: 44px; padding: 0 var(--sp-2); margin-right: calc(var(--sp-2) * -1); font-size: var(--fs-sm); }
+.grid-inferior { padding: var(--sec-y) var(--pad-pagina); gap: var(--sp-6); }
+@media (max-width: 900px) { .seccion { padding: var(--sec-y) 20px 0; } .grid-inferior { padding-left: 20px; padding-right: 20px; } }
+
+/* Etiqueta + descripción reutilizables en secciones nuevas */
+.seccion-sub { color: var(--gris-texto); font-size: var(--fs-md); margin: calc(var(--sp-5) * -1) 0 var(--sp-6); max-width: 56ch; }
+
+/* ============================================================
+   5. PROMOCIONES  (R09, R06, R11)
+   ============================================================ */
+.promos-grid { gap: var(--sp-5); }
+.promos-grid > [data-reveal], .promos-grid > .promo-clickeable-wrap { display: flex; }   /* alturas iguales */
+.promos-grid .promo-card { flex: 1; width: 100%; min-height: 248px; }
+.promo-card > div:first-child { max-width: 68%; }
+.promos-grid .promo-titulo {
+  font-size: clamp(34px, 3.2vw, 42px);
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden;
+}
+.promos-grid .promo-subtitulo { font-size: var(--fs-sm); }
+.promo-clickeable-wrap:focus-visible { outline: 3px solid var(--rojo); outline-offset: 4px; border-radius: 22px; }
+.promo-clickeable-wrap:hover .promo-card { transform: translateY(-4px); }                /* antes: scale(1.02) que desbordaba la grilla */
+.promos-grid .promo-card, .promos-grid .promo-lock { transition: transform var(--dur-2) var(--ease-out), background var(--dur-2); }
+
+/* R06: candado legible. Antes: texto de 12 px encima del título borroso. Ahora: velo firme + botón. */
+.promo-lock { background: rgba(20, 20, 20, .82); backdrop-filter: blur(7px); gap: var(--sp-2); padding: var(--sp-4); }
+.promo-lock:hover { background: rgba(20, 20, 20, .9); }
+.promo-lock-texto { font-size: var(--fs-sm); line-height: 1.4; }
+.promo-lock-cta {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 22px; margin-top: var(--sp-1);
+  border-radius: 999px; background: var(--amarillo); color: var(--negro); font-weight: 800; font-size: var(--fs-sm);
+  transition: background var(--dur-2), transform var(--dur-1);
+}
+.promo-lock:hover .promo-lock-cta { background: #fff; }
+.promo-lock:focus-visible { outline: 3px solid var(--amarillo); outline-offset: -4px; }
+
+/* ============================================================
+   6. NUEVAS SECCIONES DE INICIO  (N03, N04)
+   ============================================================ */
+/* N04 — Lo más pedido: reutiliza .product-card (consistencia de componentes) */
+.rail { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-5); }
+.rail .fav-btn { display: none; }
+@media (max-width: 900px) {
+  .rail { display: flex; overflow-x: auto; gap: var(--sp-3); scroll-snap-type: x mandatory; margin: 0 -20px; padding: 4px 20px var(--sp-3); scrollbar-width: none; }
+  .rail::-webkit-scrollbar { display: none; }
+  .rail > .product-card { flex: 0 0 min(72vw, 260px); scroll-snap-align: start; }
+}
+
+/* N03 — Cómo pedir: 3 pasos con datos reales del negocio */
+.pasos { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-5); counter-reset: paso; position: relative; }
+.paso {
+  position: relative; background: var(--superficie); border: 1px solid var(--gris-borde); border-radius: 18px;
+  padding: var(--sp-6) var(--sp-5) var(--sp-5); display: flex; flex-direction: column; gap: var(--sp-2);
+}
+.paso-num {
+  position: absolute; top: -18px; left: var(--sp-5); width: 36px; height: 36px; border-radius: 50%; background: var(--rojo); color: #fff;
+  font-family: 'Bebas Neue', sans-serif; font-size: 22px; line-height: 1; display: grid; place-items: center; padding-top: 2px;
+  box-shadow: 0 0 0 4px var(--crema), 0 6px 14px -4px rgba(217, 31, 38, .5);
+}
+.paso-ico { width: 48px; height: 48px; border-radius: 14px; background: var(--rojo-suave); color: var(--rojo-texto); display: grid; place-items: center; margin-bottom: var(--sp-2); }
+.paso h3 { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 26px; letter-spacing: 1px; line-height: 1.05; }
+.paso p { color: var(--gris-texto); font-size: var(--fs-sm); line-height: 1.6; }
+.paso strong { color: var(--texto); }
+@media (min-width: 901px) {   /* conector punteado entre pasos (decorativo) */
+  .paso:not(:last-child)::after { content: ''; position: absolute; top: 50%; right: calc(var(--sp-5) * -1); width: var(--sp-5); border-top: 2px dashed var(--borde-control); opacity: .6; }
+}
+@media (max-width: 900px) { .pasos { grid-template-columns: 1fr; gap: var(--sp-6); } .paso { padding-top: var(--sp-6); } }
+
+/* ============================================================
+   7. MAPA CON "FACHADA"  (N06 · rendimiento y privacidad)
+   El iframe de Google se carga recién al tocar el botón.
+   ============================================================ */
+.mapa-embed { position: relative; }
+.mapa-facade {
+  position: absolute; left: 50%; bottom: var(--sp-4); transform: translateX(-50%); display: inline-flex; align-items: center; gap: 8px;
+  min-height: 44px; padding: 0 var(--sp-5); border: 0; border-radius: 999px; background: var(--negro); color: #fff; font: 700 var(--fs-sm) 'Montserrat', sans-serif;
+  cursor: pointer; box-shadow: 0 10px 22px -8px rgba(0, 0, 0, .5); transition: background var(--dur-2), transform var(--dur-1);
+}
+.mapa-facade:hover { background: var(--rojo); }
+.mapa-facade:active { transform: translateX(-50%) scale(.96); }
+.mapa-facade .icono-svg { color: var(--amarillo); }
+
+/* ============================================================
+   8. BENEFICIOS Y FOOTER  (R10, R16)
+   ============================================================ */
+.beneficios-banner { padding: var(--sp-7) 0; }
+.beneficios-inner { align-items: start; }           /* antes: center → "Atención" (2 líneas) desalineaba la fila */
+.beneficio-desc { font-size: 13px; line-height: 1.4; }
+.footer-inner { padding-bottom: var(--sp-7); }       /* antes 0: los íconos sociales tocaban el divisor */
+.footer-links { gap: var(--sp-1); }
+.footer-links a { display: inline-flex; align-items: center; min-height: 36px; font-size: var(--fs-sm); }
+.footer-desc, .footer-contacto-item { font-size: var(--fs-sm); }
+.footer-social { width: 44px; height: 44px; }
+.footer-copy { padding: var(--sp-5) var(--pad-pagina); }
+
+/* ============================================================
+   9. CATÁLOGO (productos.php)  (R08, R12, R13, R04, R03)
+   ============================================================ */
+.main { padding: var(--sp-7) var(--pad-pagina) var(--sec-y); gap: var(--sp-6); }
+.sidebar { top: calc(var(--header-h) + 24px); }
+.cat-list li a { min-height: 44px; }
+.cat-list li a .cat-name { gap: 10px; }
+
+.products-header { margin-bottom: var(--sp-5); gap: var(--sp-4); }
+.sort-select { min-height: 44px; border-color: var(--borde-control); background-color: var(--superficie); }
+.products-grid { gap: var(--sp-5); }
+
+.product-card { padding: var(--sp-4); gap: var(--sp-3); border-radius: 16px; }
+.card-top { position: static; }
+.badge-desc { top: calc(var(--sp-4) + 8px); left: calc(var(--sp-4) + 8px); z-index: 2; font-size: 13px; padding: 4px 9px; }
+.fav-btn {
+  top: calc(var(--sp-4) + 4px); right: calc(var(--sp-4) + 4px); z-index: 2; width: 44px; height: 44px; border-radius: 50%;
+  background: color-mix(in srgb, var(--superficie) 86%, transparent);
+}
+.fav-btn:hover { background: var(--superficie); }
+/* R12: imagen en "tile" con proporción fija (sin saltos de layout) y fondo propio */
+.product-img {
+  height: auto; aspect-ratio: 4 / 3; margin: 0; background: var(--crema); border-radius: 12px; font-size: clamp(52px, 5vw, 64px);
+  transition: background var(--dur-2);
+}
+.product-img img { object-fit: contain; padding: var(--sp-3); }
+.product-card:hover .product-img { background: var(--rojo-suave-2); }
+.product-name {
+  font-size: 15px; line-height: 1.3; min-height: calc(2 * 1.3em);   /* 2 líneas reservadas: los precios quedan alineados entre tarjetas */
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden;
+}
+.product-price-original { font-size: var(--fs-sm); }
+.tag-en-promo { min-height: 28px; padding: 3px 10px; font-size: 13px; }
+.card-actions { gap: var(--sp-2); }
+
+/* Controles con borde ≥3:1 (R03) y objetivo táctil de 44 px (R04) */
+.btn-agregar { min-height: 44px; border-color: var(--borde-control); }
+.qty-control { border-color: var(--borde-control); padding: 0; }
+.qty-btn { width: 44px; height: 44px; margin: 0; padding: 0; font-size: 20px; display: grid; place-items: center; }
+.qty-num { font-size: var(--fs-md); min-width: 28px; }
+.productos-btn-carrito { width: 44px; height: 44px; }
+.page-btn { width: 44px; height: 44px; border-color: var(--borde-control); }
+.pagination { gap: var(--sp-2); margin-top: var(--sp-7); }
+
+/* R02: "Agregar" agrega. Un botón primario; al sumar, se transforma en selector de cantidad en el mismo lugar. */
+.card-actions--ajax { display: block; position: relative; margin-top: auto; }
+.card-actions--ajax .btn-agregar {
+  width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--rojo); color: var(--blanco);
+  border: 0; font-weight: 700; font-size: var(--fs-sm); font-family: 'Montserrat', sans-serif; cursor: pointer; border-radius: 10px;
+  transition: background var(--dur-2), transform var(--dur-1);
+}
+.card-actions--ajax .btn-agregar:hover { background: var(--rojo-oscuro); color: var(--blanco); }
+html[data-theme="dark"] .card-actions--ajax .btn-agregar:hover { background: #e0353b; }
+.card-actions--ajax .btn-agregar:active { transform: scale(.97); }
+.card-actions--ajax .btn-agregar.is-ok { background: var(--ok-texto); }
+html[data-theme="dark"] .card-actions--ajax .btn-agregar.is-ok { background: #2e9e4f; }
+.card-actions--ajax .qty-control { display: none; }
+.card-actions--ajax.en-carrito .btn-agregar { display: none; }
+.card-actions--ajax.en-carrito .qty-control {
+  display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; justify-items: center; width: 100%; border-radius: 10px;
+  border: 2px solid var(--rojo); background: var(--rojo-suave-2);
+}
+.card-actions--ajax .qty-num { font-weight: 800; }
+.card-actions--ajax .qty-btn { color: var(--rojo-texto); border-radius: 8px; transition: background var(--dur-1); }
+.card-actions--ajax .qty-btn:hover { background: var(--rojo-suave); }
+.card-actions--ajax .qty-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+/* R08: categorías como chips horizontales en móvil (antes: lista de 10 filas = 520 px antes del 1.er producto) */
+.cat-chips-wrap { display: none; }
+@media (max-width: 900px) {
+  .cat-chips-wrap { display: block; position: sticky; top: var(--header-h); z-index: var(--z-chips); background: var(--crema); border-bottom: 1px solid var(--crema-linea); }
+  .cat-chips {
+    display: flex; gap: var(--sp-2); overflow-x: auto; padding: var(--sp-3) var(--pad-pagina); scroll-snap-type: x proximity; scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 36px), transparent);
+            mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 36px), transparent);
+  }
+  .cat-chips::-webkit-scrollbar { display: none; }
+  .cat-chip {
+    flex: 0 0 auto; scroll-snap-align: center; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 var(--sp-4);
+    border-radius: 999px; border: 1.5px solid var(--borde-control); background: var(--superficie); color: var(--texto);
+    font-weight: 600; font-size: var(--fs-sm); white-space: nowrap; transition: background var(--dur-2), color var(--dur-2), border-color var(--dur-2);
+  }
+  .cat-chip--promo { color: var(--rojo-texto); border-color: var(--rojo); }
+  .cat-chip.active { background: var(--rojo); border-color: var(--rojo); color: #fff; }
+  .main { padding-top: var(--sp-5); }
+  .sidebar { order: 2; margin-top: var(--sp-4); }
+  .sidebar-title, .sidebar nav { display: none; }       /* la navegación de categorías pasa a los chips */
+  .compra-semanal { margin-top: 0; }
+  .sort-select { font-size: 16px; }                      /* R04: <16 px dispara el zoom de iOS al enfocar */
+  .products-count { font-size: var(--fs-sm); }
+}
+@media (max-width: 480px) {
+  .products-grid { gap: var(--sp-3); grid-template-columns: repeat(2, minmax(0, 1fr)); }   /* minmax(0,…): en 320 px la grilla ya no desborda */
+  .product-card { min-width: 0; }
+  .product-card { padding: var(--sp-3); }
+  .badge-desc { top: calc(var(--sp-3) + 8px); left: calc(var(--sp-3) + 8px); }
+  .fav-btn { top: calc(var(--sp-3) + 2px); right: calc(var(--sp-3) + 2px); }
+  .product-name { font-size: var(--fs-sm); }
+}
+
+/* Inputs de formularios a 16 px en móvil (carrito, modal, login, chat) → sin zoom involuntario en iOS */
+@media (max-width: 900px) {
+  input[type="text"], input[type="tel"], input[type="email"], input[type="password"], input[type="number"], select, textarea { font-size: 16px; }
+  .resumen-campo input, .modal-cs-campo input, .modal-cs-campo select, .cb-form input { font-size: 16px; }
+}
+
+/* ============================================================
+   10. MODAL DE PROMO  (R04)
+   ============================================================ */
+.modal-overlay-promo { z-index: var(--z-modal); }
+.modal-promo-cerrar { width: 44px; height: 44px; top: 8px; right: 8px; display: grid; place-items: center; }
+.modal-promo-qty-btn { width: 44px; height: 44px; border-color: var(--borde-control); }
+.modal-promo-box { transform-origin: 50% 60%; }
+.modal-overlay-promo.abierto .modal-promo-box { animation: modalIn var(--dur-3) var(--ease-out); }
+@keyframes modalIn { from { opacity: 0; transform: translateY(16px) scale(.97); } to { opacity: 1; transform: none; } }
+
+/* ============================================================
+   11. BOTÓN FLOTANTE ÚNICO  (R01)
+   Antes: dos botones fijos apilados (Ayuda + WhatsApp) que tapaban el botón de carrito de las
+   tarjetas en móvil. Ahora: un solo botón que despliega ambos canales y se oculta al bajar.
+   ============================================================ */
+/* Mejora progresiva: mejoras.js agrega html.fab-on; sin JS se conservan los dos botones originales */
+.fab, .toast-region, .cart-bar { display: none; }
+html.fab-on .cb-launcher, html.fab-on .wsp-flotante { display: none !important; }
+.cb-panel { z-index: var(--z-drawer); bottom: calc(var(--sp-4) + 72px); right: var(--sp-4); }
+.fab {
+  position: fixed; right: var(--sp-4); bottom: var(--sp-4); z-index: var(--z-fab); flex-direction: column; align-items: flex-end; gap: var(--sp-3);
+  transition: transform var(--dur-3) var(--ease-out), opacity var(--dur-2);
+}
+html.fab-on .fab { display: flex; }
+html.fab-on .toast-region { display: flex; }
+.cb.cb-abierto ~ .fab { display: none; }
+.fab--oculto { transform: translateY(calc(100% + 32px)); opacity: 0; pointer-events: none; }
+.fab-toggle {
+  width: 56px; height: 56px; border-radius: 50%; border: 0; background: var(--rojo); color: #fff; display: grid; place-items: center; cursor: pointer;
+  box-shadow: 0 10px 26px -8px rgba(217, 31, 38, .65); transition: transform var(--dur-2) var(--ease-out), background var(--dur-2);
+}
+.fab-toggle:hover { background: var(--rojo-oscuro); }
+.fab-toggle:active { transform: scale(.94); }
+.fab-toggle:focus-visible { outline: 3px solid var(--amarillo); outline-offset: 3px; }
+.fab-ico-cerrar { display: none; }
+.fab.is-open .fab-ico-abrir { display: none; }
+.fab.is-open .fab-ico-cerrar { display: block; }
+.fab-menu { display: flex; flex-direction: column; align-items: flex-end; gap: var(--sp-2); visibility: hidden; pointer-events: none; }
+.fab.is-open .fab-menu { visibility: visible; pointer-events: auto; }
+.fab-item {
+  display: inline-flex; align-items: center; gap: var(--sp-3); min-height: 48px; padding: 0 var(--sp-4) 0 6px; border-radius: 999px;
+  background: var(--superficie); color: var(--texto); border: 1.5px solid var(--gris-borde); font: 700 var(--fs-sm) 'Montserrat', sans-serif;
+  box-shadow: var(--sombra); cursor: pointer; white-space: nowrap; transition: transform var(--dur-1), border-color var(--dur-2);
+}
+.fab-item:hover { border-color: var(--rojo); }
+.fab-item[hidden] { display: none; }   /* el botón "Sonidos" nace oculto; sonidos.js lo muestra si el navegador soporta audio */
+.fab-item:active { transform: scale(.97); }
+.fab-item-ico { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: var(--rojo); }
+.fab-item--wsp .fab-item-ico { background: #128C4B; }   /* verde de WhatsApp oscurecido: el glifo blanco pasa de 2:1 a 4,3:1 */
+.fab-item-ico svg { width: 20px; height: 20px; fill: currentColor; }
+.fab-item-ico .icono-svg { fill: none; }
+@media (max-width: 720px) { .fab { right: var(--sp-3); bottom: var(--sp-3); } .fab-toggle { width: 52px; height: 52px; } }
+body.has-cartbar .fab { bottom: 88px; }
+
+/* ============================================================
+   12. TOAST + MINI-CARRITO  (N01, N02, M04)
+   ============================================================ */
+.toast-region {
+  position: fixed; left: 50%; bottom: var(--sp-5); transform: translateX(-50%); z-index: var(--z-toast); width: min(92vw, 440px);
+  flex-direction: column; align-items: center; gap: var(--sp-2); pointer-events: none;
+}
+body.has-cartbar .toast-region { bottom: 92px; }
+.toast {
+  pointer-events: auto; width: 100%; display: flex; align-items: center; gap: var(--sp-3); background: var(--negro); color: #fff;
+  padding: 10px 10px 10px var(--sp-4); border-radius: 14px; font-size: var(--fs-sm); font-weight: 600; box-shadow: 0 14px 34px -10px rgba(0, 0, 0, .55);
+}
+html[data-theme="dark"] .toast { background: #2b2b30; }
+.toast .icono-svg { color: var(--amarillo); }
+.toast-txt { flex: 1; min-width: 0; }
+.toast-accion { min-height: 44px; padding: 0 var(--sp-3); border: 0; border-radius: 8px; background: transparent; color: var(--amarillo); font: 800 var(--fs-sm) 'Montserrat', sans-serif; cursor: pointer; }
+.toast-accion:hover { background: rgba(255, 255, 255, .1); }
+.toast--error .icono-svg { color: #ff8a8e; }
+
+.drawer-overlay { position: fixed; inset: 0; z-index: var(--z-drawer); background: rgba(0, 0, 0, .5); opacity: 0; visibility: hidden; transition: opacity var(--dur-3) var(--ease-out), visibility 0s var(--dur-3); }
+.drawer-overlay.is-open { opacity: 1; visibility: visible; transition: opacity var(--dur-3) var(--ease-out), visibility 0s; }
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: calc(var(--z-drawer) + 1); width: min(420px, 100vw); display: flex; flex-direction: column;
+  background: var(--superficie); box-shadow: -20px 0 50px -20px rgba(0, 0, 0, .5); transform: translateX(100%); visibility: hidden;
+  transition: transform var(--dur-3) var(--ease-out), visibility 0s var(--dur-3);
+}
+.drawer.is-open { transform: none; visibility: visible; transition: transform var(--dur-3) var(--ease-out), visibility 0s; }
+.drawer:focus { outline: none; }
+.drawer-head { display: flex; align-items: center; justify-content: space-between; padding: var(--sp-4) var(--sp-5); border-bottom: 1px solid var(--gris-borde); }
+.drawer-head h2 { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 28px; letter-spacing: 1px; display: flex; align-items: baseline; gap: var(--sp-2); }
+.drawer-count { font-family: 'Montserrat', sans-serif; font-size: var(--fs-sm); font-weight: 700; color: var(--gris-texto); letter-spacing: 0; }
+.drawer-cerrar { width: 44px; height: 44px; border: 0; border-radius: 50%; background: transparent; color: var(--texto); display: grid; place-items: center; cursor: pointer; margin-right: -10px; }
+.drawer-cerrar:hover { background: var(--superficie-2); }
+.drawer-body { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: var(--sp-2) var(--sp-5); }
+.drawer-item { display: grid; grid-template-columns: 56px 1fr auto; gap: var(--sp-3); align-items: center; padding: var(--sp-4) 0; border-bottom: 1px solid var(--gris-borde); }
+.drawer-item:last-child { border-bottom: 0; }
+.drawer-item-img { width: 56px; height: 56px; border-radius: 12px; background: var(--crema); display: grid; place-items: center; font-size: 30px; }
+.drawer-item-nombre { font-size: var(--fs-sm); font-weight: 600; line-height: 1.3; }
+.drawer-item-precio { font-size: 13px; color: var(--gris-texto); margin-top: 2px; }
+.drawer-item-subtotal { font-weight: 800; font-size: 15px; text-align: right; font-variant-numeric: tabular-nums; }
+.drawer-item-ctrl { grid-column: 2 / 4; display: flex; align-items: center; justify-content: space-between; margin-top: calc(var(--sp-2) * -1); }
+.drawer-item .qty-control { display: grid; grid-template-columns: 44px 36px 44px; align-items: center; justify-items: center; border: 1.5px solid var(--borde-control); border-radius: 10px; padding: 0; }
+.drawer-quitar { min-height: 44px; padding: 0 var(--sp-3); border: 0; background: transparent; color: var(--rojo-texto); font: 700 13px 'Montserrat', sans-serif; border-radius: 8px; cursor: pointer; }
+.drawer-quitar:hover { background: var(--rojo-suave); }
+.drawer-vacio { text-align: center; padding: var(--sp-8) var(--sp-4); color: var(--gris-texto); }
+.drawer-vacio .icono-svg { color: var(--rojo-texto); margin: 0 auto var(--sp-3); }
+.drawer-vacio strong { display: block; color: var(--texto); font-size: var(--fs-lg); margin-bottom: var(--sp-1); }
+.drawer-foot { padding: var(--sp-4) var(--sp-5) calc(var(--sp-5) + env(safe-area-inset-bottom)); border-top: 1px solid var(--gris-borde); background: var(--superficie); display: grid; gap: var(--sp-3); }
+.drawer-total { display: flex; justify-content: space-between; align-items: baseline; font-weight: 600; }
+.drawer-total strong { font-size: 24px; font-weight: 800; }
+.drawer-nota { font-size: 13px; color: var(--gris-texto); line-height: 1.5; }
+.drawer-cta { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; border-radius: 10px; background: var(--rojo); color: #fff; font-weight: 800; font-size: var(--fs-md); transition: background var(--dur-2); }
+.drawer-cta:hover { background: var(--rojo-oscuro); }
+html[data-theme="dark"] .drawer-cta:hover { background: #e0353b; }
+.drawer-cta[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+.drawer-seguir { min-height: 44px; border: 0; background: transparent; color: var(--texto); font: 700 var(--fs-sm) 'Montserrat', sans-serif; cursor: pointer; border-radius: 10px; }
+.drawer-seguir:hover { background: var(--superficie-2); }
+
+/* Barra de carrito en móvil: el total siempre a mano, sin depender del header */
+.cart-bar {
+  position: fixed; left: var(--sp-3); right: var(--sp-3); bottom: var(--sp-3); z-index: var(--z-fab); min-height: 56px; padding: 0 var(--sp-4);
+  align-items: center; justify-content: space-between; gap: var(--sp-3); border: 0; border-radius: 16px; background: var(--negro); color: #fff;
+  font: 700 var(--fs-sm) 'Montserrat', sans-serif; box-shadow: 0 16px 34px -10px rgba(0, 0, 0, .6); cursor: pointer;
+}
+html[data-theme="dark"] .cart-bar { background: #2b2b30; }
+.cart-bar-izq { display: inline-flex; align-items: center; gap: var(--sp-3); }
+.cart-bar-n { min-width: 26px; height: 26px; padding: 0 7px; border-radius: 13px; background: var(--rojo); display: grid; place-items: center; font-size: 13px; }
+.cart-bar-der { display: inline-flex; align-items: center; gap: var(--sp-2); color: var(--amarillo); font-variant-numeric: tabular-nums; }
+@media (max-width: 720px) { body.has-cartbar .cart-bar { display: flex; } body.has-cartbar { padding-bottom: 84px; } }
+
+/* Animación de entrada del badge (la dispara mejoras.js) */
+.carrito-badge.is-bump { animation: badgeBump var(--dur-3) var(--ease-out); }
+@keyframes badgeBump { 0% { transform: scale(1); } 40% { transform: scale(1.45); } 100% { transform: scale(1); } }
+.carrito-badge.carrito-badge--vacio { display: none; }
+
+/* ============================================================
+   13. MOVIMIENTO (M01–M10)
+   Los estados iniciales los pone GSAP desde JS (si JS no corre, todo queda visible).
+   ============================================================ */
+/* Cuando GSAP está activo (mejoras.js agrega html.gsap-on) él anima opacity/transform:
+   se apagan las transiciones/animaciones CSS equivalentes para que no compitan.
+   Sin GSAP, el sistema original (reveal.js + CSS) sigue funcionando igual. */
+html.gsap-on [data-reveal], html.gsap-on [data-reveal].reveal-oculto { transition: none; }
+html.gsap-on .hero-texto, html.gsap-on .hero-imagen { animation: none; }
+body.drawer-abierto { overflow: hidden; }
+.hero-titulo-chica, .hero-titulo-grande { display: block; }
+.linea-mascara { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
+.btn-wsp, .btn-ubicacion { will-change: transform; }
+@media (prefers-reduced-motion: reduce) {
+  .fab, .drawer, .drawer-overlay, .toast, .cart-bar, .mobile-menu.open, .modal-overlay-promo.abierto .modal-promo-box, .carrito-badge.is-bump { animation: none !important; transition-duration: .01ms !important; }
+}
+
+/* ============================================================
+   14. FOCO  (WCAG 2.4.7 / 2.4.11)
+   ============================================================ */
+.cat-chip:focus-visible, .fab-item:focus-visible, .toast-accion:focus-visible, .cart-bar:focus-visible,
+.drawer-cerrar:focus-visible, .drawer-quitar:focus-visible, .drawer-seguir:focus-visible, .qty-btn:focus-visible { outline: 3px solid var(--rojo); outline-offset: 2px; }
+.cart-bar:focus-visible, .toast-accion:focus-visible { outline-color: var(--amarillo); }
+main { scroll-margin-top: var(--header-h); }
+
+/* Botones secundarios a 44 px de alto (medido: 40 px y 38 px) */
+.btn-como-llegar, .btn-compra { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }

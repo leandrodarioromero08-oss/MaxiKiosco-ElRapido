@@ -1,0 +1,234 @@
+/* ============================================================
+   LOGIN.CSS — Página de Iniciar Sesión
+   ============================================================ */
+
+.auth-section {
+  background: var(--crema);
+  overflow-x: clip; /* Paso 9: el fondo decorativo rotado del hero no debe generar scroll horizontal */
+}
+
+.auth-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 56px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  gap: 48px;
+  min-height: 460px;
+}
+
+/* ===== Columna del formulario ===== */
+.auth-form-col {
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-titulo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px;
+  letter-spacing: 1px;
+  color: var(--texto);
+  margin-bottom: 8px;
+}
+
+.auth-subtitulo {
+  color: var(--gris-texto);
+  font-size: 14px;
+  margin-bottom: 28px;
+}
+
+.auth-error {
+  background: #fdecea;
+  color: var(--rojo-oscuro);
+  border: 1px solid #f5c2c0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.auth-ok {
+  background: #e8f6ec;
+  color: #1d6b34;
+  border: 1px solid #bfe3c8;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.auth-ayuda { font-size: 13px; color: var(--gris-texto); line-height: 1.5; margin: 0 0 18px; }
+
+.auth-form { display: flex; flex-direction: column; gap: 18px; }
+
+.auth-campo { display: flex; flex-direction: column; gap: 8px; }
+
+/* Grupo de campos lado a lado (ej: Calle + Número) */
+.auth-campo-grupo {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+}
+
+.auth-seccion-titulo {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--texto);
+  margin: 4px 0 -8px;
+}
+.auth-seccion-ayuda {
+  font-size: 12px;
+  color: var(--gris-texto);
+  margin: 0 0 -6px;
+  line-height: 1.4;
+}
+
+@media (max-width: 480px) {
+  .auth-campo-grupo { grid-template-columns: 1fr; gap: 18px; }
+}
+
+.auth-campo label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--texto);
+}
+
+.auth-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--superficie);
+  border: 1px solid var(--gris-borde);
+  border-radius: 10px;
+  padding: 12px 14px;
+  transition: border-color 0.2s;
+}
+.auth-input-wrap:focus-within { border-color: var(--rojo); }
+.auth-input-icono { display: flex; color: var(--gris-texto); flex-shrink: 0; }
+.auth-input-wrap input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  background: transparent;
+}
+.auth-toggle-pass {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  color: var(--gris-texto);
+  padding: 0;
+  transition: color .15s;
+}
+.auth-toggle-pass:hover { color: var(--texto); }
+
+.auth-olvide {
+  align-self: flex-start;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--rojo-texto);
+  margin-top: -8px;
+}
+.auth-olvide:hover { text-decoration: underline; }
+
+.btn-auth-principal {
+  width: 100%;
+  padding: 14px;
+  background: var(--rojo);
+  color: var(--blanco);
+  border: none;
+  border-radius: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.2s, transform .1s;
+}
+.btn-auth-principal:hover { background: var(--rojo-oscuro); }
+.btn-auth-principal:active { transform: scale(0.98); }
+
+.auth-divisor {
+  position: relative;
+  text-align: center;
+  margin: 4px 0;
+}
+.auth-divisor::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  height: 1px;
+  background: var(--gris-borde);
+}
+.auth-divisor span {
+  position: relative;
+  background: var(--crema);
+  padding: 0 12px;
+  font-size: 12px;
+  color: var(--gris-texto);
+}
+
+.auth-social { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.btn-social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px;
+  background: var(--superficie);
+  border: 1px solid var(--gris-borde);
+  border-radius: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform .15s;
+}
+.btn-social:hover { background: #fafafa; border-color: #ccc; }
+.btn-social:active { transform: scale(0.97); }
+.btn-social-icono { display: flex; }
+
+.auth-alt {
+  text-align: center;
+  font-size: 13px;
+  color: var(--gris-texto);
+  margin-top: 4px;
+}
+.auth-alt a { color: var(--rojo-texto); font-weight: 700; }
+.auth-alt a:hover { text-decoration: underline; }
+
+/* ===== Columna de imagen ===== */
+.auth-imagen-col {
+  position: relative;
+  min-height: 380px;
+  display: flex;
+  align-items: flex-start; /* la foto NO se estira con el alto del formulario */
+}
+/* En formularios largos (Registro) la foto acompaña el scroll en vez de quedar suelta arriba */
+.auth-imagen-col .foto-hero {
+  position: sticky;
+  top: 96px;
+}
+
+
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .auth-inner { grid-template-columns: 1fr; padding: 32px 24px; }
+  .auth-imagen-col { display: none; }
+  .auth-form-col { max-width: 100%; }
+}
+
+/* ===== PASO 8 (Diseño y UX): botones sociales aún sin función ===== */
+.btn-social:disabled { opacity: .6; cursor: not-allowed; }
+.btn-social:disabled:hover { background: var(--superficie); border-color: var(--gris-borde); }
+.btn-social:disabled:active { transform: none; }
+.btn-social-pronto { font-size: 12px; font-weight: 600; color: var(--gris-texto); }
+.auth-social .btn-social { flex-wrap: wrap; }

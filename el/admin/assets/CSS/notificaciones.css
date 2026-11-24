@@ -1,0 +1,48 @@
+/* admin/assets/CSS/notificaciones.css — avisos del panel, abajo a la derecha.
+   Se carga desde Template/sidebar.php (todas las páginas del admin). */
+.anotif-region {
+  position: fixed; right: 20px; bottom: 20px; z-index: 3000; width: min(390px, calc(100vw - 24px));
+  display: flex; flex-direction: column; gap: 10px; pointer-events: none;
+}
+.anotif {
+  --anotif-color: var(--amarillo, #FFD600);
+  pointer-events: auto; display: flex; align-items: flex-start; gap: 12px; padding: 12px 6px 12px 14px;
+  border-radius: 12px; border-left: 5px solid var(--anotif-color); background: var(--negro-sidebar, #1A1A1A); color: #fff;
+  font: 500 14px/1.4 'Inter', system-ui, sans-serif; box-shadow: 0 14px 34px -10px rgba(0, 0, 0, .5);
+  animation: anotifEntra .35s cubic-bezier(.22, 1, .36, 1) both;
+}
+.anotif--pedido { --anotif-color: #FFD600; }
+.anotif--exito  { --anotif-color: #4CC38A; }
+.anotif--error  { --anotif-color: #FF6B70; }
+.anotif--info   { --anotif-color: #4DA3FF; }
+.anotif-ico { flex: none; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; color: var(--anotif-color); background: rgba(255, 255, 255, .09); }
+.anotif-cuerpo { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; padding-top: 6px; }
+.anotif-titulo { font-weight: 700; font-size: 14.5px; }
+.anotif-txt { color: rgba(255, 255, 255, .86); }
+.anotif-accion {
+  align-self: flex-start; margin-top: 8px; padding: 6px 12px; border: 0; border-radius: 8px; cursor: pointer;
+  background: var(--anotif-color); color: #1A1A1A; font: 700 13px 'Inter', system-ui, sans-serif;
+}
+.anotif-accion:hover { filter: brightness(1.08); }
+.anotif-x { flex: none; width: 40px; height: 40px; border: 0; border-radius: 8px; background: transparent; color: rgba(255, 255, 255, .7); display: grid; place-items: center; cursor: pointer; }
+.anotif-x:hover { background: rgba(255, 255, 255, .1); color: #fff; }
+.anotif-x:focus-visible, .anotif-accion:focus-visible { outline: 3px solid var(--anotif-color); outline-offset: 2px; }
+.anotif--sale { animation: anotifSale .24s ease-in both; }
+@keyframes anotifEntra { from { opacity: 0; transform: translateX(40px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes anotifSale  { to   { opacity: 0; transform: translateX(40px); } }
+@media (max-width: 600px) { .anotif-region { right: 12px; bottom: 12px; } }
+@media (prefers-reduced-motion: reduce) { .anotif, .anotif--sale { animation: none !important; } }
+
+/* Botón para silenciar/activar los sonidos (barra superior del admin) */
+.topbar-sonido { width: 38px; height: 38px; border: 1px solid var(--gris-borde, #E0E0E0); border-radius: 8px; background: #fff; color: var(--negro-texto, #1A1A1A); display: grid; place-items: center; cursor: pointer; }
+.topbar-sonido[hidden] { display: none; }
+.topbar-sonido:hover { background: var(--gris-fondo, #F5F5F5); }
+.topbar-sonido[aria-pressed="false"] { color: var(--gris-texto, #666); }
+.topbar-sonido:focus-visible { outline: 3px solid var(--amarillo, #FFD600); outline-offset: 2px; }
+
+/* Botón "Instalar app" (barra superior del admin; solo aparece si el navegador permite instalar) */
+.topbar-instalar { display: inline-flex; align-items: center; gap: 6px; height: 38px; padding: 0 12px; border: 1px solid var(--gris-borde, #E0E0E0); border-radius: 8px; background: #fff; color: var(--negro-texto, #1A1A1A); font: 600 13px 'Inter', system-ui, sans-serif; cursor: pointer; }
+.topbar-instalar[hidden] { display: none; }
+.topbar-instalar:hover { background: var(--gris-fondo, #F5F5F5); }
+.topbar-instalar:focus-visible { outline: 3px solid var(--amarillo, #FFD600); outline-offset: 2px; }
+@media (max-width: 600px) { .topbar-instalar span { display: none; } .topbar-instalar { width: 38px; padding: 0; justify-content: center; } }

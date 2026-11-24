@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="nuestro-objetivo.css"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 460" width="720" height="460"
+     role="img" aria-labelledby="tituloAnimacion descAnimacion">
+  <title id="tituloAnimacion">Nuestro objetivo · El Rápido</title>
+  <desc id="descAnimacion">Animación en tres momentos: los pedidos desordenados se acomodan en una lista, un reloj muestra la reducción de los tiempos de espera y el negocio entrega la compra a un cliente con atención cercana.</desc>
+
+  <defs>
+    <pattern id="rayasFondo" width="64" height="64" patternUnits="userSpaceOnUse" patternTransform="rotate(25)">
+      <line x1="0" y1="0" x2="0" y2="64" stroke="#efe7dc" stroke-width="1"/>
+    </pattern>
+
+    <pattern id="pisoCuadros" width="56" height="26" patternUnits="userSpaceOnUse">
+      <rect width="56" height="26" fill="#F7F0E6"/>
+      <rect width="28" height="13" fill="#EFE4D4"/>
+      <rect x="28" y="13" width="28" height="13" fill="#EFE4D4"/>
+    </pattern>
+
+    <linearGradient id="degradadoRojo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E0252C"/>
+      <stop offset="1" stop-color="#B01920"/>
+    </linearGradient>
+
+    <linearGradient id="degradadoPiso" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FAF6F0" stop-opacity="0"/>
+      <stop offset="1" stop-color="#FAF6F0"/>
+    </linearGradient>
+
+    <linearGradient id="degradadoPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFDF9"/>
+      <stop offset="1" stop-color="#FDF8EF"/>
+    </linearGradient>
+
+    <clipPath id="marcoTarjeta">
+      <rect width="720" height="460" rx="24"/>
+    </clipPath>
+
+    <filter id="sombraPanel" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#1a1a1a" flood-opacity=".10"/>
+    </filter>
+
+    <filter id="sombraFicha" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.4" flood-color="#1a1a1a" flood-opacity=".10"/>
+    </filter>
+
+    <filter id="sombraGlobo" x="-35%" y="-35%" width="170%" height="190%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3.2" flood-color="#1a1a1a" flood-opacity=".14"/>
+    </filter>
+  </defs>
+
+  <g clip-path="url(#marcoTarjeta)">
+
+    <!-- ══════════ FONDO ══════════ -->
+    <rect width="720" height="460" fill="#faf6f0"/>
+    <rect width="720" height="460" fill="url(#rayasFondo)"/>
+
+    <circle class="mancha-amarilla" cx="560" cy="238" r="172" fill="#FFD600" opacity=".10"/>
+    <path d="M0 312 Q92 280 174 330 T342 460 H0 Z" fill="#D91F26" opacity=".045"/>
+    <circle cx="642" cy="330" r="52" fill="#FFD600" opacity=".10"/>
+    <circle cx="114" cy="212" r="36" fill="#D91F26" opacity=".04"/>
+
+    <!-- Destellos de marca -->
+    <g class="destellos" aria-hidden="true">
+      <path d="M232 64 v10 M227 69 h10" stroke="#FFD600" stroke-width="2.4" stroke-linecap="round" opacity=".8"/>
+      <path d="M612 128 v8 M608 132 h8" stroke="#D91F26" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+      <path d="M84 118 v9 M79.5 122.5 h9" stroke="#D91F26" stroke-width="2" stroke-linecap="round" opacity=".35"/>
+    </g>
+
+    <g class="escena">
+
+      <!-- ══════════ RÓTULO DE LA TIENDA ══════════ -->
+      <g class="rotulo-tienda">
+        <rect x="258" y="52" width="348" height="60" rx="7" fill="url(#degradadoRojo)"/>
+        <g stroke="#fff" stroke-width="1.4" opacity=".07">
+          <path d="M270 54 V110"/><path d="M282 54 V110"/><path d="M294 54 V110"/>
+          <path d="M306 54 V110"/><path d="M318 54 V110"/><path d="M330 54 V110"/>
+          <path d="M342 54 V110"/><path d="M354 54 V110"/><path d="M366 54 V110"/>
+          <path d="M378 54 V110"/><path d="M390 54 V110"/><path d="M402 54 V110"/>
+          <path d="M414 54 V110"/><path d="M426 54 V110"/><path d="M438 54 V110"/>
+          <path d="M450 54 V110"/><path d="M462 54 V110"/><path d="M474 54 V110"/>
+          <path d="M486 54 V110"/><path d="M498 54 V110"/><path d="M510 54 V110"/>
+          <path d="M522 54 V110"/><path d="M534 54 V110"/><path d="M546 54 V110"/>
+          <path d="M558 54 V110"/><path d="M570 54 V110"/><path d="M582 54 V110"/>
+          <path d="M594 54 V110"/>
+        </g>
+        <rect x="258" y="110" width="348" height="7" fill="#FFD600"/>
+
+        <g fill="#FFD600">
+          <rect x="276" y="78" width="17" height="3" rx="1.5"/>
+          <rect x="276" y="84" width="12" height="3" rx="1.5" opacity=".75"/>
+          <rect x="276" y="90" width="7" height="3" rx="1.5" opacity=".5"/>
+        </g>
+
+        <g transform="translate(302 71)" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="5" cy="16" r="4.6"/>
+          <circle cx="23" cy="16" r="4.6"/>
+          <path d="M5 16 L10 6 H18 L21 16"/>
+          <path d="M18 6 L21 1.5"/>
+          <path d="M8.5 6 H12"/>
+          <path d="M10 12 H19"/>
+        </g>
+
+        <text x="338" y="86" font-family="'Bebas Neue', Montserrat, Arial, sans-serif" font-size="31" letter-spacing=".5" fill="#fff">EL RÁPIDO</text>
+        <text x="339" y="98" font-family="Montserrat, Arial, sans-serif" font-size="5.6" font-weight="700" letter-spacing="1.9" fill="#FFD600">MAXIKIOSCO</text>
+
+        <text x="592" y="84" text-anchor="end" font-family="Montserrat, Arial, sans-serif" font-size="6.4" font-weight="700" letter-spacing="1.7" fill="#fff" opacity=".9">MONTE CASEROS</text>
+        <text x="592" y="95" text-anchor="end" font-family="Montserrat, Arial, sans-serif" font-size="5.2" font-weight="600" letter-spacing="1.9" fill="#FFD600" opacity=".9">CORRIENTES</text>
+      </g>
+
+      <!-- ══════════ RÓTULOS DE MOMENTO ══════════ -->
+      <g class="texto-momento texto-momento--1">
+        <rect x="48" y="84" width="22" height="2" rx="1" fill="#D91F26"/>
+        <text x="78" y="88" font-family="Montserrat, Arial, sans-serif" font-size="8.4" font-weight="800" letter-spacing="2.2" fill="#C8161D">MOMENTO 01</text>
+        <text x="48" y="118" font-family="'Bebas Neue', Montserrat, Arial, sans-serif" font-size="28" letter-spacing=".4" fill="#1a1a1a">PEDIDOS EN ORDEN</text>
+        <text x="48" y="134" font-family="Montserrat, Arial, sans-serif" font-size="9.6" fill="#6B6B70">Cada pedido en su lugar.</text>
+      </g>
+
+      <g class="texto-momento texto-momento--2">
+        <rect x="48" y="84" width="22" height="2" rx="1" fill="#D91F26"/>
+        <text x="78" y="88" font-family="Montserrat, Arial, sans-serif" font-size="8.4" font-weight="800" letter-spacing="2.2" fill="#C8161D">MOMENTO 02</text>
+        <text x="48" y="118" font-family="'Bebas Neue', Montserrat, Arial, sans-serif" font-size="28" letter-spacing=".4" fill="#1a1a1a">MENOS ESPERA</text>
+        <text x="48" y="134" font-family="Montserrat, Arial, sans-serif" font-size="9.6" fill="#6B6B70">Respuestas más rápidas.</text>
+      </g>
+
+      <g class="texto-momento texto-momento--3">
+        <rect x="48" y="84" width="22" height="2" rx="1" fill="#D91F26"/>
+        <text x="78" y="88" font-family="Montserrat, Arial, sans-serif" font-size="8.4" font-weight="800" letter-spacing="2.2" fill="#C8161D">MOMENTO 03</text>
+        <text x="48" y="118" font-family="'Bebas Neue', Montserrat, Arial, sans-serif" font-size="28" letter-spacing=".4" fill="#1a1a1a">ATENCIÓN CERCANA</text>
+        <text x="48" y="134" font-family="Montserrat, Arial, sans-serif" font-size="9.6" fill="#6B6B70">Tecnología con trato humano.</text>
+      </g>
+
+      <!-- ══════════ PISO Y SOMBRAS ══════════ -->
+      <rect x="0" y="356" width="720" height="80" fill="url(#pisoCuadros)" opacity=".5"/>
+      <rect x="0" y="382" width="720" height="54" fill="url(#degradadoPiso)" opacity=".85"/>
+      <path d="M44 356 H676" stroke="#E4D8C7" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- ══════════ PANEL DE PEDIDOS ══════════ -->
+      <g class="panel-pedidos">
+
+        <!-- Sombra en el piso -->
+        <ellipse cx="279" cy="356" rx="126" ry="7" fill="#1a1a1a" opacity=".07"/>
+
+        <g filter="url(#sombraPanel)">
+          <rect x="150" y="146" width="258" height="210" rx="14" fill="url(#degradadoPanel)" stroke="#EADFCF" stroke-width="1.2"/>
+        </g>
+
+        <!-- Cabecera -->
+        <path d="M164 146 H394 A14 14 0 0 1 408 160 V188 H150 V160 A14 14 0 0 1 164 146 Z" fill="#FBF5EA"/>
+        <path d="M150 188 H408" stroke="#EFE7DC" stroke-width="1.2"/>
+
+        <g fill="#D91F26">
+          <rect x="166" y="159" width="12" height="2.6" rx="1.3"/>
+          <rect x="166" y="164.4" width="8" height="2.6" rx="1.3" opacity=".8"/>
+          <rect x="166" y="169.8" width="5" height="2.6" rx="1.3" opacity=".55"/>
+        </g>
+        <text x="188" y="174" font-family="'Bebas Neue', Montserrat, Arial, sans-serif" font-size="18" letter-spacing=".6" fill="#1a1a1a">PEDIDOS</text>
+
+        <g class="contador-pedidos">
+          <rect x="366" y="157" width="32" height="20" rx="10" fill="#FFD600"/>
+          <text x="382" y="171.5" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="10" font-weight="800" fill="#B01920">4</text>
+        </g>
+
+        <!-- Pedido 1 -->
+        <g transform="translate(162 196)">
+          <g class="pedido pedido--1">
+            <rect width="234" height="30" rx="8" fill="#FBF5EA" stroke="#EFE7DC"/>
+            <rect x="4" y="4" width="4" height="22" rx="2" fill="#D91F26"/>
+            <rect x="14" y="8" width="14" height="14" rx="4" fill="#D91F26"/>
+            <rect x="18" y="13" width="6" height="4" rx="1" fill="#fff" opacity=".85"/>
+            <rect x="36" y="10" width="86" height="4.5" rx="2.25" fill="#D8CFC2"/>
+            <rect x="36" y="18.5" width="54" height="3.5" rx="1.75" fill="#E7DFD3"/>
+            <g transform="translate(214 15)">
+              <g class="check-pedido check-pedido--1">
+                <circle r="7" fill="#2E7D32"/>
+                <path d="M-3 0 l2 2.2 l4 -4.6" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+            </g>
+            <g class="etiqueta-entregado">
+              <rect x="130" y="4" width="94" height="22" rx="11" fill="#2E7D32"/>
+              <path d="M141 15 l2 2.2 l4 -4.6" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <text x="170" y="18.2" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="6.4" font-weight="800" letter-spacing=".8" fill="#fff">ENTREGADO</text>
+            </g>
+          </g>
+        </g>
+
+        <!-- Pedido 2 -->
+        <g transform="translate(162 235)">
+          <g class="pedido pedido--2">
+            <rect width="234" height="30" rx="8" fill="#FBF5EA" stroke="#EFE7DC"/>
+            <rect x="4" y="4" width="4" height="22" rx="2" fill="#FFD600"/>
+            <rect x="14" y="8" width="14" height="14" rx="4" fill="#FFD600"/>
+            <rect x="18" y="13" width="6" height="4" rx="1" fill="#fff" opacity=".85"/>
+            <rect x="36" y="10" width="78" height="4.5" rx="2.25" fill="#D8CFC2"/>
+            <rect x="36" y="18.5" width="46" height="3.5" rx="1.75" fill="#E7DFD3"/>
+            <g transform="translate(214 15)">
+              <g class="check-pedido check-pedido--2">
+                <circle r="7" fill="#2E7D32"/>
+                <path d="M-3 0 l2 2.2 l4 -4.6" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+            </g>
+          </g>
+        </g>
+
+        <!-- Pedido 3 -->
+        <g transform="translate(162 274)">
+          <g class="pedido pedido--3">
+            <rect width="234" height="30" rx="8" fill="#FBF5EA" stroke="#EFE7DC"/>
+            <rect x="4" y="4" width="4" height="22" rx="2" fill="#B01920"/>
+            <rect x="14" y="8" width="14" height="14" rx="4" fill="#B01920"/>
+            <rect x="18" y="13" width="6" height="4" rx="1" fill="#fff" opacity=".85"/>
+            <rect x="36" y="10" width="72" height="4.5" rx="2.25" fill="#D8CFC2"/>
+            <rect x="36" y="18.5" width="58" height="3.5" rx="1.75" fill="#E7DFD3"/>
+            <g transform="translate(214 15)">
+              <g class="check-pedido check-pedido--3">
+                <circle r="7" fill="#2E7D32"/>
+                <path d="M-3 0 l2 2.2 l4 -4.6" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+            </g>
+          </g>
+        </g>
+
+        <!-- Pedido 4 -->
+        <g transform="translate(162 313)">
+          <g class="pedido pedido--4">
+            <rect width="234" height="30" rx="8" fill="#FBF5EA" stroke="#EFE7DC"/>
+            <rect x="4" y="4" width="4" height="22" rx="2" fill="#D91F26"/>
+            <rect x="14" y="8" width="14" height="14" rx="4" fill="#D91F26"/>
+            <rect x="18" y="13" width="6" height="4" rx="1" fill="#fff" opacity=".85"/>
+            <rect x="36" y="10" width="90" height="4.5" rx="2.25" fill="#D8CFC2"/>
+            <rect x="36" y="18.5" width="40" height="3.5" rx="1.75" fill="#E7DFD3"/>
+            <g transform="translate(214 15)">
+              <g class="check-pedido check-pedido--4">
+                <circle r="7" fill="#2E7D32"/>
+                <path d="M-3 0 l2 2.2 l4 -4.6" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+            </g>
+          </g>
+        </g>
+
+      </g>
+
+      <!-- ══════════ RELOJ ══════════ -->
+      <g transform="translate(560 236)">
+        <g class="reloj-grupo">
+
+          <!-- Arcos de velocidad -->
+          <g class="arcos-reloj" fill="none" stroke-linecap="round" opacity="0">
+            <path d="M-92 -22 A 94 94 0 0 1 -62 -72" stroke="#FFD600" stroke-width="4.5" stroke-dasharray="11 9"/>
+            <path d="M92 22 A 94 94 0 0 1 62 72" stroke="#D91F26" stroke-width="4.5" stroke-dasharray="11 9"/>
+          </g>
+
+          <circle class="pulso-reloj" r="72" fill="none" stroke="#FFD600" stroke-width="7" opacity="0"/>
+
+          <g filter="url(#sombraPanel)">
+            <circle r="72" fill="#FFFDF9" stroke="#D91F26" stroke-width="6"/>
+          </g>
+          <circle r="60" fill="none" stroke="#F1E8DA" stroke-width="1.5"/>
+
+          <!-- Marcas -->
+          <g stroke-linecap="round">
+            <g stroke="#D9CFC0" stroke-width="1.8">
+              <path d="M0 -68 V-63" transform="rotate(30)"/>
+              <path d="M0 -68 V-63" transform="rotate(60)"/>
+              <path d="M0 -68 V-63" transform="rotate(120)"/>
+              <path d="M0 -68 V-63" transform="rotate(150)"/>
+              <path d="M0 -68 V-63" transform="rotate(210)"/>
+              <path d="M0 -68 V-63" transform="rotate(240)"/>
+              <path d="M0 -68 V-63" transform="rotate(300)"/>
+              <path d="M0 -68 V-63" transform="rotate(330)"/>
+            </g>
+            <g stroke="#D91F26" stroke-width="3">
+              <path d="M0 -70 V-61"/>
+              <path d="M0 -70 V-61" transform="rotate(90)"/>
+              <path d="M0 -70 V-61" transform="rotate(180)"/>
+              <path d="M0 -70 V-61" transform="rotate(270)"/>
+            </g>
+          </g>
+
+          <!-- Agujas -->
+          <g class="aguja-hora">
+            <rect x="-3.4" y="-36" width="6.8" height="36" rx="3.4" fill="#26262A"/>
+          </g>
+          <g class="aguja-minuto">
+            <rect x="-2.2" y="-52" width="4.4" height="52" rx="2.2" fill="#26262A"/>
+          </g>
+
+          <circle r="7.5" fill="#FFD600" stroke="#D91F26" stroke-width="2"/>
+          <circle r="2.4" fill="#D91F26"/>
+        </g>
+      </g>
+
+      <!-- Chip de tiempo -->
+      <g transform="translate(560 334)">
+        <g class="chip-espera">
+          <rect x="-50" y="-12" width="100" height="24" rx="12" fill="#D91F26"/>
+          <path d="M-40 -3.5 l4.6 3.5 l-4.6 3.5" fill="none" stroke="#FFD600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="9" y="3.4" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="7.4" font-weight="800" letter-spacing="1.1" fill="#fff">MENOS ESPERA</text>
+        </g>
+      </g>
+
+      <!-- ══════════ CLIENTE ══════════ -->
+      <g transform="translate(262 0)">
+        <g class="cliente-obj">
+        <ellipse cx="234" cy="356" rx="44" ry="6.5" fill="#1a1a1a" opacity=".10"/>
+
+        <!-- Piernas -->
+        <g transform="translate(222 260)">
+          <path d="M0 0 L-2 82" fill="none" stroke="#33333A" stroke-width="14" stroke-linecap="round"/>
+          <rect x="-15" y="82" width="28" height="12" rx="6" fill="#26262A"/>
+          <rect x="-13" y="91" width="24" height="3" rx="1.5" fill="#F3EADF" opacity=".55"/>
+        </g>
+        <g transform="translate(240 260)">
+          <path d="M0 0 L4 82" fill="none" stroke="#3A3A40" stroke-width="14" stroke-linecap="round"/>
+          <rect x="-15" y="82" width="30" height="12" rx="6" fill="#1F1F23"/>
+          <rect x="-13" y="91" width="26" height="3" rx="1.5" fill="#F3EADF" opacity=".55"/>
+        </g>
+
+        <!-- Brazo lejano -->
+        <g transform="translate(208 208)" fill="none" stroke-linecap="round">
+          <path d="M0 0 L-7 34" stroke="#E0B800" stroke-width="13"/>
+          <circle cx="-8" cy="37" r="6.2" fill="#E8B78E" stroke="none"/>
+        </g>
+
+        <!-- Torso -->
+        <path d="M210 204 Q210 192 224 190 H238 Q252 192 252 204 L258 260 Q258 266 250 266 H206 Q198 266 198 260 Z" fill="#FFD600"/>
+        <path d="M224 190 L237 205 L250 190" fill="#FFF8EA"/>
+        <path d="M231 205 V252" stroke="#D91F26" stroke-width="4.4" stroke-linecap="round" opacity=".9"/>
+        <path d="M205 252 Q228 258 253 252" fill="none" stroke="#E0B800" stroke-width="2" stroke-linecap="round"/>
+        <rect x="210" y="238" width="12" height="3" rx="1.5" fill="#D91F26" opacity=".55"/>
+
+        <!-- Cabeza -->
+        <rect x="224" y="181" width="9" height="13" rx="4" fill="#D9A57C"/>
+        <circle cx="228" cy="168" r="21" fill="#E9B98F"/>
+        <circle cx="209" cy="174" r="4.2" fill="#E9B98F"/>
+        <path d="M207 168 Q207 145 228 145 Q249 145 249 168 Q245 156 236 153 Q222 149 214 158 Q209 162 207 168 Z" fill="#2A211B"/>
+        <path d="M243 160 Q249 164 249 171" fill="none" stroke="#2A211B" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="235" cy="168" r="1.6" fill="#2A211B"/>
+        <circle cx="243" cy="168" r="1.6" fill="#2A211B"/>
+        <path d="M247 172 Q249 174.5 246.5 176" fill="none" stroke="#C98E68" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M236 178 Q241 181.5 246 177" fill="none" stroke="#8A5A3C" stroke-width="1.7" stroke-linecap="round"/>
+        <circle cx="232" cy="175" r="2.1" fill="#D97A63" opacity=".3"/>
+
+        <!-- Brazo que recibe -->
+        <g transform="translate(250 206)">
+          <g class="brazo-cliente-obj">
+            <path d="M0 0 L16 24" fill="none" stroke="#F2C400" stroke-width="14" stroke-linecap="round"/>
+            <path d="M16 24 L30 38" fill="none" stroke="#E9B98F" stroke-width="9.5" stroke-linecap="round"/>
+            <circle cx="32" cy="40" r="6.5" fill="#E9B98F"/>
+          </g>
+        </g>
+        </g>
+      </g>
+
+      <!-- ══════════ VENDEDOR ══════════ -->
+      <g transform="translate(226 0)">
+        <g class="vendedor-obj">
+        <ellipse cx="410" cy="356" rx="46" ry="6.5" fill="#1a1a1a" opacity=".10"/>
+
+        <!-- Piernas -->
+        <g transform="translate(400 266)">
+          <path d="M0 0 L-2 74" fill="none" stroke="#33333A" stroke-width="14" stroke-linecap="round"/>
+          <rect x="-15" y="74" width="28" height="12" rx="6" fill="#26262A"/>
+          <rect x="-13" y="83" width="24" height="3" rx="1.5" fill="#F3EADF" opacity=".5"/>
+        </g>
+        <g transform="translate(420 266)">
+          <path d="M0 0 L4 74" fill="none" stroke="#3A3A40" stroke-width="14" stroke-linecap="round"/>
+          <rect x="-13" y="74" width="30" height="12" rx="6" fill="#1F1F23"/>
+          <rect x="-11" y="83" width="26" height="3" rx="1.5" fill="#F3EADF" opacity=".5"/>
+        </g>
+
+        <!-- Brazo lejano -->
+        <g fill="none" stroke-linecap="round">
+          <path d="M433 212 L441 246" stroke="#B01920" stroke-width="15"/>
+          <path d="M441 246 L445 258" stroke="#F0C6A0" stroke-width="10"/>
+          <circle cx="446" cy="261" r="6.4" fill="#F0C6A0" stroke="none"/>
+        </g>
+
+        <!-- Torso -->
+        <path d="M382 212 Q382 192 404 190 H416 Q438 192 438 212 L440 266 H380 Z" fill="#D91F26"/>
+        <path d="M400 190 L410 204 L420 190" fill="#FFF8EA"/>
+        <path d="M396 214 H424 L428 266 H392 Z" fill="#FFF8EA" stroke="#EADFCF" stroke-width="1"/>
+        <path d="M402 228 H418" stroke="#E5D8C6" stroke-width="1.4" stroke-linecap="round"/>
+        <circle cx="410" cy="243" r="8" fill="#FFD600"/>
+        <text x="410" y="246" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="6.4" font-weight="800" fill="#D91F26">ER</text>
+        <rect x="392" y="258" width="36" height="2" rx="1" fill="#EADFCF"/>
+
+        <!-- Cuello y cabeza -->
+        <rect x="405" y="180" width="11" height="14" rx="4" fill="#E8B78E"/>
+        <circle cx="410" cy="170" r="21" fill="#F0C6A0"/>
+        <circle cx="431" cy="173" r="4.2" fill="#F0C6A0"/>
+        <path d="M389 168 Q389 147 410 145 Q431 147 431 168 Z" fill="#2A211B"/>
+        <path d="M386 166 Q388 144 410 143 Q432 144 434 166 Z" fill="#D91F26"/>
+        <rect x="382" y="163" width="31" height="5.5" rx="2.75" fill="#B01920"/>
+        <rect x="407" y="144" width="19" height="3" rx="1.5" fill="#FFD600"/>
+
+        <circle cx="401" cy="170" r="1.55" fill="#2A211B"/>
+        <circle cx="411" cy="170" r="1.55" fill="#2A211B"/>
+        <path d="M399 177 Q405 182 412 177" fill="none" stroke="#8A5A3C" stroke-width="1.7" stroke-linecap="round"/>
+        <circle cx="396" cy="175" r="2.1" fill="#E08A72" opacity=".32"/>
+
+        <!-- Brazo que entrega -->
+        <g transform="translate(386 206)">
+          <g class="brazo-vendedor-obj">
+            <path d="M0 0 L-6 34" fill="none" stroke="#D91F26" stroke-width="15" stroke-linecap="round"/>
+            <g transform="translate(-6 34)">
+              <g class="antebrazo-vendedor-obj">
+                <path d="M0 0 L-14 8" fill="none" stroke="#F0C6A0" stroke-width="10" stroke-linecap="round"/>
+                <circle cx="-17" cy="9.5" r="6.4" fill="#F0C6A0"/>
+              </g>
+            </g>
+          </g>
+        </g>
+
+        <!-- Bolsa -->
+        <g transform="translate(318 224)">
+          <g class="bolsa-obj">
+            <path d="M9 2 V-8 Q9 -16 16 -16 Q23 -16 23 -8 V2" fill="none" stroke="#C99A1E" stroke-width="3" stroke-linecap="round"/>
+            <path d="M25 2 V-8 Q25 -16 32 -16 Q39 -16 39 -8 V2" fill="none" stroke="#C99A1E" stroke-width="3" stroke-linecap="round"/>
+            <path d="M0 2 Q0 0 3 0 H39 Q42 0 42 2 L39 45 Q39 48 36 48 H6 Q3 48 3 45 Z" fill="#FFF8EA" stroke="#E8D9C0" stroke-width="1"/>
+            <path d="M0 2 Q0 0 3 0 H9 L7 48 H6 Q3 48 3 45 Z" fill="#D91F26"/>
+            <path d="M39 0 H39 Q42 0 42 2 L39 45 Q39 48 36 48 H35 L37 0 Z" fill="#D91F26"/>
+            <rect x="1" y="0" width="40" height="4" rx="2" fill="#F0E2CB"/>
+            <circle cx="21" cy="22" r="7.6" fill="#D91F26"/>
+            <text x="21" y="24.6" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="5.8" font-weight="800" fill="#fff">ER</text>
+            <rect x="13" y="33" width="16" height="2.4" rx="1.2" fill="#FFD600"/>
+          </g>
+        </g>
+        </g>
+      </g>
+
+      <!-- Globo de agradecimiento -->
+      <g class="globo-gracias" opacity="0">
+        <g filter="url(#sombraGlobo)">
+          <rect x="520" y="120" width="80" height="29" rx="14.5" fill="#fff"/>
+          <path d="M550 149 L546 158 L560 149 Z" fill="#fff"/>
+        </g>
+        <circle cx="536" cy="134.5" r="5.4" fill="#2E7D32"/>
+        <path d="M533.4 134.5 l1.8 1.8 l3.6 -4" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="548" y="137.8" font-family="Montserrat, Arial, sans-serif" font-size="8.4" font-weight="700" fill="#D91F26">¡Gracias!</text>
+      </g>
+
+      <!-- Destellos de la entrega -->
+      <g class="destellos-exito" fill="none" stroke-linecap="round" opacity="0">
+        <path d="M606 196 v10 M601 201 h10" stroke="#FFD600" stroke-width="2.6"/>
+        <path d="M462 132 v8 M458 136 h8" stroke="#D91F26" stroke-width="2.2" opacity=".7"/>
+        <path d="M668 146 v8 M664 150 h8" stroke="#2E7D32" stroke-width="2" opacity=".6"/>
+      </g>
+
+    </g>
+
+    <!-- ══════════ PROGRESO ══════════ -->
+    <g class="progreso">
+      <rect x="48" y="436" width="624" height="3" rx="1.5" fill="#E8DED1"/>
+      <rect class="progreso-relleno" x="48" y="436" width="624" height="3" rx="1.5" fill="#D91F26"/>
+      <circle class="progreso-punto" cx="48" cy="437.5" r="3.4" fill="#D91F26" stroke="#fff" stroke-width="1.4"/>
+      <circle cx="256" cy="437.5" r="2.2" fill="#fff" stroke="#D8CDBF"/>
+      <circle cx="464" cy="437.5" r="2.2" fill="#fff" stroke="#D8CDBF"/>
+      <circle cx="650" cy="437.5" r="2.2" fill="#fff" stroke="#D8CDBF"/>
+    </g>
+
+  </g>
+</svg>

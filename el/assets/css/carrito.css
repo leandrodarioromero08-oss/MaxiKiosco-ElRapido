@@ -1,0 +1,651 @@
+/* ============================================================
+   CARRITO.CSS — Página del carrito de compras
+   ============================================================ */
+
+body { background: var(--crema); }
+
+.carrito-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px 56px;
+}
+
+.carrito-titulo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  color: var(--texto);
+  letter-spacing: 0.5px;
+}
+
+.carrito-subtitulo {
+  font-size: 14px;
+  color: var(--gris-texto);
+  margin-top: 4px;
+  margin-bottom: 32px;
+}
+
+.carrito-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+.carrito-col-izq {
+  flex: 1;
+  min-width: 0;
+}
+
+.carrito-col-der {
+  width: 340px;
+  flex-shrink: 0;
+}
+
+/* ===== TABLA DE ITEMS ===== */
+.carrito-tabla-card {
+  background: var(--superficie);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+}
+
+.tabla-carrito {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-carrito thead th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gris-texto);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--gris-borde);
+}
+
+.tabla-carrito tbody td {
+  padding: 16px 20px;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--gris-borde);
+}
+
+.tabla-carrito tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.item-producto-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.item-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: var(--crema);
+  border: 1px solid var(--gris-borde);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.item-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.item-nombre {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--texto);
+}
+
+.item-categoria {
+  font-size: 12px;
+  color: var(--gris-texto);
+}
+
+.item-precio,
+.item-subtotal {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--texto);
+  white-space: nowrap;
+}
+
+.item-qty-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1.5px solid var(--gris-borde);
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.item-qty-control button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: var(--texto);
+  line-height: 1;
+}
+
+.item-qty-control span {
+  font-size: 14px;
+  font-weight: 700;
+  min-width: 16px;
+  text-align: center;
+}
+
+.item-qty-form,
+.item-eliminar-form {
+  display: inline;
+}
+
+.item-eliminar-btn {
+  background: none;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--gris-texto);
+  transition: color .15s, transform .15s;
+}
+
+.item-eliminar-btn:hover {
+  color: var(--rojo-texto);
+}
+.item-eliminar-btn:active { transform: scale(0.85); }
+
+.item-stock-aviso {
+  font-size: 12px;
+  color: var(--rojo-texto);
+  margin-top: 2px;
+}
+
+.carrito-seguir-comprando {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 12px 22px;
+  border: 1.5px solid var(--gris-borde);
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--texto);
+  background: var(--superficie);
+  transition: background-color .15s, border-color .15s, color .15s, box-shadow .15s, transform .15s, opacity .15s;
+}
+
+.carrito-seguir-comprando:hover {
+  border-color: var(--rojo);
+  color: var(--rojo-texto);
+}
+
+/* ===== CARRITO VACÍO ===== */
+.carrito-vacio {
+  background: var(--superficie);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 72px 30px;
+  text-align: center;
+}
+
+.carrito-vacio-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gris-texto);
+  margin-bottom: 18px;
+}
+
+.carrito-vacio h2 {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.carrito-vacio p {
+  color: var(--gris-texto);
+  margin-bottom: 24px;
+}
+
+/* ===== RESUMEN DEL PEDIDO ===== */
+.resumen-card {
+  background: var(--superficie);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 28px;
+}
+
+.resumen-titulo {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--texto);
+  margin-bottom: 20px;
+}
+
+.resumen-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: var(--gris-texto);
+  padding: 8px 0;
+}
+
+.resumen-fila span:last-child {
+  color: var(--texto);
+  font-weight: 600;
+}
+
+#envio-texto { font-weight: 700; }
+.resumen-fila.envio-gratis span:last-child {
+  color: #2e9e4f;
+  font-weight: 700;
+}
+
+.resumen-divisor {
+  border-top: 1px solid var(--gris-borde);
+  margin: 12px 0;
+}
+
+.resumen-total-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.resumen-total-fila span:first-child {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--texto);
+}
+
+.resumen-total-fila span:last-child {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--rojo-texto);
+}
+
+.btn-finalizar-compra {
+  width: 100%;
+  background: var(--rojo);
+  color: var(--blanco);
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: .03em;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  transition: background .15s, transform .1s;
+}
+
+.btn-finalizar-compra:hover {
+  background: var(--rojo-hover);
+}
+.btn-finalizar-compra:active { transform: scale(0.98); }
+
+.resumen-seguro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--gris-texto);
+  margin-top: 14px;
+}
+
+/* Campos de contacto/pago dentro del resumen */
+.resumen-campo {
+  margin-bottom: 16px;
+}
+
+.resumen-campo label,
+.resumen-campo .resumen-campo-etiqueta {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--texto);
+  margin-bottom: 6px;
+}
+
+.resumen-campo input[type="text"],
+.resumen-campo input[type="tel"] {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  outline: none;
+}
+
+.resumen-campo input:focus { border-color: var(--rojo); }
+
+/* Pares de campos lado a lado: Nombre/Apellido y Calle/Número */
+.resumen-campo-grupo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.resumen-campo-grupo .resumen-campo { margin-bottom: 16px; }
+.resumen-campo-grupo-calle { grid-template-columns: 2fr 1fr; }
+
+@media (max-width: 480px) {
+  .resumen-campo-grupo,
+  .resumen-campo-grupo-calle {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+/* Aviso de "este es tu dato guardado" arriba del teléfono / dirección */
+.dato-guardado-aviso {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  background: var(--gris-claro, #f5f5f5);
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--texto, #1a1a1a);
+  margin-bottom: 8px;
+}
+.dato-guardado-btn {
+  background: none;
+  border: none;
+  color: var(--rojo-texto);
+  font-weight: 700;
+  font-size: 12.5px;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  margin-left: auto;
+  white-space: nowrap;
+}
+.dato-guardado-btn:hover { color: var(--rojo-hover, var(--rojo)); }
+
+/* Mientras el campo está en modo "dato guardado" (solo lectura), se ve
+   ligeramente distinto para que quede claro que no hace falta tocarlo */
+.resumen-campo input[readonly] {
+  background: var(--gris-claro, #f5f5f5);
+  color: var(--gris-texto, #666);
+}
+
+.resumen-pago-opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.resumen-pago-opciones label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--texto);
+  cursor: pointer;
+}
+
+/* ===== BLOQUE DE BENEFICIOS (versión clara, arriba del footer) ===== */
+.carrito-beneficios {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  background: var(--superficie);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 28px 32px;
+}
+
+.carrito-beneficio-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.carrito-beneficio-icono {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--crema);
+  color: var(--rojo-texto);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.carrito-beneficio-titulo {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--texto);
+}
+
+.carrito-beneficio-desc {
+  font-size: 12px;
+  color: var(--gris-texto);
+  margin-top: 2px;
+}
+
+/* ===== CONFIRMACIÓN DE PEDIDO ===== */
+.pedido-confirmado {
+  background: var(--superficie);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 64px 32px;
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.pedido-confirmado-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2e9e4f;
+  margin-bottom: 18px;
+}
+
+.pedido-confirmado h1 {
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.pedido-confirmado p {
+  color: var(--gris-texto);
+  margin-bottom: 6px;
+}
+
+.pedido-confirmado-linea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.pedido-confirmado-numero {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--rojo-texto);
+  margin: 16px 0;
+}
+
+.alerta-carrito {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  background: #FFEBEE;
+  color: var(--rojo-texto);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .carrito-layout { flex-direction: column; }
+  .carrito-col-der { width: 100%; }
+  .carrito-beneficios { grid-template-columns: 1fr 1fr; }
+  .tabla-carrito thead { display: none; }
+  .tabla-carrito tbody td { display: block; border-bottom: none; padding: 8px 20px; }
+  .tabla-carrito tbody tr { border-bottom: 1px solid var(--gris-borde); padding: 12px 0; display: block; }
+  /* Sin encabezado de tabla, cada dato necesita su rótulo (antes Precio y Subtotal salían como dos
+     importes sueltos, uno debajo del otro, sin indicar cuál era cuál) */
+  .tabla-carrito tbody td[data-label]::before {
+    content: attr(data-label);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gris-texto);
+  }
+  .tabla-carrito tbody td.item-precio,
+  .tabla-carrito tbody td.item-subtotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .tabla-carrito tbody td[data-label="Cantidad"]::before { display: block; margin-bottom: 6px; }
+}
+@media (max-width: 560px) {
+  .carrito-beneficios { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   MODAL: ¿GUARDAR COMO COMPRA SEMANAL? (post-checkout)
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: modalFadeIn 0.2s ease;
+}
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.modal-compra-semanal {
+  background: var(--superficie);
+  border-radius: var(--radio);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  max-width: 440px;
+  width: 100%;
+  padding: 32px 28px 28px;
+  text-align: center;
+  animation: modalPopIn 0.25s ease;
+}
+@keyframes modalPopIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.modal-cs-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--rojo-texto);
+  margin-bottom: 14px;
+}
+.modal-cs-titulo {
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.4;
+  color: var(--texto);
+  margin-bottom: 20px;
+}
+.modal-cs-campo {
+  text-align: left;
+  margin-bottom: 18px;
+}
+.modal-cs-campo label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gris-texto);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.modal-cs-campo input,
+.modal-cs-campo select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid var(--gris-borde);
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  background: var(--superficie);
+}
+.modal-cs-campo input:focus,
+.modal-cs-campo select:focus {
+  outline: none;
+  border-color: var(--rojo);
+}
+.modal-cs-aviso-limite {
+  font-size: 12px;
+  color: var(--rojo-texto);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+.modal-cs-botones { margin-bottom: 10px; }
+.btn-guardar-compra-modal {
+  width: 100%;
+  padding: 14px;
+  background: var(--rojo);
+  color: var(--blanco);
+  border: none;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-guardar-compra-modal:hover { background: var(--rojo-oscuro); }
+.btn-no-gracias-modal {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: none;
+  color: var(--gris-texto);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.btn-no-gracias-modal:hover { color: var(--texto); text-decoration: underline; }
+
+/* ===== PASO 8 (Diseño y UX) ===== */
+/* Zona táctil más cómoda para − y + de cada línea del carrito. */
+.item-qty-control button { padding: 4px 6px; margin: -4px -6px; }

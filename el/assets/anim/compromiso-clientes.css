@@ -1,0 +1,528 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+/* ============================================================
+   COMPROMISO CON NUESTROS CLIENTES · El Rápido
+   Hoja de animación del SVG. Una escena de 6 s con tres momentos
+   encadenados: atención en el mostrador, compra online y entrega
+   con corazón + tilde. Los dos personajes conectan toda la escena.
+   ============================================================ */
+
+:root {
+  --ciclo: 6s;
+  --ease-suave: cubic-bezier(.2, .7, .3, 1);
+  --ease-entra: cubic-bezier(.23, 1, .32, 1);
+  --ease-resorte: cubic-bezier(.34, 1.56, .64, 1);
+  --rojo: #D91F26;
+  --amarillo: #FFD600;
+}
+
+svg {
+  font-family: 'Montserrat', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Reproducción única (integración futura en la tarjeta): el JS agrega
+   .una-vez al <svg> para que la secuencia termine en su último fotograma.
+   En la vista previa el ciclo sigue siendo infinito. */
+.una-vez,
+.una-vez * {
+  animation-iteration-count: 1 !important;
+}
+
+/* En reproducción única la escena no se desvanece al final. */
+.una-vez .escena { animation-name: escenaUnaVez; }
+@keyframes escenaUnaVez {
+  0%       { opacity: 0; }
+  1%, 100% { opacity: 1; }
+}
+
+/* El rótulo del tercer momento se queda en el fotograma final. */
+.una-vez .texto-momento--3 { animation-name: momento3UnaVez; }
+@keyframes momento3UnaVez {
+  0%, 64.5% { opacity: 0; transform: translateY(8px); }
+  68%, 100% { opacity: 1; transform: translateY(0); }
+}
+
+/* El corazón, los destellos y la bolsa se quedan al terminar. */
+.una-vez .corazon-grupo { animation-name: corazonUnaVez; }
+@keyframes corazonUnaVez {
+  0%, 81.5%   { opacity: 0; transform: scale(.3); }
+  84%         { opacity: 1; transform: scale(1.14); }
+  86%, 100%   { opacity: 1; transform: scale(1); }
+}
+
+.una-vez .destellos-corazon { animation-name: destellosUnaVez; }
+@keyframes destellosUnaVez {
+  0%, 84%   { opacity: 0; transform: scale(.6); }
+  86%       { opacity: 1; transform: scale(1); }
+  90%, 100% { opacity: .85; transform: scale(1.02); }
+}
+
+.una-vez .bolsa-entrega { animation-name: bolsaUnaVez; }
+@keyframes bolsaUnaVez {
+  0%, 68%   { opacity: 0; transform: translate(0, 0) scale(.9); }
+  70%       { opacity: 1; transform: translate(0, 0) scale(.96); }
+  72%       { opacity: 1; transform: translate(0, 0) scale(1); }
+  76%       { opacity: 1; transform: translate(-14px, -7px); }
+  79%, 100% { opacity: 1; transform: translate(-32px, 0); }
+}
+
+/* ---------- Escena general ---------- */
+
+.escena {
+  animation: escenaEntra var(--ciclo) linear infinite both;
+}
+@keyframes escenaEntra {
+  0%    { opacity: 0; }
+  1%    { opacity: 1; }
+  96.5% { opacity: 1; }
+  99.4% { opacity: 0; }
+  100%  { opacity: 0; }
+}
+
+.mancha-amarilla {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: respirar var(--ciclo) ease-in-out infinite both;
+}
+@keyframes respirar {
+  0%, 100% { transform: scale(1); }
+  45%      { transform: scale(1.03); }
+  75%      { transform: scale(.995); }
+}
+
+.destellos {
+  animation: destellosFondo var(--ciclo) ease-in-out infinite both;
+}
+@keyframes destellosFondo {
+  0%, 100% { opacity: .65; }
+  42%      { opacity: 1; }
+  72%      { opacity: .78; }
+}
+
+/* ---------- Rótulos de momento ---------- */
+
+.texto-momento {
+  transform-box: fill-box;
+  transform-origin: left center;
+}
+
+.texto-momento--1 { animation: momento1 var(--ciclo) linear infinite both; }
+.texto-momento--2 { animation: momento2 var(--ciclo) linear infinite both; }
+.texto-momento--3 { animation: momento3 var(--ciclo) linear infinite both; }
+
+@keyframes momento1 {
+  0%      { opacity: 0; transform: translateY(8px); }
+  1.5%    { opacity: 0; transform: translateY(8px); animation-timing-function: var(--ease-entra); }
+  4%      { opacity: 1; transform: translateY(0); }
+  28%     { opacity: 1; transform: translateY(0); }
+  30.5%   { opacity: 0; transform: translateY(-6px); }
+  100%    { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes momento2 {
+  0%, 30.5% { opacity: 0; transform: translateY(8px); }
+  33.5%     { opacity: 1; transform: translateY(0); }
+  62.5%     { opacity: 1; transform: translateY(0); }
+  64.5%     { opacity: 0; transform: translateY(-6px); }
+  100%      { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes momento3 {
+  0%, 64.5% { opacity: 0; transform: translateY(8px); }
+  67.5%     { opacity: 1; transform: translateY(0); }
+  94%       { opacity: 1; transform: translateY(0); }
+  96.5%     { opacity: 0; transform: translateY(-6px); }
+  100%      { opacity: 0; transform: translateY(-6px); }
+}
+
+/* ---------- Personajes: respiración, gesto y saludo ---------- */
+
+.cliente-bob {
+  animation: clienteBob var(--ciclo) linear infinite both;
+}
+@keyframes clienteBob {
+  0%       { transform: translateY(0); }
+  5.5%     { transform: translateY(-2px); }
+  8%       { transform: translateY(0); }
+  10.5%    { transform: translateY(-1.4px); }
+  13%      { transform: translateY(0); }
+  40%      { transform: translateY(0); }
+  44%      { transform: translateY(-1.2px); }
+  48%      { transform: translateY(0); }
+  54%      { transform: translateY(-1.2px); }
+  58%      { transform: translateY(0); }
+  81.5%    { transform: translateY(0); }
+  82.5%    { transform: translateY(-5px); }
+  84.5%    { transform: translateY(.5px); }
+  86.5%    { transform: translateY(-2.4px); }
+  89%      { transform: translateY(0); }
+  100%     { transform: translateY(0); }
+}
+
+.vendedor-bob {
+  animation: vendedorBob var(--ciclo) linear infinite both;
+}
+@keyframes vendedorBob {
+  0%       { transform: translateY(0); }
+  15.5%    { transform: translateY(0); }
+  17%      { transform: translateY(-3px); }
+  18.5%    { transform: translateY(0); }
+  20%      { transform: translateY(-1.4px); }
+  21.5%    { transform: translateY(0); }
+  40%      { transform: translateY(0); }
+  44%      { transform: translateY(-1.2px); }
+  48%      { transform: translateY(0); }
+  54%      { transform: translateY(-1.2px); }
+  58%      { transform: translateY(0); }
+  81.5%    { transform: translateY(0); }
+  82.5%    { transform: translateY(-5px); }
+  84.5%    { transform: translateY(.5px); }
+  86.5%    { transform: translateY(-2.4px); }
+  89%      { transform: translateY(0); }
+  100%     { transform: translateY(0); }
+}
+
+/* Brazo del cliente: saluda, levanta el celular y recibe la bolsa. */
+.brazo-cliente {
+  transform-box: fill-box;
+  transform-origin: 0 0;
+  animation: brazoCliente var(--ciclo) linear infinite both;
+}
+@keyframes brazoCliente {
+  0%, 4%    { transform: rotate(0deg); }
+  7%        { transform: rotate(-16deg); }
+  10%       { transform: rotate(-6deg); }
+  12%       { transform: rotate(0deg); }
+  32%       { transform: rotate(0deg); }
+  37%       { transform: rotate(-25deg); }
+  61%       { transform: rotate(-25deg); }
+  66%       { transform: rotate(0deg); }
+  74%       { transform: rotate(-7deg); }
+  77%       { transform: rotate(0deg); }
+  82%       { transform: rotate(-4deg); }
+  84.5%     { transform: rotate(0deg); }
+  100%      { transform: rotate(0deg); }
+}
+
+/* Brazo del empleado: entrega la bolsa por encima del mostrador. */
+.brazo-vendedor {
+  transform-box: fill-box;
+  transform-origin: 100% 0;
+  animation: brazoVendedor var(--ciclo) linear infinite both;
+}
+@keyframes brazoVendedor {
+  0%, 66%   { transform: rotate(0deg); }
+  70%       { transform: rotate(-9deg); }
+  73.5%     { transform: rotate(6deg); }
+  76%       { transform: rotate(3deg); }
+  79%       { transform: rotate(2deg); }
+  82%       { transform: rotate(0deg); }
+  84%       { transform: rotate(3deg); }
+  87%, 100% { transform: rotate(2deg); }
+}
+
+.antebrazo-vendedor {
+  transform-box: fill-box;
+  transform-origin: 100% 0;
+  animation: antebrazoVendedor var(--ciclo) linear infinite both;
+}
+@keyframes antebrazoVendedor {
+  0%, 69%   { transform: rotate(0deg); }
+  72%       { transform: rotate(-14deg); }
+  75%       { transform: rotate(-4deg); }
+  78%, 100% { transform: rotate(0deg); }
+}
+
+/* ---------- Conversación ---------- */
+
+.globo-pregunta,
+.globo-respuesta {
+  transform-box: fill-box;
+  transform-origin: 100% 100%;
+}
+
+.globo-pregunta {
+  animation: globoPregunta var(--ciclo) linear infinite both;
+}
+@keyframes globoPregunta {
+  0%, 2.5%  { opacity: 0; transform: translateY(7px) scale(.94); }
+  4%        { opacity: 1; transform: translateY(0) scale(1.02); }
+  5%        { opacity: 1; transform: translateY(0) scale(1); }
+  13%       { opacity: 1; transform: translateY(0) scale(1); }
+  15%       { opacity: 0; transform: translateY(-5px) scale(.97); }
+  100%      { opacity: 0; transform: translateY(-5px) scale(.97); }
+}
+
+.globo-respuesta {
+  animation: globoRespuesta var(--ciclo) linear infinite both;
+}
+@keyframes globoRespuesta {
+  0%, 14.5% { opacity: 0; transform: translateY(7px) scale(.94); }
+  16.5%     { opacity: 1; transform: translateY(0) scale(1.03); }
+  17.5%     { opacity: 1; transform: translateY(0) scale(1); }
+  27%       { opacity: 1; transform: translateY(0) scale(1); }
+  29%       { opacity: 0; transform: translateY(-5px) scale(.97); }
+  100%      { opacity: 0; transform: translateY(-5px) scale(.97); }
+}
+
+/* ---------- Celular ---------- */
+
+.telefono {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: telefonoEntra var(--ciclo) linear infinite both;
+}
+@keyframes telefonoEntra {
+  0%, 30%   { opacity: 0; transform: translate(8px, 16px) scale(.75); }
+  33%       { opacity: 0; transform: translate(8px, 16px) scale(.75); }
+  36%       { opacity: 1; transform: translate(0, 0) scale(1.05); }
+  38%       { opacity: 1; transform: translate(0, 0) scale(1); }
+  43%       { opacity: 1; transform: translate(0, -2px) scale(1); }
+  48%       { opacity: 1; transform: translate(0, 1px) scale(1); }
+  53%       { opacity: 1; transform: translate(0, -2px) scale(1); }
+  58%       { opacity: 1; transform: translate(0, 0) scale(1); }
+  62%       { opacity: 1; transform: translate(0, 0) scale(1); }
+  65%, 100% { opacity: 0; transform: translate(4px, -8px) scale(.94); }
+}
+
+.brillo-telefono {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: brilloTelefono var(--ciclo) linear infinite both;
+}
+@keyframes brilloTelefono {
+  0%, 36%   { opacity: 0; transform: scale(.7); }
+  38%       { opacity: .22; transform: scale(1); }
+  48%       { opacity: .32; transform: scale(1.06); }
+  58%       { opacity: .2; transform: scale(1); }
+  64%, 100% { opacity: 0; transform: scale(.9); }
+}
+
+.chip-online {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: chipOnline var(--ciclo) linear infinite both;
+}
+@keyframes chipOnline {
+  0%, 35%   { opacity: 0; transform: translateY(6px) scale(.8); }
+  37.5%     { opacity: 1; transform: translateY(0) scale(1.06); }
+  39%       { opacity: 1; transform: translateY(0) scale(1); }
+  59%       { opacity: 1; transform: translateY(0) scale(1); }
+  62%, 100% { opacity: 0; transform: translateY(-5px) scale(.94); }
+}
+
+.wifi-online {
+  transform-box: fill-box;
+  transform-origin: 0 100%;
+  animation: wifiOnline var(--ciclo) linear infinite both;
+}
+@keyframes wifiOnline {
+  0%, 38%   { opacity: 0; transform: scale(.6); }
+  40%       { opacity: 1; transform: scale(1.08); }
+  42%       { opacity: 1; transform: scale(1); }
+  46%       { opacity: .65; transform: scale(1); }
+  50%       { opacity: 1; transform: scale(1); }
+  54%       { opacity: .65; transform: scale(1); }
+  58%       { opacity: 1; transform: scale(1); }
+  61%       { opacity: 1; transform: scale(1); }
+  64%, 100% { opacity: 0; transform: scale(.9); }
+}
+
+/* ---------- Tarjeta de pedido online ---------- */
+
+.tarjeta-online {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: tarjetaOnline var(--ciclo) linear infinite both;
+}
+@keyframes tarjetaOnline {
+  0%, 36.5% { opacity: 0; transform: translateY(12px) scale(.94); }
+  39%       { opacity: 1; transform: translateY(0) scale(1.03); }
+  41.5%     { opacity: 1; transform: translateY(0) scale(1); }
+  48%       { opacity: 1; transform: translateY(-2px) scale(1); }
+  55%       { opacity: 1; transform: translateY(0) scale(1); }
+  59.5%     { opacity: 1; transform: translateY(0) scale(1); }
+  63%, 100% { opacity: 0; transform: translateY(8px) scale(.97); }
+}
+
+.check-online {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: checkOnline var(--ciclo) linear infinite both;
+}
+@keyframes checkOnline {
+  0%, 54%   { opacity: .35; transform: scale(.98); }
+  57%       { opacity: 1; transform: scale(1.08); }
+  59%       { opacity: 1; transform: scale(1); }
+  100%      { opacity: 1; transform: scale(1); }
+}
+
+/* ---------- Bolsa de compra ---------- */
+
+.bolsa-entrega {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: bolsaEntrega var(--ciclo) linear infinite both;
+}
+@keyframes bolsaEntrega {
+  0%, 68%   { opacity: 0; transform: translate(0, 0) scale(.9); }
+  70%       { opacity: 1; transform: translate(0, 0) scale(.96); }
+  72%       { opacity: 1; transform: translate(0, 0) scale(1); }
+  76%       { opacity: 1; transform: translate(-14px, -7px); }
+  79%       { opacity: 1; transform: translate(-32px, 0); }
+  82%       { opacity: 1; transform: translate(-32px, -2px); }
+  84%       { opacity: 1; transform: translate(-32px, 0); }
+  100%      { opacity: 1; transform: translate(-32px, 0); }
+}
+
+.bolsa-columpio {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: bolsaColumpio var(--ciclo) linear infinite both;
+}
+@keyframes bolsaColumpio {
+  0%, 72%  { transform: rotate(0deg); }
+  76%      { transform: rotate(-3deg); }
+  79%      { transform: rotate(3deg); }
+  82%      { transform: rotate(-1.5deg); }
+  85%, 100% { transform: rotate(0deg); }
+}
+
+/* ---------- Cierre: corazón, tilde y destellos ---------- */
+
+.corazon-grupo {
+  transform-box: fill-box;
+  transform-origin: 50% 60%;
+  animation: corazonEntra var(--ciclo) linear infinite both;
+}
+@keyframes corazonEntra {
+  0%, 81.5% { opacity: 0; transform: scale(.3); }
+  84%       { opacity: 1; transform: scale(1.14); }
+  86%       { opacity: 1; transform: scale(1); }
+  91%       { opacity: 1; transform: scale(1.04); }
+  93.5%     { opacity: 1; transform: scale(1); }
+  97%       { opacity: 1; transform: scale(1); }
+  99.4%, 100% { opacity: 0; transform: scale(.96); }
+}
+
+.corazon-pulso {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: corazonPulso var(--ciclo) linear infinite both;
+}
+@keyframes corazonPulso {
+  0%, 84%   { opacity: 0; transform: scale(.6); }
+  85.5%     { opacity: .45; transform: scale(.9); }
+  89%       { opacity: 0; transform: scale(1.35); }
+  90.5%     { opacity: .3; transform: scale(.85); }
+  94%       { opacity: 0; transform: scale(1.3); }
+  100%      { opacity: 0; transform: scale(1.3); }
+}
+
+.destellos-corazon {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: destellosCorazon var(--ciclo) linear infinite both;
+}
+@keyframes destellosCorazon {
+  0%, 84%   { opacity: 0; transform: scale(.6); }
+  86%       { opacity: 1; transform: scale(1); }
+  90%       { opacity: .85; transform: scale(1.06); }
+  94.5%     { opacity: 0; transform: scale(1.12); }
+  100%      { opacity: 0; transform: scale(1.12); }
+}
+
+/* ---------- Progreso ---------- */
+
+.progreso-relleno {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: progreso var(--ciclo) linear infinite both;
+}
+@keyframes progreso {
+  0%   { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+.progreso-punto {
+  animation: progresoPunto var(--ciclo) linear infinite both;
+}
+@keyframes progresoPunto {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(624px); }
+}
+
+/* ---------- Movimiento reducido ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .escena,
+  .mancha-amarilla,
+  .destellos,
+  .texto-momento,
+  .cliente-bob,
+  .vendedor-bob,
+  .brazo-cliente,
+  .brazo-vendedor,
+  .antebrazo-vendedor,
+  .globo-pregunta,
+  .globo-respuesta,
+  .telefono,
+  .brillo-telefono,
+  .chip-online,
+  .wifi-online,
+  .tarjeta-online,
+  .check-online,
+  .bolsa-entrega,
+  .bolsa-columpio,
+  .corazon-grupo,
+  .corazon-pulso,
+  .destellos-corazon,
+  .progreso-relleno,
+  .progreso-punto {
+    animation: none !important;
+  }
+
+  /* Composición final quieta: los dos personajes, la bolsa entregada
+     y el corazón con el tilde. */
+  .texto-momento--1,
+  .texto-momento--2,
+  .globo-pregunta,
+  .globo-respuesta,
+  .telefono,
+  .brillo-telefono,
+  .chip-online,
+  .wifi-online,
+  .tarjeta-online,
+  .corazon-pulso,
+  .destellos-corazon {
+    display: none;
+  }
+
+  .texto-momento--3 { opacity: 1; transform: none; }
+
+  .cliente-bob,
+  .vendedor-bob {
+    opacity: 1;
+    transform: none;
+  }
+  .brazo-cliente { transform: rotate(0deg); }
+  .brazo-vendedor { transform: rotate(2deg); }
+  .antebrazo-vendedor { transform: rotate(0deg); }
+
+  .bolsa-entrega {
+    opacity: 1;
+    transform: translate(-32px, 0) scale(1);
+  }
+  .bolsa-columpio { transform: rotate(0deg); }
+
+  .corazon-grupo {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .progreso-relleno {
+    transform-box: fill-box;
+    transform-origin: left center;
+    transform: scaleX(.88);
+  }
+  .progreso-punto { transform: translateX(548px); }
+}

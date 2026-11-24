@@ -1,0 +1,121 @@
+/* ============================================================
+   MODO-OSCURO.CSS — El Rápido Maxi Kiosco
+   Se activa con <html data-theme="dark"> (botón del header, ver global.js).
+   Se carga SIEMPRE al final (includes/header.php) para pisar a las demás hojas.
+
+   Cómo está armado:
+   1) Se redefinen las variables de global.css → casi todo el sitio cambia solo.
+   2) Abajo van los pocos colores que estaban escritos "a mano" (hex) en cada
+      hoja, agrupados por página.
+   Los colores de marca (rojo, amarillo) NO se tocan.
+   ============================================================ */
+
+html[data-theme="dark"] {
+  color-scheme: dark; /* barras de scroll, inputs y selects nativos en oscuro */
+
+  --gris-claro:  #121214; /* fondo general de la página */
+  --crema:       #17171a; /* fondos de secciones (antes crema) */
+  --crema-linea: #2b2b30;
+  --gris-borde:  #36363c;
+  --gris-texto:  #a9a9b2;
+  --superficie:  #1e1e22; /* tarjetas, header, menús, modales */
+  --texto:       #f1f1f4; /* texto principal */
+  --sombra:      0 4px 20px rgba(0, 0, 0, 0.55);
+  --rojo-oscuro: #e0353b;
+
+  /* Tokens de la auditoría: en oscuro el rojo de TEXTO se aclara (6,5:1 sobre el fondo) */
+  --rojo-texto:  #FF6B70;
+  --rojo-suave:  rgba(217, 31, 38, 0.16);
+  --rojo-suave-2:rgba(217, 31, 38, 0.16);
+  --superficie-2:#26262b;
+  /* Tokens nuevos del header y las tarjetas */
+  --texto-2:     #a9a9b2;
+  --borde:       rgba(255, 255, 255, 0.10);
+  --header-bg:   rgba(30, 30, 34, 0.82);
+  --ok-fondo:    rgba(46, 158, 79, 0.18);
+  --ok-texto:    #6fd58c;
+}
+
+/* ===== GLOBAL: header, menús, footer ===== */
+html[data-theme="dark"] .site-header { box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6); }
+html[data-theme="dark"] .nav-link:not(.active):not(:hover) { color: #d3d3d9; }
+html[data-theme="dark"] .btn-carrito:hover,
+html[data-theme="dark"] .btn-cuenta:hover { background: #2b2b30; }
+html[data-theme="dark"] .cuenta-menu { box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6); }
+html[data-theme="dark"] .cuenta-menu-item { color: #e3e3e8; }
+html[data-theme="dark"] .mobile-menu { border-top-color: #2b2b30; }
+/* el bloque rotado detrás de la foto (Nosotros, Login, Registro) desaparecía sobre el fondo oscuro */
+html[data-theme="dark"] .foto-hero-fondo { background: #34343a; }
+html[data-theme="dark"] .foto-hero-marco { background: linear-gradient(145deg, #2d2823 0%, #25211c 100%); }
+html[data-theme="dark"] .chip-icono { background: rgba(255, 152, 0, 0.16); }
+html[data-theme="dark"] .site-footer { background: #0b0b0d; }
+html[data-theme="dark"] .footer-social { background: #1f1f23; }
+html[data-theme="dark"] .footer-copy { border-top-color: #1f1f23; }
+
+/* ===== INICIO ===== */
+html[data-theme="dark"] .hero-subtitulo,
+html[data-theme="dark"] .hero-estado,
+html[data-theme="dark"] .ubicacion-horario { color: #c2c2ca; }
+html[data-theme="dark"] .btn-ubicacion { border-color: #3a3a40; }
+html[data-theme="dark"] .estado-dot--cerrado { background: #8b8f98; }
+html[data-theme="dark"] .categoria-nombre { color: #d3d3d9; }
+html[data-theme="dark"] .compra-item { border-bottom-color: #2b2b30; }
+
+/* ===== NOSOTROS / PÁGINAS ESTÁTICAS ===== */
+html[data-theme="dark"] .quienes-content p,
+html[data-theme="dark"] .info-card p { color: #cfcfd6; }
+html[data-theme="dark"] .check-list li { color: #e3e3e8; }
+
+/* ===== PRODUCTOS / PROMOCIONES ===== */
+html[data-theme="dark"] .fav-btn { color: #9a9aa3; }
+html[data-theme="dark"] .fav-btn[aria-pressed="true"] { color: var(--rojo-texto); }
+html[data-theme="dark"] .item-promo-ahorro,
+html[data-theme="dark"] .resumen-fila-ahorro { color: #6fd58c; }
+html[data-theme="dark"] .aviso-carrito-item { background: rgba(255, 193, 7, 0.14); color: #f0cf6a; }
+
+/* ===== CARRITO ===== */
+html[data-theme="dark"] .alerta-carrito { background: rgba(217, 31, 38, 0.16); }
+html[data-theme="dark"] .resumen-fila.envio-gratis span:last-child,
+html[data-theme="dark"] .pedido-confirmado-icono,
+html[data-theme="dark"] .check-ico { color: #5fd07f; }
+
+/* ===== MI CUENTA ===== */
+html[data-theme="dark"] .cuenta-menu-lat-item:not(.activo):not(:hover) { color: #d3d3d9; }
+html[data-theme="dark"] .cuenta-alerta-ok { background: rgba(46, 158, 79, 0.16); color: #6fd58c; }
+html[data-theme="dark"] .cuenta-alerta-error { background: rgba(217, 31, 38, 0.16); color: #ff7b80; }
+html[data-theme="dark"] .compra-semanal-limite,
+html[data-theme="dark"] .compra-semanal-nota { background: rgba(255, 152, 0, 0.14); color: #f2c46d; }
+html[data-theme="dark"] .compra-semanal-datos { background: #25252a; }
+html[data-theme="dark"] .csp-item { background: #25252a; }
+html[data-theme="dark"] .csp-item-cant { background: #3a3a40; }
+html[data-theme="dark"] .btn-eliminar-lista { color: #ff7b80; }
+html[data-theme="dark"] .btn-eliminar-lista:hover { background: rgba(217, 31, 38, 0.16); }
+html[data-theme="dark"] .historial-item { border-bottom-color: #2b2b30; }
+html[data-theme="dark"] .historial-item-icono { background: rgba(217, 31, 38, 0.16); }
+html[data-theme="dark"] .editor-producto-item.seleccionado { background: rgba(217, 31, 38, 0.12); }
+/* Estados de pedido */
+html[data-theme="dark"] .estado-pendiente  { background: rgba(255, 152, 0, 0.16);  color: #f2c46d; }
+html[data-theme="dark"] .estado-preparando { background: rgba(66, 133, 244, 0.18); color: #8fb8ff; }
+html[data-theme="dark"] .estado-listo      { background: rgba(124, 77, 255, 0.2);  color: #bda4ff; }
+html[data-theme="dark"] .estado-camino     { background: rgba(255, 140, 0, 0.18);  color: #ffb45e; }
+html[data-theme="dark"] .estado-entregado  { background: rgba(46, 158, 79, 0.18);  color: #6fd58c; }
+html[data-theme="dark"] .estado-cancelado  { background: #34343a; }
+
+/* ===== LOGIN / REGISTRO ===== */
+html[data-theme="dark"] .auth-error { background: rgba(217, 31, 38, 0.16); border-color: rgba(217, 31, 38, 0.45); color: #ff8a8e; }
+html[data-theme="dark"] .auth-ok { background: rgba(46, 158, 79, 0.16); border-color: rgba(46, 158, 79, 0.45); color: #6fd58c; }
+html[data-theme="dark"] .btn-social:hover { background: #2a2a2f; border-color: #4a4a52; }
+
+/* ===== CAMPOS DE FORMULARIO =====
+   Los que no tienen fondo propio ya salen oscuros por color-scheme; acá se
+   asegura el texto y el color del placeholder para que se lean bien. */
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea { color: var(--texto); }
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder { color: #8a8a94; }
+html[data-theme="dark"] input:-webkit-autofill { box-shadow: 0 0 0 1000px #26262b inset; }
+
+/* ===== BOTÓN DE TEMA ===== */
+html[data-theme="dark"] .btn-tema { background: var(--superficie); color: #d3d3d9; }
+html[data-theme="dark"] .btn-tema:hover { background: var(--rojo-suave); color: var(--rojo-texto); }

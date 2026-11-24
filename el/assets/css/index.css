@@ -1,0 +1,737 @@
+    body { background: var(--crema); }
+
+    /* ===== ENTRADA DEL HERO (un único momento orquestado al cargar) ===== */
+    @keyframes heroEntra {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Feedback táctil: todo lo pulsable "se hunde" un poco al tocarlo,
+       como en una app nativa, en vez de quedarse inerte. */
+    .btn-wsp, .btn-ubicacion, .categoria-item, .promo-card, .btn-guardar-compra,
+    .btn-login-cta, .btn-como-llegar, .btn-crear-primera-compra-home {
+      transition: transform 0.15s ease, background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .btn-wsp:active, .btn-ubicacion:active, .categoria-item:active,
+    .promo-card:active, .btn-guardar-compra:active, .btn-login-cta:active,
+    .btn-como-llegar:active, .btn-crear-primera-compra-home:active {
+      transform: scale(0.96);
+    }
+
+    
+    /* ===== HERO ===== */
+    /* Fondo de rayas diagonales (marca de la fachada): cubre el hero y la franja de categorías
+       y se desvanece hacia abajo, en vez de cortarse en seco en el borde del hero.
+       Va en un pseudo-elemento detrás del contenido (z-index:-1 dentro del contexto aislado). */
+    .inicio-cabecera { position: relative; isolation: isolate; }
+    .inicio-cabecera::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(115deg, var(--crema-linea) 0px, var(--crema-linea) 1px, transparent 1px, transparent 64px);
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+    }
+    .hero {
+      overflow: hidden;
+      position: relative;
+      z-index: 0;
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 72px 24px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: stretch;
+      gap: 56px;
+      min-height: 580px;
+    }
+    .hero-texto {
+      animation: heroEntra 0.6s cubic-bezier(.2,.7,.3,1) both;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .hero-imagen { height: 100%; animation: heroEntra 0.7s cubic-bezier(.2,.7,.3,1) 0.12s both; }
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--rojo-texto);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+    .hero-kicker::before {
+      content: '';
+      width: 22px;
+      height: 1.5px;
+      background: var(--rojo);
+      display: inline-block;
+    }
+    .hero-titulo { line-height: 1; margin-top: 10px; margin-bottom: 32px; }
+    .hero-titulo-chica {
+      display: block;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      font-size: 27px;
+      color: var(--texto);
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+    .hero-titulo-grande {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(56px, 7.6vw, 96px); /* a 1200px el título entra en su columna sin cortar la línea */
+      line-height: 0.95;
+      letter-spacing: 2px;
+      color: var(--texto);
+      margin-top: 22px;
+    }
+    .hero-acento {
+      color: var(--rojo-texto);
+      /* franja amarilla como la de la fachada: el amarillo de marca entra a la interfaz */
+      text-decoration: underline;
+      text-decoration-color: var(--amarillo);
+      text-decoration-thickness: 0.07em;
+      text-underline-offset: 0.06em;
+      text-decoration-skip-ink: none;
+    }
+    .hero-subtitulo {
+      margin: 16px 0 28px;
+      color: #555;
+      font-size: 17px;
+      line-height: 1.65;
+      max-width: 480px;
+    }
+    .hero-botones {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .btn-wsp {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--rojo);
+      color: var(--blanco);
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.5px;
+      padding: 17px 28px;
+      border-radius: 8px;
+      box-shadow: 0 10px 24px -8px rgba(217, 31, 38, 0.45);
+      transition: background 0.2s;
+    }
+    .btn-wsp:hover { background: var(--rojo-oscuro); }
+    .btn-ubicacion {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--texto);
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.5px;
+      padding: 17px 28px;
+      border-radius: 8px;
+      border: 1.5px solid #ddd4c8;
+      transition: border-color 0.2s;
+    }
+    .btn-ubicacion:hover { border-color: var(--rojo); color: var(--rojo-texto); }
+    .hero-estado {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      color: #555;
+      background: var(--superficie);
+      border: 1px solid var(--crema-linea);
+      padding: 11px 20px 11px 16px;
+      border-radius: 30px;
+    }
+    .hero-estado b { color: var(--texto); }
+    .hero-estado-sep { width: 1px; height: 12px; background: var(--crema-linea); }
+    .estado-dot {
+      width: 8px;
+      height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+      display: inline-block;
+      position: relative;
+    }
+    .estado-dot--cerrado { background: #9ca3af; }
+    .estado-dot--cerrado::after { display: none; }
+    .estado-dot::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulsoVivo 2s ease-out infinite;
+    }
+    @keyframes pulsoVivo {
+      0%   { opacity: 0.7; transform: scale(1); }
+      100% { opacity: 0; transform: scale(2.8); }
+    }
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; padding: 90px 24px 60px; }
+      .hero-titulo-grande { font-size: 78px; letter-spacing: 1.5px; }
+      .hero-subtitulo { margin-left: auto; margin-right: auto; }
+      .hero-botones, .hero-kicker { justify-content: center; }
+      .hero-kicker::before { display: none; }
+    }
+
+    /* ===== PASO 9 (Responsive): hero en teléfonos chicos =====
+       El hero tiene overflow:hidden, así que en 320–430px el título de 78px,
+       el kicker y los botones se recortaban en vez de adaptarse. */
+    .hero-inner > * { min-width: 0; }
+    @media (max-width: 480px) {
+      .hero-inner { padding: 72px 20px 72px; gap: 36px; } /* 72px abajo: deja lugar a .chip-flotante (bottom:-18px) sin que lo tape la franja de categorías */
+      .hero-kicker { letter-spacing: 1.5px; font-size: 12px; flex-wrap: wrap; text-align: center; }
+      .hero-titulo-chica { font-size: 22px; }
+      .hero-titulo-grande { font-size: clamp(44px, 17vw, 72px); letter-spacing: 1px; margin-top: 14px; }
+      .hero-botones { flex-direction: column; align-items: stretch; }
+      .hero-botones > * { justify-content: center; text-align: center; }
+      .btn-wsp { padding: 15px 20px; }
+      .hero-estado { flex-wrap: wrap; justify-content: center; }
+    }
+
+    /* ===== CATEGORÍAS ===== */
+    .categorias-section {
+      padding: 0 0 20px;
+    }
+
+    .categorias-inner {
+      max-width: 1200px;
+      margin: auto;
+      padding: 18px 32px;
+      display: flex;
+      justify-content: flex-start;
+      gap: 26px;
+      background-color: var(--superficie);
+      border-radius: 16px;
+      margin-top: -34px;
+      box-shadow: 0 12px 32px -12px rgba(23, 21, 18, 0.12);
+      position: relative;
+      z-index: 10;
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+      scroll-padding-left: 32px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Firefox */
+    }
+    .categorias-inner::-webkit-scrollbar { display: none; }
+    @media (min-width: 860px) {
+      .categorias-inner { justify-content: center; flex-wrap: wrap; overflow-x: visible; }
+    }
+    .categoria-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+    }
+    .categoria-item:hover { transform: translateY(-4px); }
+    .categoria-circulo {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      background: var(--crema);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--rojo-texto); /* el SVG toma este color (currentColor) */
+      border: 2px solid var(--crema-linea);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    @media (min-width: 860px) {
+      .categoria-circulo { width: 100px; height: 100px; }
+      .categoria-circulo .icono-svg { width: 50px; height: 50px; }
+    }
+    .categoria-item:hover .categoria-circulo { 
+      border-color: var(--rojo);
+      background: var(--rojo-suave-2);
+    }
+    .categoria-nombre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #444;
+    }
+
+    /* ===== SECCIONES GENERALES ===== */
+    .seccion {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 64px 24px 8px;
+    }
+    .seccion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+    .seccion-titulo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(26px, 3.2vw, 34px);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: 1px;
+      position: relative;
+      padding-left: 16px;
+    }
+    .seccion-titulo::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 5px;
+      background: var(--rojo);
+      border-radius: 2px;
+    }
+    .ver-todas {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--rojo-texto);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .ver-todas:hover { text-decoration: underline; }
+
+    /* ===== PROMOCIONES ===== */
+    .promos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    
+    .promo-card {
+      position: relative;
+      border-radius: 16px;
+      padding: 28px 24px;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .promo-card-roja { background: var(--rojo); color: var(--blanco); }
+    .promo-card-amarilla { background: var(--amarillo); color: var(--negro); }
+    .promo-card-verde { background: var(--oscuro); color: var(--blanco); } /* el nombre es heredado: es el negro de marca (antes un azul fuera de paleta) */
+
+    .promo-badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 3px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .promo-badge-blanco { background: var(--blanco); color: var(--rojo-texto); }
+    
+
+    .promo-titulo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      line-height: 1;
+      letter-spacing: 1px;
+    }
+    .promo-subtitulo {
+      font-size: 13px;
+      font-weight: 600;
+      opacity: 0.85;
+      margin-top: 4px;
+    }
+    .promo-precio {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      margin-top: 8px;
+    }
+    
+    .promo-card > div:first-child { max-width: 64%; }
+    .promo-imagen {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      font-size: 56px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    /* foto real del producto, grande, como un sello pegado en la tarjeta */
+    .promo-imagen img {
+      width: 104px;
+      height: 104px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 10px 22px -8px rgba(0, 0, 0, 0.45);
+      transform: rotate(3deg);
+    }
+    /* sin foto: ícono SVG del sistema en vez de un emoji que cambia según el celular */
+    .promo-imagen .icono-svg { width: 72px; height: 72px; opacity: 0.9; stroke-width: 1.4; }
+
+    /* ===== TARJETAS DE PROMO DE LA PORTADA (solo .promos-grid) =====
+       Mismo HTML de siempre; el cambio es 100% CSS. Se suman tres cosas:
+       1) textura: rayas diagonales (la marca del hero) + un brillo suave en la esquina,
+       2) un disco detrás del producto que le da profundidad,
+       3) el precio como "sello" de contraste y la foto como sticker con borde blanco.
+       Los colores salen de variables locales (--trama, --disco) para que cada color de tarjeta
+       ajuste su textura sin repetir reglas. El modal y el admin no se ven afectados. */
+    .promos-grid .promo-card {
+      --trama: rgba(255, 255, 255, 0.09);
+      --disco: rgba(255, 255, 255, 0.16);
+      min-height: 230px;
+      padding: 26px 24px;
+      border-radius: 20px;
+      isolation: isolate; /* las capas decorativas (z-index:-1) quedan sobre el color y bajo el texto */
+      box-shadow: 0 16px 32px -16px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+    .promos-grid .promo-card-amarilla {
+      --trama: rgba(0, 0, 0, 0.06);
+      --disco: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 16px 32px -16px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+    }
+    .promos-grid .promo-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(circle at 100% 100%, var(--disco), transparent 60%),
+        repeating-linear-gradient(115deg, var(--trama) 0 2px, transparent 2px 24px);
+    }
+    .promos-grid .promo-card::after {
+      content: '';
+      position: absolute;
+      right: -36px;
+      bottom: -48px;
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      z-index: -1;
+      background: var(--disco);
+      box-shadow: 0 0 0 16px var(--trama);
+    }
+    /* Etiqueta tipo píldora; en la tarjeta amarilla va en negro para no perderse */
+    .promos-grid .promo-badge {
+      padding: 4px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 1.2px;
+      margin-bottom: 10px;
+    }
+    .promos-grid .promo-card-amarilla .promo-badge { background: var(--negro); color: var(--amarillo); }
+    .promos-grid .promo-titulo { font-size: 42px; text-wrap: balance; }
+    .promos-grid .promo-card:not(.promo-card-amarilla) .promo-titulo { text-shadow: 0 2px 0 rgba(0, 0, 0, 0.18); }
+    .promos-grid .promo-subtitulo { margin-top: 6px; opacity: 0.92; }
+    /* Precio como sello: amarillo sobre rojo/negro, negro sobre amarillo */
+    .promos-grid .promo-precio {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 6px 14px 3px;
+      border-radius: 10px;
+      font-size: 34px;
+      line-height: 1;
+      letter-spacing: 0.5px;
+      background: var(--amarillo);
+      color: var(--negro);
+      transform: rotate(-2deg);
+      box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.45);
+    }
+    .promos-grid .promo-card-amarilla .promo-precio { background: var(--negro); color: var(--amarillo); }
+    /* Foto del producto: sticker con borde blanco apoyado sobre el disco */
+    .promos-grid .promo-imagen { right: 22px; bottom: 22px; }
+    .promos-grid .promo-imagen img {
+      width: 112px;
+      height: 112px;
+      border: 4px solid var(--blanco);
+      border-radius: 18px;
+      transform: rotate(4deg);
+      transition: transform 0.25s ease;
+    }
+    .promos-grid .promo-card:hover .promo-imagen img { transform: rotate(0deg) scale(1.06); }
+    @media (max-width: 480px) {
+      .promos-grid .promo-titulo { font-size: 36px; }
+      .promos-grid .promo-imagen img { width: 96px; height: 96px; }
+    }
+
+    /* Combo: las dos fotos van juntas, la segunda un poco superpuesta */
+    .promo-imagen-combo { gap: 0; }
+    .promo-imagen-combo img { width: 84px; height: 84px; }
+    .promo-imagen-combo img + img { margin-left: -18px; margin-top: 22px; transform: rotate(-4deg); }
+    .promo-imagen-combo .promo-emoji { font-size: 48px; }
+    .promos-grid .promo-imagen-combo img { width: 84px; height: 84px; border-width: 3px; }
+    .promos-grid .promo-imagen-combo img + img { margin-left: -22px; margin-top: 26px; transform: rotate(-4deg); }
+    .promo-card:has(.promo-imagen-combo) > div:first-child { max-width: 56%; }
+    .promos-grid .promo-card:hover .promo-imagen-combo img { transform: rotate(0deg) scale(1.06); }
+    .promos-grid .promo-card:hover .promo-imagen-combo img + img { transform: rotate(0deg) scale(1.06); }
+    @media (max-width: 480px) {
+      .promos-grid .promo-imagen-combo img { width: 74px; height: 74px; }
+      .promos-grid .promo-imagen-combo img + img { margin-left: -16px; margin-top: 20px; }
+    }
+
+    /* ===== CANDADO DE PROMO (sin sesión) ===== */
+    .promo-lock {
+      position: absolute;
+      inset: 0;
+      background: rgba(20, 20, 20, 0.55);
+      backdrop-filter: blur(1.5px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-align: center;
+      color: var(--blanco);
+      z-index: 2;
+      transition: background 0.2s;
+    }
+    .promo-lock:hover { background: rgba(20, 20, 20, 0.7); }
+    .promo-lock-icono { display: flex; }
+    .promo-lock-texto { font-size: 12px; font-weight: 700; line-height: 1.4; }
+
+    /* ===== TARJETA "INICIÁ SESIÓN PARA COMPRAR" ===== */
+    .login-cta-card {
+      background: var(--superficie);
+      border-radius: 16px;
+      box-shadow: var(--sombra);
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .login-cta-titulo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      align-self: flex-start;
+      margin-bottom: 20px;
+    }
+    .login-cta-icono {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: var(--rojo-suave);
+      color: var(--rojo-texto);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .login-cta-texto {
+      font-size: 13px;
+      color: var(--gris-texto);
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+    .btn-login-cta {
+      width: 100%;
+      max-width: 260px;
+      padding: 14px;
+      background: var(--rojo);
+      color: var(--blanco);
+      border: none;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      text-align: center;
+      margin-bottom: 16px;
+      transition: background 0.2s;
+    }
+    .btn-login-cta:hover { background: var(--rojo-oscuro); }
+    .login-cta-alt {
+      font-size: 12.5px;
+      color: var(--gris-texto);
+    }
+    .login-cta-alt a { color: var(--rojo-texto); font-weight: 700; }
+    .login-cta-alt a:hover { text-decoration: underline; }
+
+    /* ===== GRID INFERIOR ===== */
+    .grid-inferior {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 24px 72px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    /* Compras semanales */
+    .compras-card {
+      background: var(--superficie);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: var(--sombra);
+    }
+    .compras-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .compras-titulo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+    .compra-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .compra-item:last-of-type { border-bottom: none; }
+    .compra-img {
+      width: 50px;
+      height: 50px;
+      background: var(--crema);
+      color: var(--rojo-texto);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .compra-info { flex: 1; }
+    .compra-nombre { font-weight: 700; font-size: 14px; }
+    .compra-cant { font-size: 12px; color: var(--gris-texto); margin-top: 2px; }
+    
+    
+    
+    .btn-guardar-compra {
+      width: 100%;
+      margin-top: 20px;
+      padding: 13px;
+      border: 2px solid var(--rojo);
+      background: transparent;
+      color: var(--rojo-texto);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-guardar-compra:hover { background: var(--rojo); color: var(--blanco); }
+
+    .compras-vacia-home {
+      text-align: center;
+      padding: 20px 8px 8px;
+    }
+    .compras-vacia-home-icono {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gris-texto);
+      margin-bottom: 12px;
+    }
+    .compras-vacia-home-texto {
+      font-size: 13px;
+      color: var(--gris-texto);
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+    .btn-crear-primera-compra-home {
+      display: inline-block;
+      padding: 12px 22px;
+      background: var(--rojo);
+      color: var(--blanco);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .btn-crear-primera-compra-home:hover { background: var(--rojo-oscuro); }
+
+    /* Mapa / Ubicación */
+    .ubicacion-card {
+      background: var(--superficie);
+      border-radius: 16px;
+      box-shadow: var(--sombra);
+      overflow: hidden;
+    }
+
+    .mapa-embed {
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      position: relative;
+      background: var(--crema);
+    }
+    .mapa-embed iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .ubicacion-info { padding: 28px; }
+    .ubicacion-nombre { font-weight: 800; font-size: 16px; margin-bottom: 6px; }
+    .ubicacion-dir { font-size: 13px; color: var(--gris-texto); margin-bottom: 4px; }
+    
+    .btn-como-llegar {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--rojo);
+      color: var(--blanco);
+      font-weight: 700;
+      font-size: 13px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .btn-como-llegar:hover { background: var(--rojo-oscuro); }
+    .ubicacion-horario {
+      margin-top: 14px;
+      font-size: 13px;
+      color: #555;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ===== REVELADO AL HACER SCROLL =====
+       Progressive enhancement real: por defecto todo es visible. Es
+       reveal.js quien agrega .reveal-oculto al cargar (si JS corre) y
+       lo va sacando con IntersectionObserver a medida que aparece en
+       pantalla. Si JS no carga por algún motivo, el contenido nunca
+       llega a ocultarse. */
+    [data-reveal] {
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    [data-reveal].reveal-oculto {
+      opacity: 0;
+      transform: translateY(22px);
+    }
+    .promos-grid [data-reveal]:nth-child(2) { transition-delay: 0.06s; }
+    .promos-grid [data-reveal]:nth-child(3) { transition-delay: 0.12s; }
+    .grid-inferior [data-reveal]:nth-child(2) { transition-delay: 0.08s; }
+
+    @media (max-width: 900px) {
+      .promos-grid { grid-template-columns: 1fr; }
+      .grid-inferior { grid-template-columns: 1fr; }
+      .seccion { padding: 48px 20px 8px; }
+    }

@@ -1,0 +1,776 @@
+/* ============================================
+   PROMOCIONES.CSS — Estilos SOLO para promociones.html
+   Este archivo se usa JUNTO con global.css
+   ============================================ */
+
+/* ============================================
+   ENCABEZADO DE PÁGINA
+   ============================================ */
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+/* ============================================
+   ESTADÍSTICAS (4 tarjetas arriba)
+   ============================================ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background-color: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.stat-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-info { flex: 1; }
+.stat-label { font-size: 13px; color: var(--gris-texto); margin-bottom: 4px; }
+.stat-value { font-size: 26px; font-weight: 700; color: var(--negro-texto); line-height: 1.1; margin-bottom: 6px; }
+.stat-trend { font-size: 12px; font-weight: 600; }
+.trend-positivo { color: var(--verde); }
+.stat-sub { font-size: 12px; color: var(--gris-texto); }
+.stat-link { font-size: 12px; font-weight: 600; color: var(--rojo); text-decoration: none; }
+.stat-link:hover { text-decoration: underline; }
+
+/* ============================================
+   BARRA DE FILTROS
+   ============================================ */
+.filtros-bar {
+  background-color: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.filtro-buscar {
+  position: relative;
+  flex: 1;
+  min-width: 180px;
+}
+
+.filtro-buscar input {
+  width: 100%;
+  padding: 9px 14px 9px 36px;
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  background-color: var(--gris-fondo);
+  transition: border-color 0.2s ease;
+}
+
+.filtro-buscar input:focus { border-color: var(--rojo); }
+
+.filtro-buscar .search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gris-texto);
+  display: inline-flex;
+  align-items: center;
+}
+
+.filtro-select {
+  padding: 9px 28px 9px 12px;
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--blanco);
+  color: var(--negro-texto);
+  cursor: pointer;
+  outline: none;
+  appearance: auto;
+  transition: border-color 0.2s ease;
+}
+
+.filtro-select:focus { border-color: var(--rojo); }
+
+.btn-filtros {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  background-color: var(--blanco);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  color: var(--negro-texto);
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-filtros:hover { background-color: var(--gris-fondo); border-color: var(--rojo); }
+.btn-filtros:active { transform: scale(0.96); }
+
+.btn-exportar {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  background-color: var(--blanco);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  color: var(--negro-texto);
+  margin-left: auto;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-exportar:hover { background-color: var(--gris-fondo); border-color: var(--rojo); }
+.btn-exportar:active { transform: scale(0.96); }
+
+/* ============================================
+   TABLA DE PROMOCIONES
+   ============================================ */
+.tabla-wrapper {
+  background-color: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  overflow-x: auto;       /* Responsive: la tabla se desplaza dentro de su caja */
+}
+
+.tabla-promociones {
+  width: 100%;
+  min-width: 820px;       /* Responsive: en pantallas chicas se desplaza en vez de apretarse */
+  border-collapse: collapse;
+}
+
+.tabla-promociones thead th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gris-texto);
+  border-bottom: 1px solid var(--gris-borde);
+  background-color: var(--gris-fondo);
+}
+
+.tabla-promociones tbody td {
+  padding: 14px 16px;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--gris-borde);
+  font-size: 14px;
+}
+
+.tabla-promociones tbody tr:last-child td { border-bottom: none; }
+.tabla-promociones tbody tr:hover { background-color: var(--gris-fondo); }
+
+/* ============================================
+   CELDA PROMOCIÓN (imagen + nombre + desc)
+   ============================================ */
+.promo-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Cuadro de imagen de la promo */
+
+
+/* Badge rojo encima de la imagen (2x1, 3x2, etc.) */
+
+
+.promo-nombre {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--negro-texto);
+  margin-bottom: 2px;
+}
+
+.promo-desc {
+  font-size: 12px;
+  color: var(--gris-texto);
+}
+
+/* ============================================
+   COLUMNA VIGENCIA (dos fechas apiladas)
+   ============================================ */
+.vigencia-desde {
+  font-size: 13px;
+  color: var(--negro-texto);
+  display: block;
+}
+
+.vigencia-hasta {
+  font-size: 13px;
+  color: var(--gris-texto);
+  display: block;
+}
+
+/* ============================================
+   BADGES DE ESTADO DE PROMOCIÓN
+   ============================================ */
+.badge-activa {
+  display: inline-block;
+  padding: 4px 14px;
+  background-color: #E8F5E9;
+  color: var(--verde);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.badge-programada {
+  display: inline-block;
+  padding: 4px 14px;
+  background-color: #E3F2FD;
+  color: var(--azul);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.badge-finalizada {
+  display: inline-block;
+  padding: 4px 14px;
+  background-color: var(--gris-fondo);
+  color: #616161;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ============================================
+   COLUMNA DESCUENTO
+   ============================================ */
+
+
+
+
+/* ============================================
+   COLUMNA VENTAS GENERADAS
+   ============================================ */
+.ventas-monto {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--negro-texto);
+  display: block;
+}
+
+.ventas-unidades {
+  font-size: 12px;
+  color: var(--gris-texto);
+}
+
+/* ============================================
+   BOTONES DE ACCIÓN (editar + eliminar)
+   ============================================ */
+.acciones-td {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-accion {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--gris-borde);
+  background-color: var(--blanco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  color: var(--negro-texto);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-accion:active {
+  transform: scale(0.94);
+}
+
+.btn-editar:hover {
+  background-color: #FFF3E0;
+  border-color: var(--naranja);
+}
+
+.btn-eliminar:hover {
+  background-color: var(--rojo-claro);
+  border-color: var(--rojo);
+}
+
+/* ============================================
+   PAGINACIÓN
+   ============================================ */
+.paginacion-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-top: 1px solid var(--gris-borde);
+  background-color: var(--blanco);
+  font-size: 13px;
+  color: var(--gris-texto);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.paginacion-botones {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pag-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--gris-borde);
+  background-color: var(--blanco);
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  color: var(--negro-texto);
+}
+
+.pag-btn:active {
+  transform: scale(0.92);
+}
+
+.pag-btn:hover { background-color: var(--gris-fondo); }
+
+.pag-btn.activa {
+  background-color: var(--rojo);
+  color: var(--blanco);
+  border-color: var(--rojo);
+  font-weight: 700;
+}
+
+.pag-por-pagina { display: flex; align-items: center; gap: 8px; }
+
+.pag-por-pagina select {
+  padding: 6px 10px;
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--blanco);
+  cursor: pointer;
+  outline: none;
+}
+
+/* ============================================================
+   BADGE DE ESTADO "PAUSADA" (los demás ya venían de la maqueta)
+   ============================================================ */
+.badge-pausada {
+  display: inline-block;
+  padding: 4px 14px;
+  background-color: #ECEFF1;
+  color: #455A64;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ============================================================
+   MINIATURA DEL BANNER REAL EN LA TABLA (reemplaza el emoji suelto)
+   Reutiliza .promo-card / .promo-badge / .promo-titulo de index.css,
+   solo se importa acá una versión reducida para que quepa en la fila.
+   ============================================================ */
+.promo-mini {
+  width: 96px;
+  height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+}
+.promo-mini .promo-card {
+  width: 100%; height: 100%;
+  border-radius: 8px;
+  padding: 6px 8px;
+  min-height: unset;
+  display: flex; flex-direction: column; justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+.promo-mini .promo-card-roja { background: var(--rojo); color: var(--blanco); }
+.promo-mini .promo-card-amarilla { background: var(--amarillo); color: #1a1a1a; }
+.promo-mini .promo-card-verde { background: #1a1a2e; color: var(--blanco); }
+.promo-mini .promo-badge { display:none; }
+.promo-mini .promo-titulo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px; line-height: 1.05; letter-spacing: .3px;
+}
+.promo-mini .promo-subtitulo,
+.promo-mini .promo-imagen,
+.promo-mini .promo-lock { display: none; }
+.promo-mini .promo-precio { font-size: 11px; font-weight: 800; margin-top: 2px; }
+
+/* ============================================================
+   WIZARD "NUEVA PROMOCIÓN" (modal grande, 2 columnas: form + preview)
+   ============================================================ */
+.modal-box.modal-box-ancho {
+  max-width: 920px;
+}
+
+.wizard-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 760px) {
+  .wizard-layout { grid-template-columns: 1fr; }
+}
+
+.wizard-steps {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.wizard-step {
+  flex: 1;
+  text-align: center;
+  padding: 8px 4px;
+  border-radius: 8px;
+  background: var(--gris-fondo);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gris-texto);
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+.wizard-step.on { background: var(--rojo-claro); color: var(--rojo-hover); border-color: var(--rojo); }
+.wizard-step.done { background: #E8F5E9; color: var(--verde); }
+
+.wizard-panel { display: none; }
+.wizard-panel.on { display: block; }
+
+.tipos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+@media (max-width: 500px) { .tipos-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.tipo-card {
+  border: 2px solid var(--gris-borde);
+  border-radius: 10px;
+  padding: 14px 8px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--negro-texto);
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  background: var(--blanco);
+}
+.tipo-card:active { transform: scale(0.96); }
+.tipo-card .ic { display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+.tipo-card:hover { border-color: var(--rojo); }
+.tipo-card.sel { border-color: var(--rojo); background: var(--rojo-claro); color: var(--rojo-hover); }
+
+.buscador-prod-wizard { position: relative; margin-bottom: 10px; }
+.prod-resultados {
+  margin-top: 6px; max-height: 180px; overflow: auto;
+  border: 1px solid var(--gris-borde); border-radius: 8px; background: var(--blanco);
+  position: absolute; width: 100%; z-index: 20; box-shadow: var(--sombra);
+}
+.prod-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; cursor: pointer; font-size: 13px; }
+.prod-item:hover { background: var(--gris-fondo); }
+.prod-item .emoji { width: 30px; height: 30px; background: var(--gris-fondo); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; overflow:hidden; }
+.prod-item .emoji img { width:100%; height:100%; object-fit:cover; }
+
+.prod-elegido {
+  display: flex; align-items: center; gap: 12px; padding: 10px;
+  border: 1px solid var(--gris-borde); border-radius: 8px; margin-top: 6px; background: var(--gris-fondo);
+}
+.prod-elegido .emoji { width: 42px; height: 42px; background: var(--blanco); border: 1px solid var(--gris-borde); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; overflow:hidden; }
+.prod-elegido .emoji img { width:100%; height:100%; object-fit:cover; }
+.prod-elegido .info b { display: block; font-size: 13px; }
+.prod-elegido .info span { font-size: 12px; color: var(--gris-texto); }
+.prod-elegido .quitar {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--rojo);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.prod-elegido .quitar:hover { background-color: var(--rojo-claro); }
+.prod-elegido .quitar:active { transform: scale(0.9); }
+
+.colores-wizard { display: flex; gap: 10px; margin-top: 4px; }
+.color-op {
+  width: 34px; height: 34px; border-radius: 50%; cursor: pointer; border: 3px solid transparent;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.color-op.sel { border-color: var(--negro-texto); }
+.color-op:active { transform: scale(0.9); }
+
+.pos-grid-wizard { display: flex; gap: 8px; margin-top: 4px; }
+.pos-op {
+  flex: 1; border: 2px solid var(--gris-borde); border-radius: 8px; padding: 8px; text-align: center;
+  font-size: 12px; font-weight: 700; cursor: pointer; background: var(--blanco);
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+.pos-op.sel { border-color: var(--rojo); background: var(--rojo-claro); color: var(--rojo-hover); }
+.pos-op:active { transform: scale(0.96); }
+
+/* columna de vista previa dentro del wizard */
+.wizard-preview-col {
+  background: var(--gris-fondo);
+  border-radius: 10px;
+  padding: 16px;
+}
+.wizard-preview-titulo {
+  font-size: 12px; font-weight: 700; color: var(--gris-texto);
+  text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px;
+}
+.wizard-preview-box .promo-card { min-height: 160px; }
+.wizard-preview-box .promo-imagen img { border-radius: 8px; }
+
+.mini-home-wizard { margin-top: 16px; border: 1px solid var(--gris-borde); border-radius: 10px; padding: 12px; background: var(--blanco); }
+.mini-home-wizard .lbl { font-size: 11px; color: var(--gris-texto); font-weight: 700; margin-bottom: 8px; }
+.mini-slots-wizard { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.mini-slot-wizard {
+  background: var(--gris-fondo); border: 1px dashed var(--gris-borde); border-radius: 8px;
+  height: 50px; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--gris-texto); font-weight: 700;
+}
+.mini-slot-wizard.activo { border-style: solid; border-color: var(--rojo); color: var(--rojo-hover); background: var(--rojo-claro); }
+
+.wizard-botones { display: flex; justify-content: space-between; margin-top: 20px; }
+.wizard-botones button:disabled { opacity: .4; cursor: not-allowed; }
+
+.resumen-confirmar { font-size: 13px; line-height: 2; color: var(--negro-texto); background: var(--gris-fondo); border-radius: 8px; padding: 14px 16px; margin-top: 10px; }
+
+/* ============================================================
+   BASE DEL MODAL / FORMULARIO / ALERTAS
+   (promociones.php no carga productos.css, así que estas clases
+   base del modal se definen acá para que el wizard se vea y
+   se posicione correctamente)
+   ============================================================ */
+.modal-overlay {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,.45);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.modal-overlay.abierto {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal-box {
+  background-color: var(--blanco);
+  border-radius: var(--radio);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.22);
+  width: 100%;
+  max-width: 520px;
+  transform: scale(0.96);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-overlay.abierto .modal-box {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--gris-borde);
+}
+
+.modal-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--negro-texto);
+}
+
+.modal-cerrar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--gris-texto);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.modal-cerrar:hover { color: var(--rojo); background-color: var(--rojo-claro); }
+.modal-cerrar:active { transform: scale(0.9); }
+
+.modal-body {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.campo-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo-grupo label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--negro-texto);
+}
+
+.campo-grupo input[type="text"],
+.campo-grupo input[type="number"],
+.campo-grupo input[type="date"],
+.campo-grupo select {
+  padding: 9px 12px;
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  background-color: var(--gris-fondo);
+  width: 100%;
+  transition: border-color 0.2s ease;
+}
+
+.campo-grupo input:focus,
+.campo-grupo select:focus {
+  border-color: var(--rojo);
+}
+
+.campo-fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.campo-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-direction: row;
+}
+
+.campo-check input { width: auto; }
+
+.modal-footer {
+  padding: 16px 22px 22px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-cancelar {
+  background: none;
+  border: 1px solid var(--gris-borde);
+  color: var(--negro-texto);
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-cancelar:active {
+  transform: scale(0.97);
+}
+
+.btn-cancelar:hover { background-color: var(--gris-fondo); }
+
+.alerta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.alerta .icono-svg {
+  flex-shrink: 0;
+}
+
+.alerta-exito {
+  background-color: #E8F5E9;
+  color: var(--verde);
+}
+
+.alerta-error {
+  background-color: #FFEBEE;
+  color: var(--rojo);
+}
+
+.sin-resultados {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--gris-texto);
+}

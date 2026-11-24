@@ -1,0 +1,276 @@
+/* ============================================
+   INICIO.CSS — Estilos SOLO para la página Inicio
+   Este archivo se usa JUNTO con global.css
+   ============================================ */
+
+/* ============================================
+   FILA DE ESTADÍSTICAS (las 4 tarjetas arriba)
+   ============================================ */
+.stats-grid {
+  display: grid;
+  /* 4 columnas iguales que se adaptan al espacio */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* Cada tarjeta de estadística */
+.stat-card {
+  background-color: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* El círculo con el ícono */
+.stat-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;   /* No se achica aunque no haya espacio */
+}
+
+/* Texto dentro de la tarjeta stat */
+.stat-info {
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--gris-texto);
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--negro-texto);
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+/* Texto verde/rojo de tendencia (ej: "+3 que ayer") */
+.stat-trend {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.trend-positivo {
+  color: var(--verde);
+}
+
+.trend-negativo {
+  color: var(--rojo);
+}
+
+/* Link rojo (ej: "Ver productos") */
+.stat-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--rojo);
+  text-decoration: none;
+}
+
+.stat-link:hover {
+  text-decoration: underline;
+}
+
+/* Nombre del producto top */
+.stat-product-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--negro-texto);
+}
+
+.stat-product-sub {
+  font-size: 12px;
+  color: var(--gris-texto);
+}
+
+/* ============================================
+   FILA DE DOS COLUMNAS (pedidos + gráfico)
+   ============================================ */
+.dos-columnas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;  /* Dos columnas iguales */
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+/* ============================================
+   TABLA DE PEDIDOS RECIENTES
+   ============================================ */
+.seccion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.seccion-titulo {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.ver-todos-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--rojo);
+  text-decoration: none;
+}
+
+.ver-todos-link:hover {
+  text-decoration: underline;
+}
+
+/* Tabla */
+.tabla-pedidos {
+  width: 100%;
+  border-collapse: collapse;  /* Borra el espacio entre celdas */
+}
+
+.tabla-pedidos tbody tr {
+  border-bottom: 1px solid var(--gris-borde);
+}
+
+.tabla-pedidos tbody tr:last-child {
+  border-bottom: none;
+}
+
+.tabla-pedidos td {
+  padding: 14px 6px;
+  vertical-align: middle;
+}
+
+/* Número y hora del pedido */
+.pedido-num {
+  font-weight: 700;
+  font-size: 14px;
+  display: block;
+}
+
+.pedido-hora {
+  font-size: 12px;
+  color: var(--gris-texto);
+}
+
+/* Nombre del cliente */
+.pedido-cliente {
+  font-size: 14px;
+  color: var(--negro-texto);
+}
+
+/* Precio */
+.pedido-precio {
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap; /* No corta el texto en dos líneas */
+}
+
+/* ============================================
+   GRÁFICO DE VENTAS (SVG hecho a mano)
+   ============================================ */
+.grafico-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.grafico-titulo {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+/* Selector de período */
+.grafico-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--negro-texto);
+  background: var(--gris-fondo);
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+}
+
+/* El SVG del gráfico ocupa todo el ancho */
+.grafico-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ============================================
+   ACCIONES RÁPIDAS (4 botones abajo)
+   ============================================ */
+.acciones-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+/* Cada tarjeta de acción */
+.accion-card {
+  background-color: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 20px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: var(--negro-texto);
+  transition: box-shadow 0.2s ease, transform 0.15s ease, border-color 0.2s ease;
+  cursor: pointer;
+}
+
+.accion-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+  transform: translateY(-2px);  /* Sube un poco al hover */
+}
+
+.accion-card:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Círculo con ícono de la acción */
+.accion-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.accion-nombre {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.accion-desc {
+  font-size: 12px;
+  color: var(--gris-texto);
+}
+
+/* Responsive: la lista de pedidos recientes se desplaza dentro de su tarjeta si no entra */
+.tabla-scroll { overflow-x: auto; }
+
+/* Responsive: nombres largos de cliente se cortan con "…" en la lista de pedidos recientes */
+.tabla-pedidos .pedido-cliente { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
